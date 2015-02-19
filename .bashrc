@@ -5,6 +5,8 @@
 # If not running interactively, don't do anything
 	[[ $- != *i* ]] && return
 
+# included as a folder executables are run from 
+	export PATH=$PATH:/home/mruig1/.gem/ruby/2.2.0/bin
 
 #remaps Caps Lock to Escape.
 
@@ -19,15 +21,13 @@
 
 #easier way of doing "sudo !!"
 	alias oh='sudo $(history -p \!\!)'
-#doesnt save "oh" to history
-	export HISTIGNORE=oh
 
 #makes the "ls" command all pretty
 	alias ls='ls --color=auto'
 	
 #each of these keeps history clean of unimportant commands
 #the [ \t]* at the end means it includes anything following
-	HISTIGNORE="&:ls:[bf]g:exit:pwd:clear:mount:umount:[ \t]*"	
+	HISTIGNORE="&:ls:[bf]g:exit:pwd:clear:mount:umount:oh:uptime:[ \t]*"	
 #
 
 #just a general prompt. Gotta customise this sometimes...
