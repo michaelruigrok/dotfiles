@@ -70,9 +70,28 @@
 "	ABBREVIATIONS															 "
 "																			 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-iabbrev myCopyright #Copyright (C) 2015 crayonsmelting - protected under Australian and International Copyright law <CR>#crayonsmelting can be found at http://www.github.com/crayonsmelting/ or at crayons.melting@gmail.com <CR>#Licence found within licence.txt <CR>############################################<CR><CR><CR><CR>
+iabbrev myCopyright 
+		\#Copyright (C) 2015 crayonsmelting - protected under Australian and International Copyright law 
+	\<CR>#crayonsmelting can be found at http://www.github.com/crayonsmelting/ or at crayons.melting@gmail.com 
+	\<CR>#Licence found within licence.txt 
+	\<CR>############################################
+	\<CR>
+	\<CR>
+	\<CR>
+	\<CR>
 
 iabbrev shortCopy COPYRIGHT (C) 2015 crayonsmelting. See licence.txt.
+
+iabbrev htmlTemplate <!DOCTYPE html> 
+	\<CR>
+	\<CR><html lang="en"> 
+	\<CR><head> 
+	\<CR><meta charset="utf-8"/> 
+	\<CR><title></title> 
+	\<CR></head> 
+	\<CR><body> 
+	\<CR></body> 
+	\<CR></html>
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -95,5 +114,5 @@ iabbrev shortCopy COPYRIGHT (C) 2015 crayonsmelting. See licence.txt.
 	
 " Autocomplete menus some sort of command
 	" set wildmenu
-	" wildmode=list:longest,full
+	" wildmode=lwasalongest,full, like the rest of us.
 
