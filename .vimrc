@@ -65,6 +65,9 @@
 " binds space to open and close folds
 	map <space> za
 	
+" returns you to normal mode when you press 'j'  and 'k' at the same time
+inoremap jk <Esc>
+inoremap kj <Esc>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "	ABBREVIATIONS															 "
@@ -93,6 +96,9 @@ iabbrev htmlTemplate <!DOCTYPE html>
 	\<CR></body> 
 	\<CR></html>
 
+" This is supposed to add a closing tag to an element automatically, after you
+" type in "<//"
+inoremap <lt>// </<C-X><C-O>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "	SEARCHING																 "
