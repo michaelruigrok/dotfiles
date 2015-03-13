@@ -32,4 +32,3 @@
 
 #just a general prompt. Gotta customise this sometimes...
 	PS1='[\u@\h \W]\$ '
-/bin/bash: line 0: fg: no job control
