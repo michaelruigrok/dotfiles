@@ -66,11 +66,11 @@
 	map <space> za
 	
 " returns you to normal mode when you press 'j'  and 'k' at the same time
-inoremap jk <Esc>
+	inoremap jk <Esc>
 inoremap kj <Esc>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"	ABBREVIATIONS															 "
+"	ABBREVIATIONS AND COMMANDS												 "
 "																			 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 iabbrev myCopyright 
@@ -85,6 +85,15 @@ iabbrev myCopyright
 
 iabbrev shortCopy COPYRIGHT (C) 2015 crayonsmelting. See licence.txt.
 
+iabbrev addBreak 
+	\<CR>---------------------------------------------------------------------
+\---------
+	\<CR>
+
+
+	" HTML SHORTCUTS "
+	""""""""""""""""""
+
 iabbrev htmlTemplate <!DOCTYPE html> 
 	\<CR>
 	\<CR><html lang="en"> 
@@ -96,10 +105,14 @@ iabbrev htmlTemplate <!DOCTYPE html>
 	\<CR></body> 
 	\<CR></html>
 
+iabbrev cssLink <link rel='stylesheet' type='text/css' href='style.css'/>
+
 " This is supposed to add a closing tag to an element automatically, after you
 " type in "<//"
-inoremap <lt>// </<C-X><C-O>
+	inoremap <lt>// </<C-X><C-O>
 
+" :C clears search
+	command C let @/ = ""
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "	SEARCHING																 "
 "																			 "
@@ -115,10 +128,8 @@ inoremap <lt>// </<C-X><C-O>
 	set ignorecase
 	set smartcase
 
-
 	""EXPERIMENTAL - RESEARCH LATER""
 	
 " Autocomplete menus some sort of command
-	" set wildmenu
-	" wildmode=lwasalongest,full, like the rest of us.
-
+	set wildmode=longest:full
+	set wildmenu
