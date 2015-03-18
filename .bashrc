@@ -10,7 +10,7 @@
 
 #remaps Caps Lock to Escape.
 
-#This one's for CLI
+#This one's for CLI (must be root)
 	loadkeys ~/.keymap
 
 #This one's for X (doesn't work till bash is open)
@@ -27,8 +27,7 @@
 	
 #each of these keeps history clean of unimportant commands
 #the [ \t]* at the end means it includes anything following
-	HISTIGNORE="&:ls:[bf]g:exit:pwd:clear:mount:umount:oh:uptime:[ \t]*"	
-#
+	HISTIGNORE="&:ls:[bf]g:exit:pwd:clear:less:mount:umount:oh:uptime:[ \t]*"	
 
 #just a general prompt. Gotta customise this sometimes...
 	PS1='[\u@\h \W]\$ '
