@@ -133,3 +133,13 @@ iabbrev cssLink <link rel='stylesheet' type='text/css' href='style.css'/>
 " Autocomplete menus some sort of command
 	set wildmode=longest:full
 	set wildmenu
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"	HISTORY & UNDO															 "
+"																			 "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" tell it to use an undo file
+	set undofile
+" set a directory to store the undo history
+	set undodir=~/.vim/undo-history/
