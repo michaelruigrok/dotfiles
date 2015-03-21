@@ -4,6 +4,12 @@
 "																			 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+" If running on Windows, use .vim directory instead of 'vimfiles'
+	let s:MSWindows = has('win95') + has('win16') + has('win32') + has('win64')
+	if s:MSWindows
+		set runtimepath=$VIM/.vim,$VIMRUNTIME,$VIM/vimfiles/after,$VIM/.vim/after
+	endif
+	
 " only uses file for vim, not vi. This removes any clashes
 	set nocompatible
 
@@ -12,11 +18,6 @@
 
 " enable file type detection for plugins
 	filetype plugin indent on
-
-" With a map leader it's possible to do extra key combinations
-" like <leader>w saves the current file
-	let mapleader = ","
-	let g:mapleader = ","
 	
 " number of lines in history memory
 	set history=700
@@ -67,7 +68,11 @@
 	
 " returns you to normal mode when you press 'j'  and 'k' at the same time
 	inoremap jk <Esc>
-inoremap kj <Esc>
+	inoremap kj <Esc>
+
+" And if you're on a machine that Caps lock isn't escape, and you press it
+" before hand, accidently:
+	inoremap JK <Esc><
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "	ABBREVIATIONS AND COMMANDS												 "
@@ -110,6 +115,17 @@ iabbrev cssLink <link rel='stylesheet' type='text/css' href='style.css'/>
 " This is supposed to add a closing tag to an element automatically, after you
 " type in "<//"
 	inoremap <lt>// </<C-X><C-O>
+
+	" OTHER COMMANDS "
+	""""""""""""""""""
+
+" With a map leader it's possible to do extra key combinations
+" like <leader>w saves the current file
+	let mapleader = ","
+	let g:mapleader = ","
+
+" I wonder what control-S should do?
+	nnoremap Ctrl-S :w
 
 " :C clears search
 	command C let @/ = ""

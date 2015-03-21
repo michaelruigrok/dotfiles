@@ -3,7 +3,7 @@
 #
 
 # If not running interactively, don't do anything
-	[[ $- != *i* ]] && return
+[[ $- != *i* ]] && return
 
 # included as a folder executables are run from 
 	export PATH=$PATH:/home/mruig1/.gem/ruby/2.2.0/bin
