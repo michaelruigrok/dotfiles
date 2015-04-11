@@ -1,4 +1,3 @@
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "	GENERAL SETTINGS														 "
 "																			 "
@@ -23,11 +22,11 @@
 	set history=700
 
 " :W sudo saves the file 
-" (useful for handling the permission-denied error)
+"  (useful for handling the permission-denied error)
 	 command W w !sudo tee % > /dev/null
 
 " when a vim file is edited externally, an open version changes with the edit
-" possibly only works while you have not edited your copy
+"  possibly only works while you have not edited your copy
 	 set autoread
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -49,7 +48,7 @@
 	autocmd FileType text setlocal textwidth=78
 
 " makes it automatically indent in specific cases, such as 
-" when adding a curly bracket ({)
+"  when adding a curly bracket ({)
 	set smartindent
 
 " Minimal number of screen lines to keep above and below the cursor.
@@ -71,7 +70,7 @@
 	inoremap kj <Esc>
 
 " And if you're on a machine that Caps lock isn't escape, and you press it
-" before hand, accidently:
+"  before hand, accidently:
 	inoremap JK <Esc><
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -120,9 +119,13 @@ iabbrev cssLink <link rel='stylesheet' type='text/css' href='style.css'/>
 	""""""""""""""""""
 
 " With a map leader it's possible to do extra key combinations
-" like <leader>w saves the current file
+"  like <leader>w saves the current file
 	let mapleader = ","
 	let g:mapleader = ","
+
+" Leader-b is the black hole register (deleting or changing without saving for
+"  pasting
+	nnoremap <leader>b "_
 
 " I wonder what control-S should do?
 	nnoremap Ctrl-S :w
