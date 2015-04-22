@@ -1,3 +1,4 @@
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "	GENERAL SETTINGS														 "
 "																			 "
@@ -58,6 +59,10 @@
 "	if has('mouse')
 "		  set mouse=a
 "	  endif
+
+" Disable beeping
+	set noeb vb t_vb=
+	au GUIEnter * set vb t_vb=
 
 " binds Alt + Shift + G to show line numbers 
 	map <A-G> :set nu!<CR>
@@ -128,7 +133,7 @@ iabbrev cssLink <link rel='stylesheet' type='text/css' href='style.css'/>
 	nnoremap <leader>b "_
 
 " I wonder what control-S should do?
-	nnoremap Ctrl-S :w
+	noremap <C-s> :w<CR>
 
 " :C clears search
 	command C let @/ = ""
