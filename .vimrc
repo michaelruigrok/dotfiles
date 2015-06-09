@@ -1,4 +1,20 @@
 
+	"  GUI SETTINGS  "
+	""""""""""""""""""
+
+if has ('gui_running')
+
+" Boot up the current saved session
+	source ~/.session.vim
+
+" set font to Anonymous Pro, font size to 12, 
+	set guifont=Anonymous\ Pro\ 12
+
+
+
+endif
+
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "	GENERAL SETTINGS														 "
 "																			 "
@@ -42,6 +58,7 @@
 	syntax on
 
 " reduces tab indenting to 4 spaces, as per the python standard
+" note that tabs are still tabs, not spaces
 	set shiftwidth=4
 	set tabstop=4
 
@@ -114,7 +131,11 @@ iabbrev htmlTemplate <!DOCTYPE html>
 	\<CR></body> 
 	\<CR></html>
 
-iabbrev cssLink <link rel='stylesheet' type='text/css' href='style.css'/>
+iabbrev cssLink <link rel='stylesheet' type='text/css' href='css/style.css' charset="utf-8"/> 
+
+iabbrev jsLink <script type="text/javascript" src="js/main.js"></script>
+
+iabbrev jqueryLink <script type="text/javascript" src="js/jquery.js"></script>
 
 " This is supposed to add a closing tag to an element automatically, after you
 " type in "<//"
@@ -133,10 +154,21 @@ iabbrev cssLink <link rel='stylesheet' type='text/css' href='style.css'/>
 	nnoremap <leader>b "_
 
 " I wonder what control-S should do?
-	noremap <C-s> :w<CR>
+	noremap <c-s> <Esc>:w<CR>
 
-" :C clears search
+" leader-s saves the session, leader-S saves session and buffers
+	noremap <leader>s :mks ~/.session.vim<CR>
+	noremap <leader>S :mks ~/.session.vim<CR>:w<CR>
+
+" :C or leader-c clears search
 	command C let @/ = ""
+	nnoremap <leader>c :let @/ = ""<CR>
+
+" Rather than deleting _all_ my stuff, Ctrl-w Ctrl-w changes window (like in
+" norman mode)
+	imap <C-w><C-w> <esc><C-w><C-w>
+
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "	SEARCHING																 "
 "																			 "
