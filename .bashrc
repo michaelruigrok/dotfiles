@@ -13,10 +13,6 @@
 # This one's for CLI (must be root)
 	loadkeys ~/.keymap
 
-# This one's for X (doesn't work till bash is open)
-	setxkbmap -option caps:escape
-
-	
 	## Command-specific config ##
 
 # Easier way of doing "sudo !!"
