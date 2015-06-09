@@ -56,9 +56,9 @@
 	set scrolloff=10
 
 " In many terminal emulators the mouse works just fine, thus enable it.
-"	if has('mouse')
-"		  set mouse=a
-"	  endif
+	if has('mouse')
+	  set mouse=a
+	  endif
 
 " Disable beeping
 	set noeb vb t_vb=
