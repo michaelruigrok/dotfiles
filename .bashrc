@@ -8,23 +8,25 @@
 # included as a folder executables are run from 
 	export PATH=$PATH:/home/mruig1/.gem/ruby/2.2.0/bin
 
-#remaps Caps Lock to Escape.
+ # Remaps Caps Lock to Escape.
 
-#This one's for CLI (must be root)
+# This one's for CLI (must be root)
 	loadkeys ~/.keymap
 
-	
 	## Command-specific config ##
 
-#easier way of doing "sudo !!"
+# Easier way of doing "sudo !!"
 	alias oh='sudo $(history -p \!\!)'
 
-#makes the "ls" command all pretty
+# Makes the "ls" command all pretty
 	alias ls='ls --color=auto'
 	
-#each of these keeps history clean of unimportant commands
-#the [ \t]* at the end means it includes anything following
+# Each of these keeps history clean of unimportant commands
+# The [ \t]* at the end means it includes anything following
 	HISTIGNORE="&:ls:[bf]g:exit:pwd:clear:less:mount:umount:oh:uptime:[ \t]*"	
 
-#just a general prompt. Gotta customise this sometimes...
+# Favourite editor:
+export EDITOR="vim"
+
+# Just a general prompt. Gotta customise this sometimes...
 	PS1='[\u@\h \W]\$ '
