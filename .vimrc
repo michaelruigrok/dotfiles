@@ -157,8 +157,8 @@ iabbrev jqueryLink <script type="text/javascript" src="js/jquery.js"></script>
 	noremap <c-s> <Esc>:w<CR>
 
 " leader-s saves the session, leader-S saves session and buffers
-	noremap <leader>s :mks ~/.session.vim<CR>
-	noremap <leader>S :mks ~/.session.vim<CR>:w<CR>
+	noremap <leader>s :mks! ~/.session.vim<CR>
+	noremap <leader>S :mks! ~/.session.vim<CR>:w<CR>
 
 " :C or leader-c clears search
 	command C let @/ = ""
