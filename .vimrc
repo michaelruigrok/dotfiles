@@ -7,8 +7,8 @@ if has ('gui_running')
 " Boot up the current saved session
 	source ~/.session.vim
 
-" set font to Anonymous Pro, font size to 12, 
-	set guifont=Anonymous\ Pro\ 12
+" set font to Anonymous Pro, font size to 12
+	set guifont=Anonymous\ Pro\ For\ Powerline 12
 
 
 
@@ -25,7 +25,7 @@ endif
 	if s:MSWindows
 		set runtimepath=$VIM/.vim,$VIMRUNTIME,$VIM/vimfiles/after,$VIM/.vim/after
 	endif
-	
+
 " only uses file for vim, not vi. This removes any clashes
 	set nocompatible
 
@@ -34,17 +34,17 @@ endif
 
 " enable file type detection for plugins
 	filetype plugin indent on
-	
-" number of lines in history memory
-	set history=700
 
-" :W sudo saves the file 
+" number of lines in history memory
+	set history=10000
+
+" :W sudo saves the file
 "  (useful for handling the permission-denied error)
-	 command W w !sudo tee % > /dev/null
+	command W w !sudo tee % > /dev/null
 
 " when a vim file is edited externally, an open version changes with the edit
 "  possibly only works while you have not edited your copy
-	 set autoread
+	set autoread
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "	VIM USER INTERFACE														 "
@@ -65,7 +65,7 @@ endif
 " sets text file 'textwidth' to 78 characters
 	autocmd FileType text setlocal textwidth=78
 
-" makes it automatically indent in specific cases, such as 
+" makes it automatically indent in specific cases, such as
 "  when adding a curly bracket ({)
 	set smartindent
 
@@ -74,35 +74,32 @@ endif
 
 " In many terminal emulators the mouse works just fine, thus enable it.
 	if has('mouse')
-	  set mouse=a
-	  endif
+		set mouse=a
+		endif
 
 " Disable beeping
 	set noeb vb t_vb=
 	au GUIEnter * set vb t_vb=
 
-" binds Alt + Shift + G to show line numbers 
-	map <A-G> :set nu!<CR>
+	function! NumberToggle()
+		if(&relativenumber == 1)
+			set relativenumber!
+		else
+			set relativenumber
+		endif
+	endfunc
 
-" binds space to open and close folds
-	map <space> za
-	
-" returns you to normal mode when you press 'j'  and 'k' at the same time
-	inoremap jk <Esc>
-	inoremap kj <Esc>
-
-" And if you're on a machine that Caps lock isn't escape, and you press it
-"  before hand, accidently:
-	inoremap JK <Esc><
+	nnoremap <leader>n :call NumberToggle()<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "	ABBREVIATIONS AND COMMANDS												 "
 "																			 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-iabbrev myCopyright 
-		\#Copyright (C) 2015 crayonsmelting - protected under Australian and International Copyright law 
-	\<CR>#crayonsmelting can be found at http://www.github.com/crayonsmelting/ or at crayons.melting@gmail.com 
-	\<CR>#Licence found within licence.txt 
+iabbrev myCopyright
+		\#Copyright (C) 2015 crayonsmelting - protected under Australian and International Copyright law
+	\<CR>#crayonsmelting can be found at http://www.github.com/crayonsmelting/
+	\<CR>#or at crayons.melting@gmail.com
+	\<CR>#Licence found within licence.txt
 	\<CR>############################################
 	\<CR>
 	\<CR>
@@ -111,7 +108,7 @@ iabbrev myCopyright
 
 iabbrev shortCopy COPYRIGHT (C) 2015 crayonsmelting. See licence.txt.
 
-iabbrev addBreak 
+iabbrev addBreak
 	\<CR>---------------------------------------------------------------------
 \---------
 	\<CR>
@@ -120,18 +117,18 @@ iabbrev addBreak
 	" HTML SHORTCUTS "
 	""""""""""""""""""
 
-iabbrev htmlTemplate <!DOCTYPE html> 
+iabbrev htmlTemplate <!DOCTYPE html>
 	\<CR>
-	\<CR><html lang="en"> 
-	\<CR><head> 
-	\<CR><meta charset="utf-8"/> 
-	\<CR><title></title> 
-	\<CR></head> 
-	\<CR><body> 
-	\<CR></body> 
+	\<CR><html lang="en">
+	\<CR><head>
+	\<CR><meta charset="utf-8"/>
+	\<CR><title></title>
+	\<CR></head>
+	\<CR><body>
+	\<CR></body>
 	\<CR></html>
 
-iabbrev cssLink <link rel='stylesheet' type='text/css' href='css/style.css' charset="utf-8"/> 
+iabbrev cssLink <link rel='stylesheet' type='text/css' href='css/style.css'/>
 
 iabbrev jsLink <script type="text/javascript" src="js/main.js"></script>
 
@@ -168,6 +165,16 @@ iabbrev jqueryLink <script type="text/javascript" src="js/jquery.js"></script>
 " norman mode)
 	imap <C-w><C-w> <esc><C-w><C-w>
 
+" binds Alt + Shift + G to show line numbers
+	map <A-G> :set nu!<CR>
+
+" binds space to open and close folds
+	map <space> za
+
+" returns you to normal mode when you press 'j'  and 'k' at the same time
+	inoremap jk <Esc>
+	inoremap kj <Esc>
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "	SEARCHING																 "
@@ -179,13 +186,12 @@ iabbrev jqueryLink <script type="text/javascript" src="js/jquery.js"></script>
 
 " Highlights all search instances
 	set hlsearch
-	
+
 " Searches using all lowercase include capitals, but not the other way around
 	set ignorecase
 	set smartcase
 
-	""EXPERIMENTAL - RESEARCH LATER""
-	
+
 " Autocomplete menus some sort of command
 	set wildmode=longest:full
 	set wildmenu
@@ -199,3 +205,18 @@ iabbrev jqueryLink <script type="text/javascript" src="js/jquery.js"></script>
 	set undofile
 " set a directory to store the undo history
 	set undodir=~/.vim/undo-history/
+
+	"Pathogen"
+	""""""""""
+	execute pathogen#infect()
+
+
+	"Airline"
+	"""""""""
+" fix such that airline runs without having to split
+	set laststatus=2
+	
+" turn on pretty arrows
+	let g:airline_powerline_fonts = 1
+
+
