@@ -10,8 +10,6 @@ if has ('gui_running')
 " set font to Anonymous Pro, font size to 12
 	set guifont=Anonymous\ Pro\ For\ Powerline 12
 
-
-
 endif
 
 
@@ -51,6 +49,10 @@ endif
 "																			 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+" show relative numbering
+	set relativenumber
+	set numberwidth=2
+
 " Use UTF-8
 	set encoding=utf-8
 
@@ -81,6 +83,7 @@ endif
 	set noeb vb t_vb=
 	au GUIEnter * set vb t_vb=
 
+" Turn relative numbers off
 	function! NumberToggle()
 		if(&relativenumber == 1)
 			set relativenumber!
@@ -95,16 +98,26 @@ endif
 "	ABBREVIATIONS AND COMMANDS												 "
 "																			 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-iabbrev myCopyright
+
+iabbrev myCopyrightHash 
 		\#Copyright (C) 2015 crayonsmelting - protected under Australian and International Copyright law
-	\<CR>#crayonsmelting can be found at http://www.github.com/crayonsmelting/
-	\<CR>#or at crayons.melting@gmail.com
-	\<CR>#Licence found within licence.txt
-	\<CR>############################################
-	\<CR>
-	\<CR>
-	\<CR>
-	\<CR>
+	\<CR>#crayonsmelting can be found at
+http://www.github.com/crayonsmelting/.
+	\<CR>#or at crayons.melting@gmail.com 
+	\<CR>#Licence found within licence.txt 
+	\<CR>############################################ 
+	\<CR> 
+	\<CR> 
+	\<CR> 
+	\<CR> 
+
+iabbrev myCopyrightSlash 
+		\/* Copyright (C) 2014 crayonsmelting - protected under Australian and International Copyright law
+	\<CR>crayonsmelting can be found at http://www.github.com/crayonsmelting/
+	\<CR>or at crayons.melting@gmail.com 
+	\<CR>Licence found within licence.txt 
+	\<CR>*/ 
+	\<CR> 
 
 iabbrev shortCopy COPYRIGHT (C) 2015 crayonsmelting. See licence.txt.
 
@@ -134,6 +147,16 @@ iabbrev jsLink <script type="text/javascript" src="js/main.js"></script>
 
 iabbrev jqueryLink <script type="text/javascript" src="js/jquery.js"></script>
 
+	" C-lang abbrieves "
+iabbrev cTemp #include <stdio.h>
+	\<CR>
+	\<CR>int main(int argc, char *argv[]) {
+	\<CR>
+	\<CR>return 0;
+	\<CR>}
+
+
+
 " This is supposed to add a closing tag to an element automatically, after you
 " type in "<//"
 	inoremap <lt>// </<C-X><C-O>
@@ -162,11 +185,11 @@ iabbrev jqueryLink <script type="text/javascript" src="js/jquery.js"></script>
 	nnoremap <leader>c :let @/ = ""<CR>
 
 " Rather than deleting _all_ my stuff, Ctrl-w Ctrl-w changes window (like in
-" norman mode)
+" normal mode)
 	imap <C-w><C-w> <esc><C-w><C-w>
 
-" binds Alt + Shift + G to show line numbers
-	map <A-G> :set nu!<CR>
+" binds Alt + Shift + G to show/hide line numbers
+	map <leader>g :set nu!<CR>
 
 " binds space to open and close folds
 	map <space> za
@@ -215,7 +238,7 @@ iabbrev jqueryLink <script type="text/javascript" src="js/jquery.js"></script>
 	"""""""""
 " fix such that airline runs without having to split
 	set laststatus=2
-	
+
 " turn on pretty arrows
 	let g:airline_powerline_fonts = 1
 
