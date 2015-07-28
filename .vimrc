@@ -1,3 +1,4 @@
+" TODO: if vim has arguments (like a file), don't run sessionfile
 
 	"  GUI SETTINGS  "
 	""""""""""""""""""
@@ -64,8 +65,10 @@ endif
 	set shiftwidth=4
 	set tabstop=4
 
-" sets text file 'textwidth' to 78 characters
+" text files may not extend further than 78 characters horizonally
 	autocmd FileType text setlocal textwidth=78
+	autocmd FileType markdown setlocal textwidth=78
+	autocmd FileType python setlocal textwidth=80
 
 " makes it automatically indent in specific cases, such as
 "  when adding a curly bracket ({)
@@ -94,6 +97,9 @@ endif
 
 	nnoremap <leader>n :call NumberToggle()<cr>
 
+" Spell checker for Australian English
+	"set spell spelllang=en_au
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "	ABBREVIATIONS AND COMMANDS												 "
 "																			 "
@@ -112,7 +118,7 @@ http://www.github.com/crayonsmelting/.
 	\<CR> 
 
 iabbrev myCopyrightSlash 
-		\/* Copyright (C) 2014 crayonsmelting - protected under Australian and International Copyright law
+		\/* Copyright (C) 2015 crayonsmelting - protected under Australian and International Copyright law
 	\<CR>crayonsmelting can be found at http://www.github.com/crayonsmelting/
 	\<CR>or at crayons.melting@gmail.com 
 	\<CR>Licence found within licence.txt 
