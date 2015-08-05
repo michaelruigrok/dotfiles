@@ -204,6 +204,8 @@ iabbrev cTemp #include <stdio.h>
 	inoremap jk <Esc>
 	inoremap kj <Esc>
 
+" for python, <leader>m runs code in python
+	autocmd FileType python nnoremap <buffer> <leader>m :!python %<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "	SEARCHING																 "
