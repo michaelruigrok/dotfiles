@@ -75,7 +75,7 @@ endif
 	set smartindent
 
 " Minimal number of screen lines to keep above and below the cursor.
-	set scrolloff=10
+	set scrolloff=7
 
 " In many terminal emulators the mouse works just fine, thus enable it.
 	if has('mouse')
@@ -249,5 +249,6 @@ iabbrev cTemp #include <stdio.h>
 
 " turn on pretty arrows
 	let g:airline_powerline_fonts = 1
+	let g:airline#extensions#whitespace#checks = [ 'indent', 'long' ]
 
 
