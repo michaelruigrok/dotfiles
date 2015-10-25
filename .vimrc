@@ -200,6 +200,10 @@ iabbrev cTemp #include <stdio.h>
 " binds space to open and close folds
 	map <space> za
 
+" with vim-surround, leader comments out the surrounded word
+	unmap <leader>C
+	autocmd FileType javascript map <buffer> <leader>Cw ysiW*ysiW/
+
 " returns you to normal mode when you press 'j'  and 'k' at the same time
 	inoremap jk <Esc>
 	inoremap kj <Esc>
