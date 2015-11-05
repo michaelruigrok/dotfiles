@@ -30,3 +30,6 @@ export EDITOR="vim"
 
 # Just a general prompt. Gotta customise this sometimes...
 	PS1='[\u@\h \W]\$ '
+
+# And then start x
+	[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx
