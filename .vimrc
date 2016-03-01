@@ -210,6 +210,15 @@ iabbrev cTemp #include <stdio.h>
 
 " for python, <leader>m runs code in python
 	autocmd FileType python nnoremap <buffer> <leader>m :!python %<CR>
+	
+" for c/c++, <leader>m compiles the file and then runs the binary
+	function CompileC()
+		let newfile = split(expand('%:p'),"\\.")[0]
+		execute 'silent !gcc ' . expand('%:p') . ' -o ' . newfile . '; clear'
+		execute '!' . newfile
+	endfunction
+
+	autocmd FileType c nnoremap <buffer> <leader>m :call CompileC()<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "	SEARCHING																 "
