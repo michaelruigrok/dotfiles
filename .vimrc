@@ -214,7 +214,7 @@ iabbrev cTemp #include <stdio.h>
 " for c/c++, <leader>m compiles the file and then runs the binary
 	function CompileC()
 		let newfile = split(expand('%:p'),"\\.")[0]
-		execute 'silent !gcc ' . expand('%:p') . ' -o ' . newfile . '; clear'
+		execute 'silent !clear; gcc ' . expand('%:p') . ' -o ' . newfile
 		execute '!' . newfile
 	endfunction
 
