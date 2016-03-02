@@ -219,6 +219,18 @@ iabbrev cTemp #include <stdio.h>
 	endfunction
 
 	autocmd FileType c nnoremap <buffer> <leader>m :call CompileC()<CR>
+	autocmd FileType c++ nnoremap <buffer> <leader>m :call CompileC()<CR>
+
+" for , <leader>m compiles the file and then runs the binary
+	function CompileJava()
+		let dir = split(expand('%:p:h'),"\\.")[0]
+		let file = split(expand('%:p:t'),"\\.")[0]
+		execute 'silent !clear; javac ' . expand('%:p')
+		execute 'silent !cd ' . dir
+		execute '!java ' . file
+	endfunction
+
+	autocmd FileType java nnoremap <buffer> <leader>m :call CompileJava()<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "	SEARCHING																 "
