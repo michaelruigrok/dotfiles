@@ -223,11 +223,12 @@ iabbrev cTemp #include <stdio.h>
 
 " for , <leader>m compiles the file and then runs the binary
 	function CompileJava()
-		let dir = split(expand('%:p:h'),"\\.")[0]
-		let file = split(expand('%:p:t'),"\\.")[0]
-		execute 'silent !clear; javac ' . expand('%:p')
-		execute 'silent !cd ' . dir
-		execute '!java ' . file
+		let cdir = getcwd()
+		let jdir = expand('%:p:h')
+		let jfile = split(expand('%:p:t'),"\\.")[0]
+		execute 'silent cd ' . jdir
+		execute '!clear; javac ' . jfile . '.java;java ' . jfile
+		execute 'cd ' . cdir
 	endfunction
 
 	autocmd FileType java nnoremap <buffer> <leader>m :call CompileJava()<CR>
