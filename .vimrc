@@ -50,6 +50,9 @@ endif
 "																			 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+" colorscheme to desert
+	colorscheme desert
+
 " show relative numbering
 	set relativenumber
 	set numberwidth=2
@@ -214,8 +217,7 @@ iabbrev cTemp #include <stdio.h>
 " for c/c++, <leader>m compiles the file and then runs the binary
 	function CompileC()
 		let newfile = split(expand('%:p'),"\\.")[0]
-		execute 'silent !clear; gcc ' . expand('%:p') . ' -o ' . newfile
-		execute '!' . newfile
+		execute 'silent !clear; gcc ' . expand('%:p') . ' -o ' . newfile . ' && ' newfile
 	endfunction
 
 	autocmd FileType c nnoremap <buffer> <leader>m :call CompileC()<CR>
@@ -227,7 +229,7 @@ iabbrev cTemp #include <stdio.h>
 		let jdir = expand('%:p:h')
 		let jfile = split(expand('%:p:t'),"\\.")[0]
 		execute 'silent cd ' . jdir
-		execute '!clear; javac ' . jfile . '.java;java ' . jfile
+		execute '!clear; javac ' . jfile . '.java && java ' . jfile
 		execute 'cd ' . cdir
 	endfunction
 
