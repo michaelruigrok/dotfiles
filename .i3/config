@@ -151,7 +151,7 @@ bindsym $mod+r mode "resize"
 assign [class="chromium"] 2
 
 # and eclipse in workspace 1
-assign [class="eclipse"] 1
+assign [class="Eclipse"] 1
 
 # hide title bar of selected window
 bindsym $mod+Shift+b border toggle 
