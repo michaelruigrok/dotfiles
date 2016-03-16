@@ -227,9 +227,10 @@ iabbrev cTemp #include <stdio.h>
 	function CompileJava()
 		let cdir = getcwd()
 		let jdir = expand('%:p:h')
-		let jfile = split(expand('%:p:t'),"\\.")[0]
 		execute 'silent cd ' . jdir
-		execute '!clear; javac ' . jfile . '.java && java ' . jfile
+		execute 'silent cd ..'
+		let jfile = split(expand('%'),"\\.")[0]
+		execute '!clear; javac ' . expand('%') . ' && java ' . jfile
 		execute 'cd ' . cdir
 	endfunction
 
