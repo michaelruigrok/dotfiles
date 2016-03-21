@@ -6,10 +6,28 @@
 if has ('gui_running')
 
 " Boot up the current saved session
-	source ~/.session.vim
+	try
+		source ~/.session.vim
+	catch E484
+		" File does not exist error
+	endtry
 
 " set font to Anonymous Pro, font size to 12
-	set guifont=Anonymous\ Pro\ For\ Powerline 12
+	try
+		set guifont=Anonymous\ Pro\ For\ Powerline 12
+	catch E518
+		"Sometimes it doesn't accept 12 as an option
+		"Don't know why
+		set guifont=Anonymous\ Pro\ For\ Powerline 
+	endtry
+
+endif
+
+" For when vim is embedded in eclipse using eclim:
+if exists('g:vimplugin_running')
+
+	set guioptions-=m " turn off menu bar
+	set guioptions-=T " turn off toolbar
 
 endif
 
@@ -110,8 +128,7 @@ endif
 
 iabbrev myCopyrightHash 
 		\#Copyright (C) 2015 crayonsmelting - protected under Australian and International Copyright law
-	\<CR>#crayonsmelting can be found at
-http://www.github.com/crayonsmelting/.
+	\<CR>#crayonsmelting can be found at http://www.github.com/crayonsmelting/
 	\<CR>#or at crayons.melting@gmail.com 
 	\<CR>#Licence found within licence.txt 
 	\<CR>############################################ 
@@ -130,10 +147,10 @@ iabbrev myCopyrightSlash
 
 iabbrev shortCopy COPYRIGHT (C) 2015 crayonsmelting. See licence.txt.
 
-iabbrev addBreak
-	\<CR>---------------------------------------------------------------------
-\---------
-	\<CR>
+iabbrev addBreak 
+	\<CR>-------------------------------------------------------------------
+	\-------------
+	\<CR>  
 
 
 	" HTML SHORTCUTS "
@@ -204,7 +221,12 @@ iabbrev cTemp #include <stdio.h>
 	map <space> za
 
 " with vim-surround, leader comments out the surrounded word
-	unmap <leader>C
+	try
+		unmap <leader>C
+	" catch the 'No Such Mapping' Error
+	catch E3
+		" Do nothing
+	endtry
 	autocmd FileType javascript map <buffer> <leader>Cw ysiW*ysiW/
 
 " returns you to normal mode when you press 'j'  and 'k' at the same time
@@ -273,11 +295,16 @@ iabbrev cTemp #include <stdio.h>
 
 	"Airline"
 	"""""""""
+
+	if exists(':AirlineRefresh')
+
 " fix such that airline runs without having to split
 	set laststatus=2
-
+	
 " turn on pretty arrows
 	let g:airline_powerline_fonts = 1
 	let g:airline#extensions#whitespace#checks = [ 'indent', 'long' ]
+
+	endif
 
 
