@@ -107,19 +107,8 @@ endif
 	set noeb vb t_vb=
 	au GUIEnter * set vb t_vb=
 
-" Turn relative numbers off
-	function! NumberToggle()
-		if(&relativenumber == 1)
-			set relativenumber!
-		else
-			set relativenumber
-		endif
-	endfunc
-
-	nnoremap <leader>n :call NumberToggle()<cr>
-
 " Spell checker for Australian English
-	"set spell spelllang=en_au
+	autocmd FileType text setlocal spell spelllang=en_au
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "	ABBREVIATIONS AND COMMANDS												 "
@@ -173,7 +162,12 @@ iabbrev jsLink <script type="text/javascript" src="js/main.js"></script>
 
 iabbrev jqueryLink <script type="text/javascript" src="js/jquery.js"></script>
 
-	" C-lang abbrieves "
+" This is supposed to add a closing tag to an element automatically, after you
+" type in "<//"
+	inoremap <lt>// </<C-X><C-O>
+
+
+	" C abreiviations "
 iabbrev cTemp #include <stdio.h>
 	\<CR>
 	\<CR>int main(int argc, char *argv[]) {
@@ -182,21 +176,61 @@ iabbrev cTemp #include <stdio.h>
 	\<CR>}
 
 
-
-" This is supposed to add a closing tag to an element automatically, after you
-" type in "<//"
-	inoremap <lt>// </<C-X><C-O>
-
-	" OTHER COMMANDS "
-	""""""""""""""""""
+	" LEADER "
+	""""""""""
 
 " With a map leader it's possible to do extra key combinations
 "  like <leader>w saves the current file
 	let mapleader = ","
 	let g:mapleader = ","
 
-" Leader-b is the black hole register (deleting or changing without saving for
-"  pasting
+
+
+	" LANGUAGE SPECIFIC COMMANDS"
+	"""""""""""""""""""""""""""""
+	
+" Leader-l ($L for short) is a leader for language-specific commands:
+
+	" Eclim "
+		if exists('g:vimplugin_running')
+
+			" $L-b toggles java debugger breakpoint
+			nnoremap <leader>lb :JavaDebugBreakpointToggle!<cr>
+
+
+		" leader-l-d prefix for other debugger commands:
+			
+			" $L-d-l lists all breakpoints of current file
+			nnoremap <leader>ldl :JavaDebugBreakpointsList<cr>
+
+			" $L-d-L lists all breakpoints, including dependent files
+			nnoremap <leader>ldL :JavaDebugBreakpointsList!<cr>
+
+			" $L-d-r lists all breakpoints, including dependent files
+			nnoremap <leader>ldr :JavaDebugBreakpointRemove<cr>
+			
+			" $L-d-R lists all breakpoints, including dependent files
+			nnoremap <leader>ldR :JavaDebugBreakpointRemove<cr>
+
+		endif
+
+
+" leader-n toggles between relative and absolute numbering
+	nnoremap <leader>n :call NumberToggle()<cr>
+	
+	" required function
+		function! NumberToggle()
+			if(&relativenumber == 1)
+				set relativenumber!
+				set number 
+			else
+				set relativenumber
+				set number!
+			endif
+		endfunc
+
+" leader-b is the black hole register (deleting or changing without saving for
+"  pasting)
 	nnoremap <leader>b "_
 
 " I wonder what control-S should do?
