@@ -273,7 +273,7 @@ iabbrev cTemp #include <stdio.h>
 " for c/c++, <leader>m compiles the file and then runs the binary
 	function CompileC()
 		let newfile = split(expand('%:p'),"\\.")[0]
-		execute 'silent !clear; gcc ' . expand('%:p') . ' -o ' . newfile . ' && ' newfile
+		execute '!clear; gcc ' . expand('%:p') . ' -o ' . newfile . ' && ' newfile
 	endfunction
 
 	autocmd FileType c nnoremap <buffer> <leader>m :call CompileC()<CR>
