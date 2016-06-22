@@ -184,36 +184,8 @@ iabbrev cTemp #include <stdio.h>
 	let mapleader = ","
 	let g:mapleader = ","
 
-
-
-	" LANGUAGE SPECIFIC COMMANDS"
-	"""""""""""""""""""""""""""""
-	
-" Leader-l ($L for short) is a leader for language-specific commands:
-
-	" Eclim "
-		if exists('g:vimplugin_running')
-
-			" $L-b toggles java debugger breakpoint
-			nnoremap <leader>lb :JavaDebugBreakpointToggle!<cr>
-
-
-		" leader-l-d prefix for other debugger commands:
-			
-			" $L-d-l lists all breakpoints of current file
-			nnoremap <leader>ldl :JavaDebugBreakpointsList<cr>
-
-			" $L-d-L lists all breakpoints, including dependent files
-			nnoremap <leader>ldL :JavaDebugBreakpointsList!<cr>
-
-			" $L-d-r lists all breakpoints, including dependent files
-			nnoremap <leader>ldr :JavaDebugBreakpointRemove<cr>
-			
-			" $L-d-R lists all breakpoints, including dependent files
-			nnoremap <leader>ldR :JavaDebugBreakpointRemove<cr>
-
-		endif
-
+" leader-p runs the the previous colon command 
+ 	nnoremap <leader>p @:
 
 " leader-n toggles between relative and absolute numbering
 	nnoremap <leader>n :call NumberToggle()<cr>
@@ -291,6 +263,37 @@ iabbrev cTemp #include <stdio.h>
 	endfunction
 
 	autocmd FileType java nnoremap <buffer> <leader>m :call CompileJava()<CR>
+
+
+	" LANGUAGE SPECIFIC COMMANDS"
+	"""""""""""""""""""""""""""""
+	
+" Leader-l ($L for short) is a leader for language-specific commands:
+
+	" Eclim "
+		if exists('g:vimplugin_running')
+
+			" $L-b toggles java debugger breakpoint
+			nnoremap <leader>lb :JavaDebugBreakpointToggle!<cr>
+
+
+		" leader-l-d prefix for other debugger commands:
+			
+			" $L-d-l lists all breakpoints of current file
+			nnoremap <leader>ldl :JavaDebugBreakpointsList<cr>
+
+			" $L-d-L lists all breakpoints, including dependent files
+			nnoremap <leader>ldL :JavaDebugBreakpointsList!<cr>
+
+			" $L-d-r lists all breakpoints, including dependent files
+			nnoremap <leader>ldr :JavaDebugBreakpointRemove<cr>
+			
+			" $L-d-R lists all breakpoints, including dependent files
+			nnoremap <leader>ldR :JavaDebugBreakpointRemove<cr>
+
+		endif
+
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "	SEARCHING																 "
