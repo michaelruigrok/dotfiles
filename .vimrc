@@ -116,9 +116,9 @@ endif
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 iabbrev myCopyrightHash 
-		\#Copyright (C) 2016 Michael Ruigrok - protected under Australian and International Copyright law
-	\<CR>#Michael Ruigrok can be found at http://www.github.com/michaelruigrok/
-	\<CR>#or at ruigrok.michael@gmail.com 
+		\#Copyright (C) 2015 crayonsmelting - protected under Australian and International Copyright law
+	\<CR>#crayonsmelting can be found at http://www.github.com/crayonsmelting/
+	\<CR>#or at crayons.melting@gmail.com 
 	\<CR>#Licence found within licence.txt 
 	\<CR>############################################ 
 	\<CR> 
@@ -127,14 +127,14 @@ iabbrev myCopyrightHash
 	\<CR> 
 
 iabbrev myCopyrightSlash 
-		\/* Copyright (C) 2016 Michael Ruigrok - protected under Australian and International Copyright law
-	\<CR>Michael Ruigrok can be found at http://www.github.com/michaelruigrok/
-	\<CR>or at ruigrok.michael@gmail.com 
+		\/* Copyright (C) 2015 crayonsmelting - protected under Australian and International Copyright law
+	\<CR>crayonsmelting can be found at http://www.github.com/crayonsmelting/
+	\<CR>or at crayons.melting@gmail.com 
 	\<CR>Licence found within licence.txt 
 	\<CR>*/ 
 	\<CR> 
 
-iabbrev shortCopy COPYRIGHT (C) 2016 Michael Ruigrok. See licence.txt.
+iabbrev shortCopy COPYRIGHT (C) 2015 crayonsmelting. See licence.txt.
 
 iabbrev addBreak 
 	\<CR>-------------------------------------------------------------------
