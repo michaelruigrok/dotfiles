@@ -7,6 +7,7 @@
 
 # included as a folder executables are run from 
 	export PATH=$PATH:/home/mruig1/.gem/ruby/2.2.0/bin
+	export TERMINAL=xfce4-terminal
 
 	
 # Each of these keeps history clean of unimportant commands
