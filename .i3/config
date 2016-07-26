@@ -160,6 +160,11 @@ assign [class="Steam Login"] 3
 # hide title bar of selected window
 bindsym $mod+Shift+b border toggle 
 
+#Set up the audio buttons
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 1 +5% #increase sound volume
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 1 -5% #decrease sound volume
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 1 toggle # mute sound
+
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)

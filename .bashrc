@@ -13,6 +13,9 @@
 # The [ \t]* at the end means it includes anything following
 	HISTIGNORE="&:ls:[bf]g:exit:pwd:clear:less:mount:umount:oh:uptime:[ \t]*"	
 
+# Let the history size go on forever >:D
+	HISTSIZE=-1
+
 # Favourite editor:
 export EDITOR="vim"
 
