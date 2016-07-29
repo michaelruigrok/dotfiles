@@ -169,8 +169,10 @@ iabbrev jqueryLink <script type="text/javascript" src="js/jquery.js"></script>
 
 	" C abreiviations "
 iabbrev cTemp #include <stdio.h>
+	\<CR>#include <stdbool.h>
+	\<CR>#include <stdlib.h>
 	\<CR>
-	\<CR>int main(int argc, char *argv[]) {
+	\<CR>int main(int argc, char** argv) {
 	\<CR>
 	\<CR>return 0;
 	\<CR>}
@@ -242,10 +244,10 @@ iabbrev cTemp #include <stdio.h>
 " for python, <leader>m runs code in python
 	autocmd FileType python nnoremap <buffer> <leader>m :!python %<CR>
 	
-" for c/c++, <leader>m compiles the file and then runs the binary
+" for c/c++, <leader>m compiles a single file and then runs the binary
 	function CompileC()
 		let newfile = split(expand('%:p'),"\\.")[0]
-		execute '!clear; gcc ' . expand('%:p') . ' -o ' . newfile . ' && ' newfile
+		execute '!clear; gcc -Wall ' . expand('%:p') . ' -o ' . newfile . ' && ' newfile
 	endfunction
 
 	autocmd FileType c nnoremap <buffer> <leader>m :call CompileC()<CR>

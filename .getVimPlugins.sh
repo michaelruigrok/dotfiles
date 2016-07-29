@@ -1,5 +1,12 @@
 #!/bin/bash
+
+#get pathogen
+mkdir -p ~/.vim/autoload ~/.vim/bundle && \
+curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
+
+#get other plugins
 cd .vim/bundle
+
 git clone git://github.com/tpope/vim-sleuth.git || 
 ( cd vim-sleuth && git pull git://github.com/tpope/vim-sleuth.git ; cd ~/.vim/bundle )
 echo "----------------------------------------------------------------------"
