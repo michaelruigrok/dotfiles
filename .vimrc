@@ -245,9 +245,15 @@ iabbrev cTemp #include <stdio.h>
 	autocmd FileType python nnoremap <buffer> <leader>m :!python %<CR>
 	
 " for c/c++, <leader>m compiles a single file and then runs the binary
-	function CompileC()
-		let newfile = split(expand('%:p'),"\\.")[0]
-		execute '!clear; gcc -Wall ' . expand('%:p') . ' -o ' . newfile . ' && ' newfile
+	function CompileC(...)
+	    let newfile = split(expand('%:p'),"\\.")[0]
+	    let argc = 1
+	    let argv = ''
+	    for arg in a:000
+		let argv = argv . ' ' . arg
+		argc += 1
+	    endfor
+		execute '!clear; gcc -std=c99 -Wall ' . expand('%:p') . ' -o ' . newfile . ' && ' newfile . ' ' . argv
 	endfunction
 
 	autocmd FileType c nnoremap <buffer> <leader>m :call CompileC()<CR>
