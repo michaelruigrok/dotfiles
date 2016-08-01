@@ -253,7 +253,7 @@ iabbrev cTemp #include <stdio.h>
 		let argv = argv . ' ' . arg
 		argc += 1
 	    endfor
-		execute '!clear; gcc -std=c99 -Wall ' . expand('%:p') . ' -o ' . newfile . ' && ' newfile . ' ' . argv
+		execute '!clear; gcc -std=c99 -pedantic -Wall ' . expand('%:p') . ' -o ' . newfile . ' && ' newfile . ' ' . argv
 	endfunction
 
 	autocmd FileType c nnoremap <buffer> <leader>m :call CompileC()<CR>
