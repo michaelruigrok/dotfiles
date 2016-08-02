@@ -253,7 +253,7 @@ iabbrev cTemp #include <stdio.h>
 		let argv = argv . ' ' . arg
 		argc += 1
 	    endfor
-	    if filereadable(expand('%:p:h') . 'Makefile')
+	    if filereadable(expand('%:p:h') . '/Makefile')
 		make
 	    else
 		execute '!clear; gcc -std=c99 -pedantic -Wall ' . expand('%:p') . ' -o ' . newfile . ' && ' newfile . ' ' . argv
