@@ -214,9 +214,9 @@ iabbrev cTemp #include <stdio.h>
 	noremap <leader>s :mks! ~/.session.vim<CR>
 	noremap <leader>S :mks! ~/.session.vim<CR>:w<CR>
 
-" :C or leader-c clears search
+" :C or leader-c clears search and colour column
 	command C let @/ = ""
-	nnoremap <leader>c :let @/ = ""<CR>
+	nnoremap <leader>c :let @/ = ""<CR>:set cc=0<CR>
 
 " Rather than deleting _all_ my stuff, Ctrl-w Ctrl-w changes window (like in
 " normal mode)
