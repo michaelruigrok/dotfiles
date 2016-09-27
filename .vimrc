@@ -107,8 +107,10 @@ endif
 	set noeb vb t_vb=
 	au GUIEnter * set vb t_vb=
 
-" Spell checker for Australian English
+" Spell checker for Australian English, but not in helpfiles
 	autocmd FileType text setlocal spell spelllang=en_au
+	autocmd FileType help au! FileType text
+	autocmd Syntax  help setlocal spell!
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "	ABBREVIATIONS AND COMMANDS												 "
@@ -177,6 +179,9 @@ iabbrev cTemp #include <stdio.h>
 	\<CR>return 0;
 	\<CR>}
 
+iabbrev cOpenFile #include <sys/types.h>
+	\<CR>#include <sys/stat.h>
+	\<CR>#include <fcntl.h>
 
 	" LEADER "
 	""""""""""
@@ -214,6 +219,10 @@ iabbrev cTemp #include <stdio.h>
 	noremap <leader>s :mks! ~/.session.vim<CR>
 	noremap <leader>S :mks! ~/.session.vim<CR>:w<CR>
 
+" leader-L saves the session, leader-S saves session and buffers
+" note the capital, different from leading into language specific binds
+	noremap <leader>L :source ~/.session.vim<CR>
+
 " :C or leader-c clears search and colour column
 	command C let @/ = ""
 	nnoremap <leader>c :let @/ = ""<CR>:set cc=0<CR>
@@ -244,6 +253,12 @@ iabbrev cTemp #include <stdio.h>
 " for python, <leader>m runs code in python
 	autocmd FileType python nnoremap <buffer> <leader>m :!python %<CR>
 	
+" for bash, <leader>m runs code in bash
+	autocmd FileType sh nnoremap <buffer> <leader>m :!%<CR>
+
+" for this vimrc, <leader>m reloads its contents
+	autocmd FileType vim nnoremap <buffer> <leader>m :so %<CR>
+
 " for c/c++, <leader>m compiles a single file and then runs the binary
 	function CompileC(...)
 	    let newfile = split(expand('%:p'),"\\.")[0]
