@@ -276,6 +276,7 @@ iabbrev cOpenFile #include <sys/types.h>
 	endfunction
 
 	autocmd FileType c nnoremap <buffer> <leader>m :call CompileC()<CR>
+	autocmd FileType cpp nnoremap <buffer> <leader>m :call CompileC()<CR>
 	autocmd FileType c++ nnoremap <buffer> <leader>m :call CompileC()<CR>
 
 " for , <leader>m compiles the file and then runs the binary
