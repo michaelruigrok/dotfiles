@@ -14,10 +14,10 @@ if has ('gui_running')
 
 " set font to Anonymous Pro, font size to 12
 	try
-		set guifont=Anonymous\ Pro\ For\ Powerline 12
+		set guifont=Anonymous\ Pro\ For\ Powerline\ 11
 	catch E518
 		"Sometimes it doesn't accept 12 as an option
-		"Don't know why
+		"Should be fixed now, I'm a big old dummy, but still:
 		set guifont=Anonymous\ Pro\ For\ Powerline 
 	endtry
 
