@@ -113,7 +113,7 @@ endif
 	autocmd Syntax  help setlocal spell!
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"	ABBREVIATIONS AND COMMANDS												 "
+"	ABBREVIATIONS AND MAPPINGS												 "
 "																			 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -179,9 +179,12 @@ iabbrev cTemp #include <stdio.h>
 	\<CR>return 0;
 	\<CR>}
 
-iabbrev cOpenFile #include <sys/types.h>
+iabbrev cFileOpen #include <sys/types.h>
 	\<CR>#include <sys/stat.h>
 	\<CR>#include <fcntl.h>
+
+iabbrev cThreads #include <pthread.h>
+	\<CR>#include <semaphore.h>
 
 	" LEADER "
 	""""""""""
@@ -249,6 +252,9 @@ iabbrev cOpenFile #include <sys/types.h>
 " returns you to normal mode when you press 'j'  and 'k' at the same time
 	inoremap jk <Esc>
 	inoremap kj <Esc>
+
+" MakeTags will make your ctags
+command MakeTags !ctags -R .
 
 " for python, <leader>m runs code in python
 	autocmd FileType python nnoremap <buffer> <leader>m :!python %<CR>
@@ -340,7 +346,8 @@ iabbrev cOpenFile #include <sys/types.h>
 
 
 " Autocomplete menus some sort of command
-	set wildmode=longest:full
+	"set wildmode=longest:full
+	set wildmode=list:full
 	set wildmenu
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
