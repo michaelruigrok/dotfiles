@@ -360,6 +360,15 @@ command MakeTags !ctags -R .
 " set a directory to store the undo history
 	set undodir=~/.vim/undo-history/
 
+	""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+	"	Skeletons and Templates															 "
+	"																			 "
+	""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+	autocmd BufNewFile  *.c 0r ~/vim/skeleton/c
+	autocmd BufNewFile  *.html 0r ~/vim/skeleton/html
+
+
 	"Pathogen"
 	""""""""""
 	execute pathogen#infect()
