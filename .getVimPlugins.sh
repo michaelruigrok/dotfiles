@@ -5,10 +5,14 @@ mkdir -p ~/.vim/autoload ~/.vim/bundle && \
 curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
 
 #get other plugins
-cd .vim/bundle
+cd ~/.vim/bundle
 
 git clone git://github.com/tpope/vim-sleuth.git || 
 ( cd vim-sleuth && git pull git://github.com/tpope/vim-sleuth.git ; cd ~/.vim/bundle )
+echo "----------------------------------------------------------------------"
+
+git clone git://github.com/sickill/vim-pasta.git || 
+( cd vim-pasta && git pull git://github.com/sickill/vim-pasta.git ; cd ~/.vim/bundle )
 echo "----------------------------------------------------------------------"
 
 git clone git://github.com/othree/html5.vim.git || 
