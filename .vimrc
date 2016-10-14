@@ -64,8 +64,8 @@ endif
 	set autoread
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"	VIM USER INTERFACE														 "
-"																			 "
+"	VIM APPEARANCE
+"
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " colorscheme to desert
@@ -81,7 +81,7 @@ endif
 " turns on highlighting and colourising of programming code
 	syntax on
 
-" reduces tab indenting to 4 spaces, as per the python standard
+" reduces tab indenting to 4 spaces
 " note that tabs are still tabs, not spaces
 	set shiftwidth=4
 	set tabstop=4
@@ -97,6 +97,9 @@ endif
 
 " Minimal number of screen lines to keep above and below the cursor.
 	set scrolloff=7
+
+" When splitting windows vertically, open the new window in the right side
+	set splitright
 
 " In many terminal emulators the mouse works just fine, thus enable it.
 	if has('mouse')
