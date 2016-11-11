@@ -368,7 +368,7 @@ command MakeTags !ctags -R .
 	"																			 "
 	""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-	autocmd BufNewFile  *.c 0r ~/.vim/skeleton/c
+	autocmd BufNewFile  *.c 0r ~/.vim/skeleton/c | normal 4j
 	autocmd BufNewFile  *.html 0r ~/.vim/skeleton/html
 
 
