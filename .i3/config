@@ -150,6 +150,7 @@ bindsym $mod+r mode "resize"
 
 # automatically put chromium in workspace 2
 assign [class="chromium"] 2
+assign [class="Chromium"] 2
 
 # and eclipse in workspace 1
 assign [class="Eclipse"] 1
