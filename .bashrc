@@ -6,7 +6,8 @@
 [[ $- != *i* ]] && return
 
 # included as a folder executables are run from 
-	export PATH=$PATH:/home/mruig1/.gem/ruby/2.2.0/bin
+	export PATH=$PATH:~/.gem/ruby/2.2.0/bin
+	export PATH=$PATH:~/.bin
 
 	
 # Each of these keeps history clean of unimportant commands
