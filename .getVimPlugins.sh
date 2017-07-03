@@ -2,7 +2,9 @@
 
 #get pathogen
 mkdir -p ~/.vim/autoload ~/.vim/bundle && \
-curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
+curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim || \
+wget -O ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
+(exit $?) || exit 1
 
 #get other plugins
 cd ~/.vim/bundle
