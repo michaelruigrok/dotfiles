@@ -280,7 +280,11 @@ command MakeTags !ctags -R .
 	    if filereadable(expand('%:p:h') . '/Makefile')
 		make -j 8
 	    else
-		execute '!clear; gcc -std=c99 -pedantic -Wall ' . expand('%:p') . ' -o ' . newfile . ' && ' newfile . ' ' . argv
+		if (&ft=='c')
+		    execute '!clear; gcc -std=gnu99 -pedantic -Wall ' . expand('%:p') . ' -o ' . newfile . ' && ' newfile . ' ' . argv
+		else 
+		    execute '!clear; gcc -pedantic -Wall ' . expand('%:p') . ' -o ' . newfile . ' && ' newfile . ' ' . argv
+		endif
 	    endif
 	endfunction
 
@@ -368,8 +372,9 @@ command MakeTags !ctags -R .
 	"																			 "
 	""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-	autocmd BufNewFile  *.c 0r ~/.vim/skeleton/c | normal 4j
-	autocmd BufNewFile  *.html 0r ~/.vim/skeleton/html
+	autocmd BufNewFile *.c 0r ~/.vim/skeleton/c | normal 4j
+	autocmd BufNewFile *.html 0r ~/.vim/skeleton/html
+	autocmd BufNewFile Makefile 0r ~/.vim/skeleton/Makefile
 
 
 	"Pathogen"
