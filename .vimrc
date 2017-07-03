@@ -112,8 +112,7 @@ endif
 
 " Spell checker for Australian English, but not in helpfiles
 	autocmd FileType text setlocal spell spelllang=en_au
-	autocmd FileType help au! FileType text
-	autocmd Syntax  help setlocal spell!
+	autocmd Syntax help setlocal nospell
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "	ABBREVIATIONS AND MAPPINGS												 "
