@@ -12,7 +12,7 @@
 	
 # Each of these keeps history clean of unimportant commands
 # The [ \t]* at the end means it includes anything following
-	HISTIGNORE="&:ls:[bf]g:exit:pwd:clear:less:mount:umount:oh:uptime:[ \t]*"	
+	HISTIGNORE="&:ls:[bf]g:exit:pwd:clear:less:mount:umount:oh:[ \t]*"	
 
 # Let the history size go on forever >:D
 	HISTSIZE=-1
@@ -35,6 +35,9 @@ export EDITOR="vim"
 
 # Makes the "ls" command all pretty
 	alias ls='ls --color=auto'
+
+# user personal vim config whenever running vim as superuser
+	alias suvim='sudo vim -u ~/.vimrc'
 
 # And then start x
 	[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx
