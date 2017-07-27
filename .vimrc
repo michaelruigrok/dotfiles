@@ -197,7 +197,7 @@ iabbrev cThreads #include <pthread.h>
 	let g:mapleader = ","
 
 " leader-p runs the the previous colon command 
- 	nnoremap <leader>p @:
+	nnoremap <leader>p @:
 
 " leader-n toggles between relative and absolute numbering
 	nnoremap <leader>n :call NumberToggle()<cr>
@@ -269,22 +269,22 @@ command MakeTags !ctags -R .
 
 " for c/c++, <leader>m compiles a single file and then runs the binary
 	function CompileC(...)
-	    let newfile = split(expand('%:p'),"\\.")[0]
-	    let argc = 1
-	    let argv = ''
-	    for arg in a:000
-		let argv = argv . ' ' . arg
-		argc += 1
-	    endfor
-	    if filereadable(expand('%:p:h') . '/Makefile')
-		make -j 8
-	    else
-		if (&ft=='c')
-		    execute '!clear; gcc -std=gnu99 -pedantic -Wall ' . expand('%:p') . ' -o ' . newfile . ' && ' newfile . ' ' . argv
-		else 
-		    execute '!clear; gcc -pedantic -Wall ' . expand('%:p') . ' -o ' . newfile . ' && ' newfile . ' ' . argv
+		let newfile = split(expand('%:p'),"\\.")[0]
+		let argc = 1
+		let argv = ''
+		for arg in a:000
+			let argv = argv . ' ' . arg
+			argc += 1
+		endfor
+		if filereadable(expand('%:p:h') . '/Makefile')
+			make -j 8
+		else
+			if (&ft=='c')
+				execute '!clear; gcc -std=gnu99 -pedantic -Wall ' . expand('%:p') . ' -o ' . newfile . ' && ' newfile . ' ' . argv
+			else 
+				execute '!clear; gcc -pedantic -Wall ' . expand('%:p') . ' -o ' . newfile . ' && ' newfile . ' ' . argv
+			endif
 		endif
-	    endif
 	endfunction
 
 	autocmd FileType c nnoremap <buffer> <leader>m :call CompileC()<CR>
@@ -316,7 +316,6 @@ command MakeTags !ctags -R .
 			" $L-b toggles java debugger breakpoint
 			nnoremap <leader>lb :JavaDebugBreakpointToggle!<cr>
 
-
 		" leader-l-d prefix for other debugger commands:
 			
 			" $L-d-l lists all breakpoints of current file
@@ -341,7 +340,7 @@ command MakeTags !ctags -R .
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Starts searching while you type in your search
-    set incsearch
+	set incsearch
 
 " Highlights all search instances
 	set hlsearch
