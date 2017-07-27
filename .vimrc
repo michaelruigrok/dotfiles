@@ -313,6 +313,18 @@ command MakeTags !ctags -R .
 	" Eclim "
 		if exists('g:vimplugin_running')
 
+			" g] is remapped to work with eclim's JavaSearch
+			nnoremap g] :JavaSearchContext<cr>
+
+			" g[ performs a non-context sensitive search
+			nnoremap g[ :JavaSearch<cr>
+
+			" $L-i updates imports as required
+			nnoremap <leader>li :JavaImportOrganize<cr>
+
+			" $L-c uses Java's quick fix to correct error under the cursor
+			nnoremap <leader>lc :JavaCorrect<cr>
+
 			" $L-b toggles java debugger breakpoint
 			nnoremap <leader>lb :JavaDebugBreakpointToggle!<cr>
 
