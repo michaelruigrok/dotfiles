@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 #get pathogen
 mkdir -p ~/.vim/autoload ~/.vim/bundle && \
 curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim || \
@@ -8,6 +9,8 @@ wget -O ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
 
 #get other plugins
 cd ~/.vim/bundle
+
+#TODO: turn each individual block into a function (with plugin name & author as params)
 
 git clone git://github.com/tpope/vim-sleuth.git || 
 ( cd vim-sleuth && git pull git://github.com/tpope/vim-sleuth.git ; cd ~/.vim/bundle )
@@ -34,6 +37,11 @@ git clone git://github.com/tpope/vim-surround.git ||
 echo "----------------------------------------------------------------------"
 
 git clone git://github.com/tpope/vim-repeat.git || 
-( cd vim-repeat git://github.com/tpope/vim-repeat.git ; git pull; cd ~/.vim/bundle )
+( cd vim-repeat && git pull git://github.com/tpope/vim-repeat.git ; cd ~/.vim/bundle )
+echo "----------------------------------------------------------------------"
+
+git clone git://github.com/tpope/vim-unimpaired.git || 
+( cd vim-unimpaired && git pull git://github.com/tpope/vim-unimpaired.git ; cd ~/.vim/bundle )
+
 echo "----------------------------------------------------------------------"
 echo "----------------------------------------------------------------------"
