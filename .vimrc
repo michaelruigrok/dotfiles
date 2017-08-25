@@ -28,6 +28,7 @@ if exists('g:vimplugin_running')
 
 	set guioptions-=m " turn off menu bar
 	set guioptions-=T " turn off toolbar
+	let g:EclimCompletionMethod = 'omnifunc'
 
 endif
 
@@ -293,13 +294,19 @@ command MakeTags !ctags -R .
 
 " for , <leader>m compiles the file and then runs the binary
 	function CompileJava()
-		let cdir = getcwd()
-		let jdir = expand('%:p:h')
-		execute 'silent cd ' . jdir
-		execute 'silent cd ..'
-		let jfile = split(expand('%'),"\\.")[0]
-		execute '!clear; javac ' . expand('%') . ' && java ' . jfile
-		execute 'cd ' . cdir
+		if filereadable("build.gradle")
+			"stub for gradle building
+			echo "Is a Gradle Project"
+			!gradle build run
+		else
+			let cdir = getcwd()
+			let jdir = expand('%:p:h')
+			execute 'silent cd ' . jdir
+			execute 'silent cd ..'
+			let jfile = split(expand('%'),"\\.")[0]
+			execute '!clear; javac ' . expand('%') . ' && java ' . jfile
+			execute 'cd ' . cdir
+		endif
 	endfunction
 
 	autocmd FileType java nnoremap <buffer> <leader>m :call CompileJava()<CR>
@@ -313,11 +320,11 @@ command MakeTags !ctags -R .
 	" Eclim "
 		if exists('g:vimplugin_running')
 
-			" g] is remapped to work with eclim's JavaSearch
-			nnoremap g] :JavaSearchContext<cr>
+			" g[ is remapped to work with eclim's JavaSearch
+			nnoremap g[ :JavaSearchContext<cr>
 
-			" g[ performs a non-context sensitive search
-			nnoremap g[ :JavaSearch<cr>
+			" g{ performs a non-context sensitive search
+			nnoremap g{ :JavaSearch<cr>
 
 			" $L-i updates imports as required
 			nnoremap <leader>li :JavaImportOrganize<cr>
