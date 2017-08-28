@@ -259,6 +259,9 @@ iabbrev cThreads #include <pthread.h>
 " MakeTags will make your ctags
 command MakeTags !ctags -R .
 
+" repeat command once for each line of a visual selection
+vnoremap . :normal .<CR>
+
 " for python, <leader>m runs code in python
 	autocmd FileType python nnoremap <buffer> <leader>m :!python %<CR>
 	
@@ -292,7 +295,7 @@ command MakeTags !ctags -R .
 	autocmd FileType cpp nnoremap <buffer> <leader>m :call CompileC()<CR>
 	autocmd FileType c++ nnoremap <buffer> <leader>m :call CompileC()<CR>
 
-" for , <leader>m compiles the file and then runs the binary
+" for Java, <leader>m compiles the file and then runs the binary
 	function CompileJava()
 		if filereadable("build.gradle")
 			"stub for gradle building
@@ -330,7 +333,19 @@ command MakeTags !ctags -R .
 			nnoremap <leader>li :JavaImportOrganize<cr>
 
 			" $L-c uses Java's quick fix to correct error under the cursor
-			nnoremap <leader>lc :JavaCorrect<cr>
+			nnoremap <leader>lc :call JavaCorrect()<cr>
+
+			function JavaCorrect()
+				let olda = @a
+				redir @a
+				JavaCorrect
+				redir END
+				if @a =~ 'No Error Found'
+					ll
+					JavaCorrect
+				endif
+				let @a = olda
+			endfunc
 
 			" $L-b toggles java debugger breakpoint
 			nnoremap <leader>lb :JavaDebugBreakpointToggle!<cr>
