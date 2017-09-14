@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# get_plugin git-maintainer git-repo
+function get_plugin() {
+	git clone "git://github.com/$1/$2.git" || 
+	( cd "$2" && git pull "git://github.com/$1/$2.git" ; cd ~/.vim/bundle )
+	echo "----------------------------------------------------------------------"
+}
 
 #get pathogen
 mkdir -p ~/.vim/autoload ~/.vim/bundle && \
@@ -11,37 +17,14 @@ wget -O ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
 cd ~/.vim/bundle
 
 #TODO: turn each individual block into a function (with plugin name & author as params)
+get_plugin tpope vim-sleuth
+get_plugin sickill vim-pasta
+get_plugin othree html5
+get_plugin vim-airline vim-airline
+get_plugin easymotion vim-easymotion
+get_plugin tpope vim-surround
+get_plugin tpope vim-repeat
+get_plugin tpope vim-unimpaired
+get_plugin vim-scripts screenplay
 
-git clone git://github.com/tpope/vim-sleuth.git || 
-( cd vim-sleuth && git pull git://github.com/tpope/vim-sleuth.git ; cd ~/.vim/bundle )
-echo "----------------------------------------------------------------------"
-
-git clone git://github.com/sickill/vim-pasta.git || 
-( cd vim-pasta && git pull git://github.com/sickill/vim-pasta.git ; cd ~/.vim/bundle )
-echo "----------------------------------------------------------------------"
-
-git clone git://github.com/othree/html5.vim.git || 
-( cd html5.vim && git pull git://github.com/othree/html5.vim.git ; cd ~/.vim/bundle )
-echo "----------------------------------------------------------------------"
-
-git clone git://github.com/vim-airline/vim-airline.git || 
-( cd vim-airline && git pull git://github.com/vim-airline/vim-airline.git ; cd ~/.vim/bundle )
-echo "----------------------------------------------------------------------"
-
-git clone git://github.com/easymotion/vim-easymotion.git || 
-( cd vim-easymotion && git pull git://github.com/easymotion/vim-easymotion.git ; cd ~/.vim/bundle )
-echo "----------------------------------------------------------------------"
-
-git clone git://github.com/tpope/vim-surround.git || 
-( cd vim-surround && git pull git://github.com/tpope/vim-surround.git ; cd ~/.vim/bundle ) 
-echo "----------------------------------------------------------------------"
-
-git clone git://github.com/tpope/vim-repeat.git || 
-( cd vim-repeat && git pull git://github.com/tpope/vim-repeat.git ; cd ~/.vim/bundle )
-echo "----------------------------------------------------------------------"
-
-git clone git://github.com/tpope/vim-unimpaired.git || 
-( cd vim-unimpaired && git pull git://github.com/tpope/vim-unimpaired.git ; cd ~/.vim/bundle )
-
-echo "----------------------------------------------------------------------"
 echo "----------------------------------------------------------------------"
