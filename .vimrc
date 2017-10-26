@@ -60,6 +60,9 @@ endif
 "  (useful for handling the permission-denied error)
 	command W w !sudo tee % > /dev/null
 
+" autocorrect waa to wa, a typo which I frequently make
+	cabbrev waa <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'wa' : 'waa')<CR>
+
 " when a vim file is edited externally, an open version changes with the edit
 "  possibly only works while you have not edited your copy
 	set autoread
@@ -223,7 +226,7 @@ iabbrev cThreads #include <pthread.h>
 
 " leader-s saves the session, leader-S saves session and buffers
 	noremap <leader>s :mks! ~/.session.vim<CR>
-	noremap <leader>S :mks! ~/.session.vim<CR>:w<CR>
+	noremap <leader>S :mks! ~/.session.vim<CR>:wa<CR>
 
 " leader-L saves the session, leader-S saves session and buffers
 " note the capital, different from leading into language specific binds
@@ -262,11 +265,11 @@ command MakeTags !ctags -R .
 " repeat command once for each line of a visual selection
 vnoremap . :normal .<CR>
 
-" for python, <leader>m runs code in python
-	autocmd FileType python nnoremap <buffer> <leader>m :!python %<CR>
-	
-" for bash, <leader>m runs code in bash
-	autocmd FileType sh nnoremap <buffer> <leader>m :!%<CR>
+" for various scripting languages, <leader>m runs open file
+	autocmd FileType python nnoremap <buffer> <leader>m :w<CR>:!python %<CR>
+	autocmd FileType sh nnoremap <buffer> <leader>m :w<CR>:!bash %<CR>
+	autocmd FileType ruby nnoremap <buffer> <leader>m :w<CR>:!ruby %<CR>
+	autocmd FileType perl nnoremap <buffer> <leader>m :w<CR>:!perl %<CR>
 
 " for this vimrc, <leader>m reloads its contents
 	autocmd FileType vim nnoremap <buffer> <leader>m :so %<CR>
