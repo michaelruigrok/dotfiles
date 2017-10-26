@@ -90,6 +90,14 @@ endif
 	set shiftwidth=4
 	set tabstop=4
 
+" reduce tabs to 2 spaces in xml or similar
+	autocmd FileType xml setlocal shiftwidth=2
+	autocmd FileType xml setlocal tabstop=2
+	autocmd FileType html setlocal shiftwidth=2
+	autocmd FileType html setlocal tabstop=2
+	autocmd FileType vue setlocal shiftwidth=2
+	autocmd FileType vue setlocal tabstop=2
+
 " text files may not extend further than 78 characters horizonally
 	autocmd FileType text setlocal textwidth=78
 	autocmd FileType markdown setlocal textwidth=78
