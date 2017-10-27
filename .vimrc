@@ -274,10 +274,18 @@ command MakeTags !ctags -R .
 vnoremap . :normal .<CR>
 
 " for various scripting languages, <leader>m runs open file
-	autocmd FileType python nnoremap <buffer> <leader>m :w<CR>:!python %<CR>
-	autocmd FileType sh nnoremap <buffer> <leader>m :w<CR>:!bash %<CR>
-	autocmd FileType ruby nnoremap <buffer> <leader>m :w<CR>:!ruby %<CR>
-	autocmd FileType perl nnoremap <buffer> <leader>m :w<CR>:!perl %<CR>
+	function AddRunner(lang)
+		autocmd FileType a:lang nnoremap <buffer> <leader>m :w<CR>:!a:lang %<CR>
+	end
+	AddRunner(python)
+	AddRunner(sh)
+	AddRunner(ruby)
+	AddRunner(perl)
+	AddRunner(perl6)
+	AddRunner(lua)
+	AddRunner(php)
+	autocmd FileType awk nnoremap <buffer> <leader>m :w<CR>:!awk -f %<CR>
+	autocmd FileType sed nnoremap <buffer> <leader>m :w<CR>:!sed -f %<CR>
 
 " for this vimrc, <leader>m reloads its contents
 	autocmd FileType vim nnoremap <buffer> <leader>m :so %<CR>
