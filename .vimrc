@@ -329,7 +329,7 @@ vnoremap . :normal .<CR>
 			execute 'silent cd ' . jdir
 			execute 'silent cd ..'
 			let jfile = split(expand('%'),"\\.")[0]
-			execute '!clear; javac ' . expand('%') . ' && java ' . jfile
+			execute '!clear; javac "' . expand('%') . '" && java "' . jfile . '"'
 			execute 'cd ' . cdir
 		endif
 	endfunction
