@@ -276,16 +276,19 @@ vnoremap . :normal .<CR>
 " for various scripting languages, <leader>m runs open file
 	function AddRunner(lang)
 		autocmd FileType a:lang nnoremap <buffer> <leader>m :w<CR>:!a:lang %<CR>
-	end
-	AddRunner(python)
-	AddRunner(sh)
-	AddRunner(ruby)
-	AddRunner(perl)
-	AddRunner(perl6)
-	AddRunner(lua)
-	AddRunner(php)
+	endfunction
+	call AddRunner("python")
+	call AddRunner("sh")
+	call AddRunner("ruby")
+	call AddRunner("perl")
+	call AddRunner("perl6")
+	call AddRunner("lua")
+	call AddRunner("php")
 	autocmd FileType awk nnoremap <buffer> <leader>m :w<CR>:!awk -f %<CR>
 	autocmd FileType sed nnoremap <buffer> <leader>m :w<CR>:!sed -f %<CR>
+
+" for LaTeX documents, compile as a pdf
+	autocmd FileType tex nnoremap <buffer> <leader>m :w<CR>:!pdflatex %<CR>
 
 " for this vimrc, <leader>m reloads its contents
 	autocmd FileType vim nnoremap <buffer> <leader>m :so %<CR>
