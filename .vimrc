@@ -101,6 +101,7 @@ endif
 " text files may not extend further than 78 characters horizonally
 	autocmd FileType text setlocal textwidth=78
 	autocmd FileType markdown setlocal textwidth=78
+	autocmd FileType tex setlocal textwidth=90 " Except LaTeX, because of weird indents
 	autocmd FileType python setlocal textwidth=80
 
 " makes it automatically indent in specific cases, such as
@@ -176,7 +177,10 @@ iabbrev cssLink <link rel='stylesheet' type='text/css' href='css/style.css'/>
 
 iabbrev jsLink <script type="text/javascript" src="js/main.js"></script>
 
-iabbrev jqueryLink <script type="text/javascript" src="js/jquery.js"></script>
+iabbrev jqueryLink <script type="text/javascript"
+	\<CR>src="https://code.jquery.com/jquery-3.2.1.min.js"
+	\<CR>integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+	\<CR>crossorigin="anonymous"></script>
 
 " This is supposed to add a closing tag to an element automatically, after you
 " type in "<//"
