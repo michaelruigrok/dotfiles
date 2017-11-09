@@ -58,10 +58,11 @@ endif
 
 " :W sudo saves the file
 "  (useful for handling the permission-denied error)
-	command W w !sudo tee % > /dev/null
+	command! W w !sudo tee % > /dev/null
 
 " autocorrect waa to wa, a typo which I frequently make
 	cabbrev waa <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'wa' : 'waa')<CR>
+	cabbrev aw <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'wa' : 'waa')<CR>
 
 " when a vim file is edited externally, an open version changes with the edit
 "  possibly only works while you have not edited your copy
@@ -234,7 +235,8 @@ iabbrev cThreads #include <pthread.h>
 	nnoremap <leader>b "_
 
 " I wonder what control-S should do?
-	noremap <c-s> <Esc>:w<CR>
+	nnoremap <c-s> <Esc>:w<CR>
+	inoremap <c-s> <Esc>:w<CR>
 
 " leader-s saves the session, leader-S saves session and buffers
 	noremap <leader>s :mks! ~/.session.vim<CR>
@@ -245,7 +247,7 @@ iabbrev cThreads #include <pthread.h>
 	noremap <leader>L :source ~/.session.vim<CR>
 
 " :C or leader-c clears search and colour column
-	command C let @/ = ""
+	command! C let @/ = ""
 	nnoremap <leader>c :let @/ = ""<CR>:set cc=0<CR>
 
 " Rather than deleting _all_ my stuff, Ctrl-w Ctrl-w changes window (like in
@@ -272,13 +274,13 @@ iabbrev cThreads #include <pthread.h>
 	inoremap kj <Esc>
 
 " MakeTags will make your ctags
-command MakeTags !ctags -R .
+command! MakeTags !ctags -R .
 
 " repeat command once for each line of a visual selection
 vnoremap . :normal .<CR>
 
 " for various scripting languages, <leader>m runs open file
-	function AddRunner(lang)
+	function! AddRunner(lang)
 		autocmd FileType a:lang nnoremap <buffer> <leader>m :w<CR>:!a:lang %<CR>
 	endfunction
 	call AddRunner("python")
@@ -298,7 +300,7 @@ vnoremap . :normal .<CR>
 	autocmd FileType vim nnoremap <buffer> <leader>m :so %<CR>
 
 " for c/c++, <leader>m compiles a single file and then runs the binary
-	function CompileC(...)
+	function! CompileC(...)
 		let newfile = split(expand('%:p'),"\\.")[0]
 		let argc = 1
 		let argv = ''
@@ -322,7 +324,7 @@ vnoremap . :normal .<CR>
 	autocmd FileType c++ nnoremap <buffer> <leader>m :call CompileC()<CR>
 
 " for Java, <leader>m compiles the file and then runs the binary
-	function CompileJava()
+	function! CompileJava()
 		if filereadable("build.gradle")
 			"stub for gradle building
 			echo "Is a Gradle Project"
@@ -361,7 +363,7 @@ vnoremap . :normal .<CR>
 			" $L-c uses Java's quick fix to correct error under the cursor
 			nnoremap <leader>lc :call JavaCorrect()<cr>
 
-			function JavaCorrect()
+			function! JavaCorrect()
 				let olda = @a
 				redir @a
 				JavaCorrect
