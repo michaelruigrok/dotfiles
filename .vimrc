@@ -163,6 +163,10 @@ iabbrev addBreak
 	" HTML SHORTCUTS "
 	""""""""""""""""""
 
+" $L-l-t surround visually selected paragraphs with <p> tags
+autocmd FileType html vnoremap <leader>lt :s/^\(\w.*\)$/<p>\1<\/p>/<CR>
+
+" This is kind of redundant since I have skeleton files, but I'm leaving it in
 iabbrev htmlTemplate <!DOCTYPE html>
 	\<CR>
 	\<CR><html lang="en">
@@ -246,9 +250,9 @@ iabbrev cThreads #include <pthread.h>
 " note the capital, different from leading into language specific binds
 	noremap <leader>L :source ~/.session.vim<CR>
 
-" :C or leader-c clears search and colour column
+" :C or leader-c clears search, colour column, and reloads syntax
 	command! C let @/ = ""
-	nnoremap <leader>c :let @/ = ""<CR>:set cc=0<CR>
+	nnoremap <leader>c :let @/ = ""<CR>:set cc=0<CR>:syntax sync fromstart<CR>
 
 " Rather than deleting _all_ my stuff, Ctrl-w Ctrl-w changes window (like in
 " normal mode)
