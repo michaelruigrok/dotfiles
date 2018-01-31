@@ -261,6 +261,44 @@ iabbrev cThreads #include <pthread.h>
 " binds Alt + Shift + G to show/hide line numbers
 	map <leader>g :set nu!<CR>
 
+" Okay, I'm going to try and set up a command that can sort things.
+" Say you have a list of things that you want to manually put into categories,
+" You can use this command to make a binding which will help you.
+" Set up a heading for a category you want to sort the things into.
+" Enter the command, with the line number of that heading as the argument.
+" You can now press <leader-t> to move things from the unsorted list into that
+" category.
+" For now, it will put them up the top, which will reverse the order that you
+" put them in
+" In the future, I might make it so it keeps the old order
+" I might also set it up so you can press <leader><number> to
+" iterate with multiple categories at once.
+"
+command! -nargs=1 SortHelper let sortHelper=<args> | nnoremap <leader>t :call ManSort()<CR>
+
+" Maintain order
+function! ManSort()
+	normal jmtk
+	execute "m " . g:sortHelper
+	normal 't
+
+	" increment variable
+	let g:sortHelper = g:sortHelper + 1
+	echo g:sortHelper
+endfunction
+
+" multiple sortings at once
+"function! SortHelper(
+" for each
+" Each argument must be bigger than the last
+" So the position in array corresponds with position in the file
+" We increment not just the list, but all the lists in the array that follow
+" it
+
+function! AddRunner(lang)
+	autocmd FileType a:lang nnoremap <buffer> <leader>m :w<CR>:!a:lang %<CR>
+endfunction
+
 " binds space to open and close folds
 	map <space> za
 
@@ -290,6 +328,7 @@ vnoremap . :normal .<CR>
 	call AddRunner("python")
 	call AddRunner("sh")
 	call AddRunner("ruby")
+	autocmd FileType ruby nnoremap <buffer> <leader>m :w<CR>:!ruby %<CR>
 	call AddRunner("perl")
 	call AddRunner("perl6")
 	call AddRunner("lua")
