@@ -19,7 +19,7 @@ cd ~/.vim/bundle
 #TODO: turn each individual block into a function (with plugin name & author as params)
 get_plugin tpope vim-sleuth
 get_plugin sickill vim-pasta
-get_plugin othree html5
+get_plugin othree html5.vim
 get_plugin vim-airline vim-airline
 get_plugin easymotion vim-easymotion
 get_plugin tpope vim-surround
