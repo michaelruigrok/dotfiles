@@ -471,13 +471,26 @@ vnoremap . :normal .<CR>
 	set undodir=~/.vim/undo-history/
 
 	""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-	"	Skeletons and Templates															 "
+	"	Skeletons and Templates													 "
 	"																			 "
-	""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+augroup templates
+	autocmd!
 
 	autocmd BufNewFile *.c 0r ~/.vim/skeleton/c | normal 4j
+	autocmd BufNewFile *.h 0r ~/.vim/skeleton/h
 	autocmd BufNewFile *.html 0r ~/.vim/skeleton/html
 	autocmd BufNewFile Makefile 0r ~/.vim/skeleton/Makefile
+
+	" expand filenames with <@%>, <@%:p>, <@%:t:r:p:h>, et cetera
+	autocmd BufNewFile * silent! %s/<@\(%.\{-}\)>/\=expand(submatch(1))/
+	" use vim expressions in templates with <\=expression>
+	autocmd BufNewFile * silent! %s/<\\=\(.\{-}\)>/\=eval(submatch(1))/
+
+	" move the cursor to preferable positions
+	autocmd BufNewFile *.c silent 8 | normal $
+	autocmd BufNewFile *.h 4
+
+augroup END
 
 
 	"Pathogen"
