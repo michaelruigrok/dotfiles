@@ -372,6 +372,8 @@ vnoremap . :normal .<CR>
 			"stub for gradle building
 			echo "Is a Gradle Project"
 			!gradle build run
+		elseif exists('g:vimplugin_running')
+			Java
 		else
 			let cdir = getcwd()
 			let jdir = expand('%:p:h')
