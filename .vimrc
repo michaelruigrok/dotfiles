@@ -1,4 +1,7 @@
 " TODO: if vim has arguments (like a file), don't run sessionfile
+" TODO: change any short version of command names to long versions
+" TODO: put all autocmd groupings into an augroup
+" TODO: consider splitting things up into plugins, ftplugin, etc
 
 	"  GUI SETTINGS  "
 	""""""""""""""""""
@@ -105,6 +108,10 @@ endif
 	autocmd FileType tex setlocal textwidth=90 " Except LaTeX, because of weird indents
 	autocmd FileType python setlocal textwidth=80
 
+" get good working dotpoints
+	autocmd FileType text,markdown setlocal formatoptions=ctnqro
+	autocmd FileType text,markdown setlocal comments=n:>,b:*,b:+,b:-
+
 " makes it automatically indent in specific cases, such as
 "  when adding a curly bracket ({)
 	set smartindent
@@ -122,7 +129,7 @@ endif
 
 " Disable beeping
 	set noeb vb t_vb=
-	au GUIEnter * set vb t_vb=
+	autocmd GUIEnter * set vb t_vb=
 
 " Spell checker for Australian English, but not in helpfiles
 	autocmd FileType text setlocal spell spelllang=en_au
