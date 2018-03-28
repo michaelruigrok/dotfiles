@@ -8,8 +8,11 @@
 # included as a folder executables are run from 
 	export PATH=$PATH:~/.gem/ruby/2.2.0/bin
 	export PATH=$PATH:~/.bin
-
 	
+####
+# HISTORY
+####
+
 # Each of these keeps history clean of unimportant commands
 	HISTIGNORE="ls:[bf]g:exit:pwd:clear:less:umount:oh"
 
@@ -39,6 +42,10 @@
 
 	## Command-specific config ##
 
+####
+# ALIASES
+####
+
 # Easier way of doing "sudo !!"
 	alias oh='sudo $(history -p \!\!)'
 
@@ -48,5 +55,8 @@
 # user personal vim config whenever running vim as superuser
 	alias suvim='sudo vim -u ~/.vimrc'
 
+####
+# STARTUP
+####
 # And then start x (If on the first display)
 	[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx
