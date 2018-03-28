@@ -10,6 +10,13 @@
 	export PATH=$PATH:~/.bin
 	
 ####
+# SHELL BEHAVIOUR
+####
+
+# Allow use of globstart '**' to glob recursively through directories
+	shopt -s globstar
+
+####
 # HISTORY
 ####
 
