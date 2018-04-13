@@ -1,4 +1,7 @@
 " TODO: if vim has arguments (like a file), don't run sessionfile
+" TODO: change any short version of command names to long versions
+" TODO: put all autocmd groupings into an augroup
+" TODO: consider splitting things up into plugins, ftplugin, etc
 
 	"  GUI SETTINGS  "
 	""""""""""""""""""
@@ -105,6 +108,10 @@ endif
 	autocmd FileType tex setlocal textwidth=90 " Except LaTeX, because of weird indents
 	autocmd FileType python setlocal textwidth=80
 
+" get good working dotpoints
+	autocmd FileType text,markdown setlocal formatoptions=ctnqro
+	autocmd FileType text,markdown setlocal comments=n:>,b:*,b:+,b:-
+
 " makes it automatically indent in specific cases, such as
 "  when adding a curly bracket ({)
 	set smartindent
@@ -122,7 +129,7 @@ endif
 
 " Disable beeping
 	set noeb vb t_vb=
-	au GUIEnter * set vb t_vb=
+	autocmd GUIEnter * set vb t_vb=
 
 " Spell checker for Australian English, but not in helpfiles
 	autocmd FileType text setlocal spell spelllang=en_au
@@ -261,6 +268,44 @@ iabbrev cThreads #include <pthread.h>
 " binds Alt + Shift + G to show/hide line numbers
 	map <leader>g :set nu!<CR>
 
+" Okay, I'm going to try and set up a command that can sort things.
+" Say you have a list of things that you want to manually put into categories,
+" You can use this command to make a binding which will help you.
+" Set up a heading for a category you want to sort the things into.
+" Enter the command, with the line number of that heading as the argument.
+" You can now press <leader-t> to move things from the unsorted list into that
+" category.
+" For now, it will put them up the top, which will reverse the order that you
+" put them in
+" In the future, I might make it so it keeps the old order
+" I might also set it up so you can press <leader><number> to
+" iterate with multiple categories at once.
+"
+command! -nargs=1 SortHelper let sortHelper=<args> | nnoremap <leader>t :call ManSort()<CR>
+
+" Maintain order
+function! ManSort()
+	normal jmtk
+	execute "m " . g:sortHelper
+	normal 't
+
+	" increment variable
+	let g:sortHelper = g:sortHelper + 1
+	echo g:sortHelper
+endfunction
+
+" multiple sortings at once
+"function! SortHelper(
+" for each
+" Each argument must be bigger than the last
+" So the position in array corresponds with position in the file
+" We increment not just the list, but all the lists in the array that follow
+" it
+
+function! AddRunner(lang)
+	autocmd FileType a:lang nnoremap <buffer> <leader>m :w<CR>:!a:lang %<CR>
+endfunction
+
 " binds space to open and close folds
 	map <space> za
 
@@ -333,6 +378,8 @@ vnoremap . :normal .<CR>
 			"stub for gradle building
 			echo "Is a Gradle Project"
 			!gradle build run
+		elseif exists('g:vimplugin_running')
+			Java
 		else
 			let cdir = getcwd()
 			let jdir = expand('%:p:h')
@@ -432,14 +479,28 @@ vnoremap . :normal .<CR>
 	set undodir=~/.vim/undo-history/
 
 	""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-	"	Skeletons and Templates															 "
+	"	Skeletons and Templates													 "
 	"																			 "
 	""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+augroup templates
+	autocmd!
+
 	autocmd BufNewFile *.c 0r ~/.vim/skeleton/c | normal 4j
+	autocmd BufNewFile *.h 0r ~/.vim/skeleton/h
 	autocmd BufNewFile *.html 0r ~/.vim/skeleton/html
 	autocmd BufNewFile Makefile 0r ~/.vim/skeleton/Makefile
 
+	" expand filenames with <@%>, <@%:p>, <@%:t:r:p:h>, et cetera
+	autocmd BufNewFile * silent! %s/<@\(%.\{-}\)>/\=expand(submatch(1))/
+	" use vim expressions in templates with <\=expression>
+	autocmd BufNewFile * silent! %s/<\\=\(.\{-}\)>/\=eval(submatch(1))/
+
+	" move the cursor to preferable positions
+	autocmd BufNewFile *.c silent 8 | normal $
+	autocmd BufNewFile *.h 4
+
+augroup END
 
 	"Pathogen"
 	""""""""""
