@@ -3,6 +3,16 @@
 " TODO: put all autocmd groupings into an augroup
 " TODO: consider splitting things up into plugins, ftplugin, etc
 
+	" Initial startup "
+	"""""""""""""""""""
+" If running on Windows, use .vim directory instead of 'vimfiles'
+	let s:MSWindows = has('win95') + has('win16') + has('win32') + has('win64')
+	if s:MSWindows
+		let $VIMHOME=$HOME."\\.vim"
+		set runtimepath=$HOME/.vim,$VIMRUNTIME,$VIM/vimfiles/after,$VIM/.vim/after
+	endif
+
+
 	"  GUI SETTINGS  "
 	""""""""""""""""""
 
@@ -19,6 +29,8 @@ if has ('gui_running')
 	" Courier New will be replacede when I _actually_ use that system
 	if has("gui_gtk2") || has("gui_gtk3")
 		set guifont=Anonymous\ Pro\ For\ Powerline\ 11\\,Source\ Code\ Pro\ 10,Monospace
+	elseif s:MSWindows
+		set guifont=Consolas
 	elseif has("gui_photon")
 		set guifont=Courier\ New:s11
 	elseif has("gui_kde")
@@ -45,12 +57,6 @@ endif
 "	GENERAL SETTINGS														 "
 "																			 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" If running on Windows, use .vim directory instead of 'vimfiles'
-	let s:MSWindows = has('win95') + has('win16') + has('win32') + has('win64')
-	if s:MSWindows
-		set runtimepath=$VIM/.vim,$VIMRUNTIME,$VIM/vimfiles/after,$VIM/.vim/after
-	endif
 
 " only uses file for vim, not vi. This removes any clashes
 	set nocompatible
@@ -407,6 +413,7 @@ vnoremap . :normal .<CR>
 	" Eclim "
 		if exists('g:vimplugin_running')
 
+			" TODO: Set these up also for javascript, php search, all that 
 			" g[ is remapped to work with eclim's JavaSearch
 			nnoremap g[ :JavaSearchContext<cr>
 
