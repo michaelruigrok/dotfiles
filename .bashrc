@@ -2,6 +2,11 @@
 # ~/.bashrc
 #
 
+###
+# Windows only Config
+###
+export STARTUP='/c/Users/Michael/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup'
+
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
