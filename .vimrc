@@ -15,14 +15,19 @@ if has ('gui_running')
 		" File does not exist error
 	endtry
 
-" set font to Anonymous Pro, font size to 12
-	try
-		set guifont=Anonymous\ Pro\ For\ Powerline\ 11
-	catch E518
-		"Sometimes it doesn't accept 12 as an option
-		"Should be fixed now, I'm a big old dummy, but still:
-		set guifont=Anonymous\ Pro\ For\ Powerline 
-	endtry
+	" Select a font based on system
+	" Courier New will be replacede when I _actually_ use that system
+	if has("gui_gtk2") || has("gui_gtk3")
+		set guifont=Anonymous\ Pro\ For\ Powerline\ 11\\,Source\ Code\ Pro\ 10,Monospace
+	elseif has("gui_photon")
+		set guifont=Courier\ New:s11
+	elseif has("gui_kde")
+		set guifont=Courier\ New/11/-1/5/50/0/0/0/1/0
+	elseif has("x11")
+		set guifont=-*-courier-medium-r-normal-*-*-180-*-*-m-*-*
+	else
+		set guifont=Courier_New:h11:cDEFAULT
+	endif
 
 endif
 
