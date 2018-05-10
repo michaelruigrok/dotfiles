@@ -5,7 +5,10 @@
 ###
 # Windows only Config
 ###
-export STARTUP='/c/Users/Michael/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup'
+if [ `uname -o` = "Msys" ]; then
+	export STARTUP='/c/Users/Michael/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup'
+
+fi
 
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
