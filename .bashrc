@@ -70,6 +70,12 @@ fi
 # user personal vim config whenever running vim as superuser
 	alias suvim='sudo vim -u ~/.vimrc'
 
+# the command 'cd.. [number]' will go up directories the specified number of times
+	function cd_up() {
+		cd $(printf "%0.0s../" $(seq 1 $1));
+	}
+	alias 'cd..'='cd_up'
+
 ####
 # STARTUP
 ####
