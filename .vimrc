@@ -28,7 +28,7 @@ if has ('gui_running')
 	" Select a font based on system
 	" Courier New will be replacede when I _actually_ use that system
 	if has("gui_gtk2") || has("gui_gtk3")
-		set guifont=Anonymous\ Pro\ For\ Powerline\ 11\\,Source\ Code\ Pro\ 10,Monospace
+		set guifont=Anonymous\ Pro\ For\ Powerline\ 11\\,Source\ Code\ Pro\ 10\\,Monospace
 	elseif s:MSWindows
 		set guifont=Consolas
 	elseif has("gui_photon")
