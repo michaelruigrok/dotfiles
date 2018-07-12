@@ -352,6 +352,7 @@ vnoremap . :normal .<CR>
 	call AddRunner("php")
 	autocmd FileType awk nnoremap <buffer> <leader>m :w<CR>:!awk -f %<CR>
 	autocmd FileType sed nnoremap <buffer> <leader>m :w<CR>:!sed -f %<CR>
+	autocmd FileType cs nnoremap <buffer> <leader>m :w<CR>:!mono-csc %<CR>
 
 " for LaTeX documents, compile as a pdf
 	autocmd FileType tex nnoremap <buffer> <leader>m :w<CR>:!pdflatex %<CR>
@@ -374,7 +375,7 @@ vnoremap . :normal .<CR>
 			if (&ft=='c')
 				execute '!clear; gcc -std=gnu99 -pedantic -Wall ' . expand('%:p') . ' -o ' . newfile . ' && ' newfile . ' ' . argv
 			else 
-				execute '!clear; gcc -pedantic -Wall ' . expand('%:p') . ' -o ' . newfile . ' && ' newfile . ' ' . argv
+				execute '!clear; g++ -pedantic -Wall ' . expand('%:p') . ' -o ' . newfile . ' && ' newfile . ' ' . argv
 			endif
 		endif
 	endfunction
