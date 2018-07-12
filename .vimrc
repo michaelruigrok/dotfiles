@@ -476,9 +476,9 @@ vnoremap . :normal .<CR>
 	set smartcase
 
 
-" Autocomplete menus some sort of command
-	"set wildmode=longest:full
-	set wildmode=list:full
+" In command mode, firs tab fills in the longest common match
+"  Second tab uses the entirety of the first match
+	set wildmode=list:longest,full
 	set wildmenu
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
