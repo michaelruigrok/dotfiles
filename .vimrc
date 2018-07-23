@@ -491,6 +491,9 @@ vnoremap . :normal .<CR>
 " set a directory to store the undo history
 	set undodir=~/.vim/undo-history/
 
+" put all swap files in ~/.vim
+	set directory^=~/.vim/swapfiles
+
 	""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 	"	Skeletons and Templates													 "
 	"																			 "

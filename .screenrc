@@ -1,0 +1,2 @@
+# Allow use of scrolling within vim/similar programs
+termcapinfo linux|xterm|screen* ti@:te@:XT
