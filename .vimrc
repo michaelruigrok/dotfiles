@@ -260,6 +260,9 @@ iabbrev cThreads #include <pthread.h>
 	nnoremap <c-s> <Esc>:w<CR>
 	inoremap <c-s> <Esc>:w<CR>
 
+" Make Y do the same thing as ^ (because ^ is too far to reach)
+	nnoremap Y ^
+
 " leader-s saves the session, leader-S saves session and buffers
 	noremap <leader>s :mks! ~/.session.vim<CR>
 	noremap <leader>S :mks! ~/.session.vim<CR>:wa<CR>
