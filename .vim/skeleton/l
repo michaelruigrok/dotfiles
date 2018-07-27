@@ -1,0 +1,24 @@
+%{
+	/*
+	 * Initial C code
+	 */
+
+	int yywrap(void) {
+		return 1;
+	}
+%}
+
+
+%%
+	/* Rules */
+
+ /* This is default behaviour, but should be explicitly stated. */
+.|\n	ECHO; // Echo leftover characters to stdout
+
+%%
+
+	/* User Subroutines */
+
+int main() {
+	yylex();
+}
