@@ -39,12 +39,11 @@ xinput set-prop "DualPoint Stick" "Evdev Wheel Emulation Button" 2
 xinput set-prop "DualPoint Stick" "Evdev Wheel Emulation Timeout" 200
 xinput set-prop "DualPoint Stick" "Evdev Wheel Emulation Axes" 6 7 4 5
 xinput set-prop "DualPoint Stick" "Device Accel Constant Deceleration" 1.00
-
-xsetroot -solid "#000000"
 command setxkbmap && setxkbmap -option caps:escape
 #setxkbmap -option grp:alts_toggle
 sh ~/.fehbg
-xfce-power-manager
-i3
-pasystray
+xfce4-power-manager
+i3 &
+pasystray &
+redshift -b 1:0.8 -t 6500K:3500K &
 #exec startlxde

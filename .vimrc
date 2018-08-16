@@ -12,7 +12,6 @@
 		set runtimepath=$HOME/.vim,$VIMRUNTIME,$VIM/vimfiles/after,$VIM/.vim/after
 	endif
 
-
 	"  GUI SETTINGS  "
 	""""""""""""""""""
 
@@ -20,7 +19,7 @@ if has ('gui_running')
 
 " Boot up the current saved session
 	try
-		source ~/.session.vim
+		source ~/.vim/session
 	catch E484
 		" File does not exist error
 	endtry
@@ -264,12 +263,12 @@ iabbrev cThreads #include <pthread.h>
 	nnoremap Y ^
 
 " leader-s saves the session, leader-S saves session and buffers
-	noremap <leader>s :mks! ~/.session.vim<CR>
-	noremap <leader>S :mks! ~/.session.vim<CR>:wa<CR>
+	noremap <leader>s :mks! ~/.vim/session<CR>
+	noremap <leader>S :mks! ~/.vim/session<CR>:wa<CR>
 
 " leader-L saves the session, leader-S saves session and buffers
 " note the capital, different from leading into language specific binds
-	noremap <leader>L :source ~/.session.vim<CR>
+	noremap <leader>L :source ~/.vim/session<CR>
 
 " :C or leader-c clears search, colour column, and reloads syntax
 	command! C let @/ = ""
