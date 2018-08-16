@@ -519,6 +519,7 @@ augroup templates
 	" move the cursor to preferable positions
 	autocmd BufNewFile *.c silent 8 | normal $
 	autocmd BufNewFile *.h 4
+	autocmd BufNewFile *.html silent 5 | normal f<;
 
 augroup END
 
