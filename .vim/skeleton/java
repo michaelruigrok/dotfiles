@@ -1,0 +1,15 @@
+package ;
+
+/**
+ * Class: <@%:t:r> 
+ *
+ * @author	Michael Ruigrok
+ * @version 1.0
+ * @since <\=strftime("%Y-%m-%d")>
+ */
+public class <@%:t:r> {
+
+	public static void main(String[] args) {
+	}
+
+}

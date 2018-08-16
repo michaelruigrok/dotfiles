@@ -508,6 +508,8 @@ augroup templates
 	autocmd BufNewFile *.c 0r ~/.vim/skeleton/c | normal 4j
 	autocmd BufNewFile *.h 0r ~/.vim/skeleton/h
 	autocmd BufNewFile *.l 0r ~/.vim/skeleton/l
+
+	autocmd BufNewFile *.java 0r ~/.vim/skeleton/java
 	autocmd BufNewFile *.html 0r ~/.vim/skeleton/html
 	autocmd BufNewFile Makefile 0r ~/.vim/skeleton/Makefile
 
