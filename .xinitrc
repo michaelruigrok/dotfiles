@@ -43,7 +43,7 @@ command setxkbmap && setxkbmap -option caps:escape
 #setxkbmap -option grp:alts_toggle
 [ -f ~/.fehbg ] && sh ~/.fehbg
 xfce4-power-manager
-i3 &
-pasystray &
-redshift -b 1:0.8 -t 6500K:3500K &
+i3
+command pasystray && pasystray &
+command redshift && redshift -b 1:0.8 -t 6500K:3500K &
 #exec startlxde
