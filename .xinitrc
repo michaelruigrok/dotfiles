@@ -41,7 +41,7 @@ xinput set-prop "DualPoint Stick" "Evdev Wheel Emulation Axes" 6 7 4 5
 xinput set-prop "DualPoint Stick" "Device Accel Constant Deceleration" 1.00
 command setxkbmap && setxkbmap -option caps:escape
 #setxkbmap -option grp:alts_toggle
-sh ~/.fehbg
+[ -f ~/.fehbg ] && sh ~/.fehbg
 xfce4-power-manager
 i3
 pasystray &
