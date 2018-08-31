@@ -44,6 +44,7 @@ command setxkbmap && setxkbmap -option caps:escape
 [ -f ~/.fehbg ] && sh ~/.fehbg
 xfce4-power-manager
 i3
+command lxpolkit && lxpolkit &
 command pasystray && pasystray &
 command redshift && redshift -b 1:0.8 -t 6500K:3500K &
 #exec startlxde
