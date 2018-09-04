@@ -1,0 +1,5 @@
+[user]
+	email = ruigrok.michael@gmail.com
+	name = Michael Ruigrok
+[credential]
+	helper = cache --timeout 10000
