@@ -323,12 +323,8 @@ endfunction
 	map <space> za
 
 " with vim-surround, leader comments out the surrounded word
-	try
-		unmap <leader>C
-	" catch the 'No Such Mapping' Error
-	catch E3
-		" Do nothing
-	endtry
+	" First name leader-C to do nothing in particular
+	nnoremap <leader>C <NOP>
 	autocmd FileType javascript map <buffer> <leader>Cw ysiW*ysiW/
 
 " returns you to normal mode when you press 'j'  and 'k' at the same time
