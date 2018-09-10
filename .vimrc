@@ -326,6 +326,11 @@ endfunction
 	" First name leader-C to do nothing in particular
 	nnoremap <leader>C <NOP>
 	autocmd FileType javascript map <buffer> <leader>Cw ysiW*ysiW/
+	autocmd FileType css map <buffer> <leader>Cw ysiW*ysiW/
+
+" and leader-b for lines:
+	autocmd FileType javacript map <buffer> <leader>b I//<esc>
+	autocmd FileType css map <buffer> <leader>b I/*<esc>A*/<esc>
 
 " returns you to normal mode when you press 'j'  and 'k' at the same time
 	inoremap jk <Esc>
