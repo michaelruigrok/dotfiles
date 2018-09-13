@@ -2,6 +2,7 @@
 " TODO: change any short version of command names to long versions
 " TODO: put all autocmd groupings into an augroup
 " TODO: consider splitting things up into plugins, ftplugin, etc
+" TODO: add insertDate and insertTime abbreviations
 
 	" Initial startup "
 	"""""""""""""""""""
