@@ -1,6 +1,5 @@
 " TODO: if vim has arguments (like a file), don't run sessionfile
 " TODO: change any short version of command names to long versions
-" TODO: put all autocmd groupings into an augroup
 " TODO: consider splitting things up into plugins, ftplugin, etc
 " TODO: add insertDate and insertTime abbreviations
 
@@ -106,22 +105,26 @@ endif
 	set tabstop=4
 
 " reduce tabs to 2 spaces in xml or similar
-	autocmd FileType xml setlocal shiftwidth=2
-	autocmd FileType xml setlocal tabstop=2
-	autocmd FileType html setlocal shiftwidth=2
-	autocmd FileType html setlocal tabstop=2
-	autocmd FileType vue setlocal shiftwidth=2
-	autocmd FileType vue setlocal tabstop=2
+augroup xmltabs
+	autocmd!
+	autocmd FileType xml,html,vue setlocal shiftwidth=2
+	autocmd FileType xml,html,vue setlocal tabstop=2
+augroup END
 
 " text files may not extend further than 78 characters horizonally
-	autocmd FileType text setlocal textwidth=78
-	autocmd FileType markdown setlocal textwidth=78
+augroup textwidth
+	autocmd!
+	autocmd FileType text,markdown setlocal textwidth=78
 	autocmd FileType tex setlocal textwidth=90 " Except LaTeX, because of weird indents
 	autocmd FileType python setlocal textwidth=80
+augroup END
 
 " get good working dotpoints
+augroup dotpoints
+	autocmd!
 	autocmd FileType text,markdown setlocal formatoptions=ctnqro
 	autocmd FileType text,markdown setlocal comments=n:>,b:*,b:+,b:-
+augroup END
 
 " makes it automatically indent in specific cases, such as
 "  when adding a curly bracket ({)
@@ -139,12 +142,18 @@ endif
 		endif
 
 " Disable beeping
+augroup nobeep
+	autocmd!
 	set noeb vb t_vb=
 	autocmd GUIEnter * set vb t_vb=
+augroup END
 
 " Spell checker for Australian English, but not in helpfiles
+augroup spelling
+	autocmd!
 	autocmd FileType text setlocal spell spelllang=en_au
 	autocmd Syntax help setlocal nospell
+augroup END
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "	ABBREVIATIONS AND MAPPINGS												 "
@@ -181,8 +190,13 @@ iabbrev addBreak
 	" HTML SHORTCUTS "
 	""""""""""""""""""
 
+augroup html-helpers
+	autocmd!
+
 " $L-l-t surround visually selected paragraphs with <p> tags
-autocmd FileType html vnoremap <leader>lt :s/^\(\w.*\)$/<p>\1<\/p>/<CR>
+	autocmd FileType html vnoremap <leader>lt :s/^\(\w.*\)$/<p>\1<\/p>/<CR>
+
+augroup END
 
 " This is kind of redundant since I have skeleton files, but I'm leaving it in
 iabbrev htmlTemplate <!DOCTYPE html>
@@ -240,7 +254,7 @@ iabbrev cThreads #include <pthread.h>
 
 " leader-n toggles between relative and absolute numbering
 	nnoremap <leader>n :call NumberToggle()<cr>
-	
+
 	" required function
 		function! NumberToggle()
 			if(&relativenumber == 1)
@@ -316,32 +330,35 @@ endfunction
 " We increment not just the list, but all the lists in the array that follow
 " it
 
-function! AddRunner(lang)
-	autocmd FileType a:lang nnoremap <buffer> <leader>m :w<CR>:!a:lang %<CR>
-endfunction
-
 " binds space to open and close folds
 	map <space> za
+
+augroup comments
+	autocmd!
 
 " with vim-surround, leader comments out the surrounded word
 	" First name leader-C to do nothing in particular
 	nnoremap <leader>C <NOP>
-	autocmd FileType javascript map <buffer> <leader>Cw ysiW*ysiW/
-	autocmd FileType css map <buffer> <leader>Cw ysiW*ysiW/
+	autocmd FileType javascript,css nnoremap <buffer> <leader>Cw ysiW*ysiW/
 
 " and leader-b for lines:
-	autocmd FileType javacript map <buffer> <leader>b I//<esc>
-	autocmd FileType css map <buffer> <leader>b I/*<esc>A*/<esc>
+	autocmd FileType javacript nnoremap <buffer> <leader>b I//<esc>
+	autocmd FileType css nnoremap <buffer> <leader>b I/*<esc>A*/<esc>
+
+augroup END
 
 " returns you to normal mode when you press 'j'  and 'k' at the same time
 	inoremap jk <Esc>
 	inoremap kj <Esc>
 
 " MakeTags will make your ctags
-command! MakeTags !ctags -R .
+	command! MakeTags !ctags -R .
 
 " repeat command once for each line of a visual selection
-vnoremap . :normal .<CR>
+	vnoremap . :normal .<CR>
+
+augroup runners
+	autocmd!
 
 " for various scripting languages, <leader>m runs open file
 	function! AddRunner(lang)
@@ -384,9 +401,7 @@ vnoremap . :normal .<CR>
 		endif
 	endfunction
 
-	autocmd FileType c nnoremap <buffer> <leader>m :call CompileC()<CR>
-	autocmd FileType cpp nnoremap <buffer> <leader>m :call CompileC()<CR>
-	autocmd FileType c++ nnoremap <buffer> <leader>m :call CompileC()<CR>
+	autocmd FileType c,cpp,c++ nnoremap <buffer> <leader>m :call CompileC()<CR>
 
 " for Java, <leader>m compiles the file and then runs the binary
 	function! CompileJava()
@@ -409,10 +424,12 @@ vnoremap . :normal .<CR>
 
 	autocmd FileType java nnoremap <buffer> <leader>m :call CompileJava()<CR>
 
+augroup END
+
 
 	" LANGUAGE SPECIFIC COMMANDS"
 	"""""""""""""""""""""""""""""
-	
+
 " Leader-l ($L for short) is a leader for language-specific commands:
 
 	" Eclim "
@@ -447,7 +464,7 @@ vnoremap . :normal .<CR>
 			nnoremap <leader>lb :JavaDebugBreakpointToggle!<cr>
 
 		" leader-l-d prefix for other debugger commands:
-			
+
 			" $L-d-l lists all breakpoints of current file
 			nnoremap <leader>ldl :JavaDebugBreakpointsList<cr>
 
