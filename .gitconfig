@@ -3,3 +3,5 @@
 	name = Michael Ruigrok
 [credential]
 	helper = cache --timeout 10000
+[pager]
+	status = true

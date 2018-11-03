@@ -2,6 +2,8 @@
 " TODO: change any short version of command names to long versions
 " TODO: consider splitting things up into plugins, ftplugin, etc
 " TODO: add insertDate and insertTime abbreviations
+" TODO: create a command argument envar when running the given code.
+	" potentially add envar for post-run test commands (e.g. to test output)
 
 	" Initial startup "
 	"""""""""""""""""""
