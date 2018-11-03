@@ -42,19 +42,16 @@ xinput set-prop "DualPoint Stick" "Device Accel Constant Deceleration" 1.00
 command -v setxkbmap && setxkbmap -option caps:escape
 #setxkbmap -option grp:alts_toggle
 
-function tryinit { command -v "$1" && "$@" & }
+#Usually in /lib, only runs if the exec has been linked
+command -v kdeconnectd && kdeconnectd &
+command -v kdeconnect-indicator && kdeconnect-indicator &
 
-# Utilities
-tryinit lxpolkit
-tryinit kdeconnectd # Usually in /lib, only runs if the exec has been linked
+command -v xfce4-power-manager && xfce4-power-manager
+command -v lxpolkit && lxpolkit &
+command -v pasystray && pasystray &
+command -v redshift && redshift -b 1:0.8 -t 6500K:3500K &
 
-# System tray
-tryinit kdeconnect-indicator
-tryinit xfce4-power-manager
-tryinit pasystray
-
-# Display
-tryinit redshift
 [ -f ~/.fehbg ] && sh ~/.fehbg
+
 i3
 #exec startlxde
