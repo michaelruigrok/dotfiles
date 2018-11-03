@@ -39,12 +39,22 @@ xinput set-prop "DualPoint Stick" "Evdev Wheel Emulation Button" 2
 xinput set-prop "DualPoint Stick" "Evdev Wheel Emulation Timeout" 200
 xinput set-prop "DualPoint Stick" "Evdev Wheel Emulation Axes" 6 7 4 5
 xinput set-prop "DualPoint Stick" "Device Accel Constant Deceleration" 1.00
-command setxkbmap && setxkbmap -option caps:escape
+command -v setxkbmap && setxkbmap -option caps:escape
 #setxkbmap -option grp:alts_toggle
+
+function tryinit { command -v "$1" && "$@" & }
+
+# Utilities
+tryinit lxpolkit
+tryinit kdeconnectd # Usually in /lib, only runs if the exec has been linked
+
+# System tray
+tryinit kdeconnect-indicator
+tryinit xfce4-power-manager
+tryinit pasystray
+
+# Display
+tryinit redshift
 [ -f ~/.fehbg ] && sh ~/.fehbg
-xfce4-power-manager
 i3
-command lxpolkit && lxpolkit &
-command pasystray && pasystray &
-command redshift && redshift -b 1:0.8 -t 6500K:3500K &
 #exec startlxde
