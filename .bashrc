@@ -70,6 +70,9 @@ fi
 # user personal vim config whenever running vim as superuser
 	alias suvim='sudo vim -u ~/.vimrc'
 
+# Common typo shortening I may as well use
+	alias chmox='sudo chmod +x'
+
 # the command 'cd.. [number]' will go up directories the specified number of times
 	function cd_up() {
 		cd $(printf "%0.0s../" $(seq 1 $1));
@@ -79,5 +82,6 @@ fi
 ####
 # STARTUP
 ####
+
 # And then start x (If on the first display)
 	[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx
