@@ -14,7 +14,6 @@ fi
 [[ $- != *i* ]] && return
 
 # included as a folder executables are run from 
-	export PATH=$PATH:~/.gem/ruby/2.2.0/bin
 	export PATH=$PATH:~/.bin
 	
 ####
