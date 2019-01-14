@@ -533,6 +533,8 @@ augroup templates
 	autocmd BufNewFile *.html 0r ~/.vim/skeleton/html
 	autocmd BufNewFile Makefile 0r ~/.vim/skeleton/Makefile
 
+	autocmd BufNewFile *_test.c 0r ~/.vim/skeleton/minUnit_test.c | normal 33GdG
+
 	" expand filenames with <@%>, <@%:p>, <@%:t:r:p:h>, et cetera
 	autocmd BufNewFile * silent! %s/<@\(%.\{-}\)>/\=expand(submatch(1))/
 	" use vim expressions in templates with <\=expression>
