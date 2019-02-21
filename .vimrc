@@ -109,6 +109,7 @@ endif
 " reduce tabs to 2 spaces in xml or similar
 augroup xmltabs
 	autocmd!
+	autocmd BufRead,BufNewFile *.jelly setlocal filetype=html
 	autocmd FileType xml,html,vue setlocal shiftwidth=2
 	autocmd FileType xml,html,vue setlocal tabstop=2
 augroup END
