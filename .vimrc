@@ -383,17 +383,11 @@ augroup END
 augroup runners
 	autocmd!
 
-" for various scripting languages, <leader>m runs open file
-	function! AddRunner(lang)
-		autocmd FileType a:lang nnoremap <buffer> <leader>m :w<CR>:!a:lang %<CR>
-	endfunction
-	call AddRunner("python")
-	call AddRunner("sh")
-	call AddRunner("ruby")
-	call AddRunner("perl")
-	call AddRunner("perl6")
-	call AddRunner("lua")
-	call AddRunner("php")
+" For various scripting languages, <leader>m runs open file
+" In general, languages would probably work
+	autocmd FileType * nnoremap <buffer> <leader>m :w<CR>:execute "!" . &filetype . " %"<CR>
+
+" In Other cases, the runner syntax differs
 	autocmd FileType awk nnoremap <buffer> <leader>m :w<CR>:!awk -f %<CR>
 	autocmd FileType sed nnoremap <buffer> <leader>m :w<CR>:!sed -f %<CR>
 	autocmd FileType cs nnoremap <buffer> <leader>m :w<CR>:!mono-csc %<CR>
@@ -402,7 +396,7 @@ augroup runners
 	autocmd FileType tex nnoremap <buffer> <leader>m :w<CR>:!pdflatex %<CR>
 
 " for this vimrc, <leader>m reloads its contents
-	autocmd FileType vim nnoremap <buffer> <leader>m :so %<CR>
+	autocmd FileType vim nnoremap <buffer> <leader>m :source %<CR>
 
 " for c/c++, <leader>m compiles a single file and then runs the binary
 	function! CompileC(...)
@@ -416,7 +410,7 @@ augroup runners
 		if filereadable(expand('%:p:h') . '/Makefile')
 			make -j 8
 		else
-			if (&ft=='c')
+			if (&filetype == 'c')
 				execute '!clear; gcc -std=gnu99 -pedantic -Wall ' . expand('%:p') . ' -o ' . newfile . ' && ' newfile . ' ' . argv
 			else 
 				execute '!clear; g++ -pedantic -Wall ' . expand('%:p') . ' -o ' . newfile . ' && ' newfile . ' ' . argv
