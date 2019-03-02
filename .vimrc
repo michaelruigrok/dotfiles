@@ -432,7 +432,7 @@ augroup runners
 			let cdir = getcwd()
 			let jdir = expand('%:p:h')
 			execute 'silent cd ' . jdir
-			execute 'silent cd ..'
+			silent cd ..
 			let jfile = split(expand('%'),"\\.")[0]
 			execute '!clear; javac "' . expand('%') . '" && java "' . jfile . '"'
 			execute 'cd ' . cdir
@@ -440,6 +440,21 @@ augroup runners
 	endfunction
 
 	autocmd FileType java nnoremap <buffer> <leader>m :call CompileJava()<CR>
+
+	function! RunClojure(...)
+		write
+		if filereadable('project.clj')
+			" Probably a Leiningen project, try and use that
+			!clear; lein run
+		elseif search('defn -main', "w")
+			" Has a main function, run that
+			let namespace = matchstr(getline(search('(ns')), '(ns \zs\(\w\+\)\ze')
+			execute "!clear; clojure -classpath " . expand('%:p:h') . " --main " . namespace
+		else
+			!clojure %
+		endif
+	endfunction
+	autocmd FileType clojure nnoremap <buffer> <leader>m :call RunClojure()<CR>
 
 augroup END
 
