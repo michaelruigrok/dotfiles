@@ -360,6 +360,26 @@ augroup END
 " repeat command once for each line of a visual selection
 	vnoremap . :normal .<CR>
 
+" Since REPLs are usually super slow,
+" Write the given lines to a pipe that a script can
+" read and execute in a single REPL instance
+" e.g. `tail -f | tee /dev/tty | repl-cli`
+	function! WriteToRepl() range
+		let address = a:firstline.",".a:lastline
+
+		if (!exists(&filetype))
+			let ftype = &filetype
+		else
+			let ftype = expand("%:e")
+		endif
+
+		" /tmp/$USER/$filetype-REPLE.fifo
+		execute address . "w>> /tmp/" . $USER . "/" .  ftype . "-REPL.fifo"
+	endfunction
+
+	vnoremap <leader>r :'<,'>call WriteToRepl()<CR>
+	nnoremap <leader>r :call WriteToRepl()<CR>
+
 augroup runners
 	autocmd!
 
