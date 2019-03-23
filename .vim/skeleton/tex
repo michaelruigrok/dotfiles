@@ -1,0 +1,8 @@
+\documentclass{article}
+\title{Title}
+\author{Michael Ruigrok}
+\date{<\=strftime("%Y-%m-%d")>}
+\begin{document}
+   \maketitle
+   Body Text here.
+\end{document}
