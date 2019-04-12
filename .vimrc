@@ -95,6 +95,9 @@ endif
 	set relativenumber
 	set numberwidth=2
 
+" show relative numbering in netrw
+	let g:netrw_bufsettings = 'noma nomod nu rnu nobl nowrap ro'
+
 " Use UTF-8
 	set encoding=utf-8
 
