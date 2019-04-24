@@ -27,7 +27,7 @@ if has ('gui_running')
 	endtry
 
 	" Select a font based on system
-	" Courier New will be replacede when I _actually_ use that system
+	" Courier New will be replaced when I _actually_ use that system
 	if has("gui_gtk2") || has("gui_gtk3")
 		set guifont=Anonymous\ Pro\ For\ Powerline\ 11\\,Source\ Code\ Pro\ 10\\,Monospace
 	elseif s:MSWindows
@@ -113,8 +113,9 @@ endif
 augroup xmltabs
 	autocmd!
 	autocmd BufRead,BufNewFile *.jelly setlocal filetype=html
-	autocmd FileType xml,html,vue setlocal shiftwidth=2
-	autocmd FileType xml,html,vue setlocal tabstop=2
+	autocmd FileType xml,html,vue,tex setlocal shiftwidth=2
+	autocmd FileType xml,html,vue,tex setlocal tabstop=2
+	autocmd FileType tex setlocal expandtab
 augroup END
 
 " text files may not extend further than 78 characters horizonally
@@ -258,6 +259,9 @@ iabbrev cThreads #include <pthread.h>
 " leader-p runs the the previous colon command 
 	nnoremap <leader>p @:
 
+" leader-P changes the paste mode
+	nnoremap <leader>P :set paste!<CR>
+
 " leader-n toggles between relative and absolute numbering
 	nnoremap <leader>n :call NumberToggle()<cr>
 
@@ -293,7 +297,7 @@ iabbrev cThreads #include <pthread.h>
 
 " :C or leader-c clears search, colour column, and reloads syntax
 	command! C let @/ = ""
-	nnoremap <leader>c :let @/ = ""<CR>:set cc=0<CR>:syntax sync fromstart<CR>
+	nnoremap <leader>c :let @/ = ""<CR>:set cc=0<CR>:syntax sync fromstart<CR>:set nopaste<CR>
 
 " Rather than deleting _all_ my stuff, Ctrl-w Ctrl-w changes window (like in
 " normal mode)
@@ -366,7 +370,7 @@ augroup END
 " Since REPLs are usually super slow,
 " Write the given lines to a pipe that a script can
 " read and execute in a single REPL instance
-" e.g. `tail -f | tee /dev/tty | repl-cli`
+" e.g. `tail -f /tmp/$USER/*-REPL.fifo | tee /dev/tty | repl-cli`
 	function! WriteToRepl() range
 		let address = a:firstline.",".a:lastline
 
