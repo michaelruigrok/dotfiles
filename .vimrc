@@ -109,13 +109,19 @@ endif
 	set shiftwidth=4
 	set tabstop=4
 
-" reduce tabs to 2 spaces in xml or similar
-augroup xmltabs
+augroup tablength
 	autocmd!
+" reduce tabs to 2 spaces in xml or similar
 	autocmd BufRead,BufNewFile *.jelly,*.vue setlocal filetype=html
 	autocmd FileType xml,html,vue,tex setlocal shiftwidth=2
 	autocmd FileType xml,html,vue,tex setlocal tabstop=2
 	autocmd FileType tex setlocal expandtab
+
+" Vim usually does special indentation for lisps. To help facilitate this,
+" a common standard of 2 spaces is used for indentation.
+	autocmd FileType lisp,clojure setlocal shiftwidth=2
+	autocmd FileType lisp,clojure setlocal tabstop=2
+	autocmd FileType lisp,clojure setlocal expandtab
 augroup END
 
 " text files may not extend further than 78 characters horizonally
