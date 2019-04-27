@@ -219,7 +219,7 @@ iabbrev htmlTemplate <!DOCTYPE html>
 
 iabbrev cssLink <link rel='stylesheet' type='text/css' href='css/style.css'/>
 
-iabbrev jsLink <script type="text/javascript" src="js/main.js"></script>
+iabbrev jsLink <script type="text/javascript" src="js/main.js" async="async"></script>
 
 iabbrev jqueryLink <script type="text/javascript"
 	\<CR>src="https://code.jquery.com/jquery-3.2.1.min.js"

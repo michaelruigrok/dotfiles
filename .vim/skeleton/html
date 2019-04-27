@@ -2,7 +2,27 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8"/>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+		<!-- Include variations of the same URL under this given URL -->
+		<link rel="canonical" href=""/>
+
+		<!-- Open Graph Data (for Facebook, e.g.) -->
+		<meta property="og:image" content="">
+		<meta property="og:description" content=""/>
+		<meta property="og:title" content=""/>
+		<meta property="og:url" content=""/> <!-- used as permanent ID -->
+		<!-- Twitter -->
+		<meta name="twitter:title" content="">
+
+		<meta name"author" content="Michael Ruigrok"/>
+		<meta name="description" content=""/>
 		<title></title>
+
+		<!-- rel/scripts -->
+		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
+		<script type="text/javascript" src="js/main.js" defer="defer"></script>
 	</head>
 	<body>
 	</body>
