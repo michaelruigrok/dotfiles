@@ -26,5 +26,6 @@ get_plugin tpope vim-repeat
 get_plugin tpope vim-unimpaired
 get_plugin vim-scripts screenplay
 get_plugin vim-scripts paredit # see https://gist.github.com/nblumoe/5450099 for usage notes
+get_plugin mattn emmet-vim
 
 echo "----------------------------------------------------------------------"
