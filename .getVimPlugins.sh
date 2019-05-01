@@ -16,7 +16,7 @@ wget -O ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
 #get other plugins
 cd ~/.vim/bundle
 
-get_plugin tpope vim-sleuth
+get_plugin roryokane detectindent
 get_plugin sickill vim-pasta
 get_plugin othree html5.vim
 get_plugin vim-airline vim-airline
