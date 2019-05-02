@@ -262,6 +262,10 @@ iabbrev cThreads #include <pthread.h>
 	let mapleader = ","
 	let g:mapleader = ","
 
+" map , to something else, so I can still use it.
+" I would've just mapped leader to space, but I'm too used to it now v_v
+	nnoremap <space> ,
+
 " leader-p runs the the previous colon command 
 	nnoremap <leader>p @:
 
@@ -345,23 +349,6 @@ endfunction
 " So the position in array corresponds with position in the file
 " We increment not just the list, but all the lists in the array that follow
 " it
-
-" binds space to open and close folds
-	map <space> za
-
-augroup comments
-	autocmd!
-
-" with vim-surround, leader comments out the surrounded word
-	" First name leader-C to do nothing in particular
-	nnoremap <leader>C <NOP>
-	autocmd FileType javascript,css nnoremap <buffer> <leader>Cw ysiW*ysiW/
-
-" and leader-b for lines:
-	autocmd FileType javacript nnoremap <buffer> <leader>b I//<esc>
-	autocmd FileType css nnoremap <buffer> <leader>b I/*<esc>A*/<esc>
-
-augroup END
 
 " returns you to normal mode when you press 'j'  and 'k' at the same time
 	inoremap jk <Esc>
@@ -599,7 +586,7 @@ augroup END
 	"Airline"
 	"""""""""
 
-	if exists(':AirlineRefresh')
+if exists(':AirlineRefresh')
 
 " fix such that airline runs without having to split
 	set laststatus=2
@@ -608,6 +595,4 @@ augroup END
 	let g:airline_powerline_fonts = 1
 	let g:airline#extensions#whitespace#checks = [ 'indent', 'long' ]
 
-	endif
-
-
+endif
