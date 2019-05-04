@@ -18,7 +18,9 @@ wget -O ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
 (exit $?) || exit 1
 
 # Remove vim-sleuth
-rm -r ~/.vim/bundle/vim-sleuth/
+rm -rf ~/.vim/bundle/vim-sleuth/
+# Remove vim-airline
+rm -rf ~/.vim/bundle/vim-airline/
 
 #get other plugins
 get_plugin tpope vim-repeat # support to repeat custom mappings
@@ -27,7 +29,8 @@ get_plugin roryokane detectindent # command to guess the correct indentation set
 get_plugin tpope vim-dispatch
 
 # UI/Syntax
-get_plugin vim-airline vim-airline # Make the bottom line all pretty
+#get_plugin vim-airline vim-airline # Make the bottom line all pretty
+get_plugin itchyny lightline.vim # Make the bottom line all pretty
 get_plugin othree html5.vim # HTML5/SVG syntax and omnicompletion
 get_plugin ap vim-css-color # preview the colours of CSS with highlights
 get_plugin vim-scripts screenplay # For writing scripts, of the film variety
