@@ -148,6 +148,7 @@ augroup END
 
 " When splitting windows vertically, open the new window in the right side
 	set splitright
+	set g:netrw_altv=1 " also split netrw right
 
 " In many terminal emulators the mouse works just fine, thus enable it.
 	if has('mouse')
@@ -529,9 +530,9 @@ augroup END
 	set smartcase
 
 
-" In command mode, firs tab fills in the longest common match
-"  Second tab uses the entirety of the first match
-	set wildmode=list:longest,full
+" In command mode, first tab fills in the longest common match
+"  Second tab displays list. Two more tabs will iterate over that list.
+	set wildmode=longest,list,list,list:full
 	set wildmenu
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
