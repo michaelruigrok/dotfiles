@@ -84,3 +84,5 @@ fi
 
 # And then start x (If on the first display)
 	[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx
+
+alias bye='shutdown now'

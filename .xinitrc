@@ -51,7 +51,10 @@ command -v lxpolkit && lxpolkit &
 command -v pasystray && pasystray &
 command -v redshift && redshift -b 1:0.8 -t 6500K:3500K &
 
-[ -f ~/.fehbg ] && sh ~/.fehbg
+runfile() { [ -f "$1" ] && sh "$1"; }
+runfile ~/.screenlayout/default.sh
+runfile ~/.fehbg
 
+command -v compton && compton &
 i3
 #exec startlxde
