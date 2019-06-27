@@ -584,14 +584,14 @@ augroup END
 	execute pathogen#infect()
 
 
-	"Airline"
-	"""""""""
-
-if exists(':AirlineRefresh')
+	"Line Managers"
+	"""""""""""""""
 
 " fix such that airline runs without having to split
 	set laststatus=2
-	
+
+if exists(':AirlineRefresh')
+
 " turn on pretty arrows
 	let g:airline_powerline_fonts = 1
 	let g:airline#extensions#whitespace#checks = [ 'indent', 'long' ]
