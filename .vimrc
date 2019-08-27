@@ -163,11 +163,11 @@ augroup nobeep
 augroup END
 
 " Spell checker for Australian English, but not in helpfiles
-augroup spelling
-	autocmd!
-	autocmd FileType text setlocal spell spelllang=en_au
-	autocmd Syntax help setlocal nospell
-augroup END
+" augroup spelling
+" 	autocmd!
+" 	autocmd FileType text setlocal spell spelllang=en_au
+" 	autocmd Syntax help setlocal nospell
+" augroup END
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "	ABBREVIATIONS AND MAPPINGS												 "
@@ -386,7 +386,7 @@ augroup runners
 
 " For various scripting languages, <leader>m runs open file
 " In general, languages would probably work
-	autocmd FileType * nnoremap <buffer> <leader>m :w<CR>:execute "!" . &filetype . " %"<CR>
+	nnoremap <leader>m :w<CR>:execute "!" . &filetype . " %"<CR>
 
 " In Other cases, the runner syntax differs
 	autocmd FileType awk nnoremap <buffer> <leader>m :w<CR>:!awk -f %<CR>
