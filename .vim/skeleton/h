@@ -1,6 +1,13 @@
 #ifndef <\=toupper('<@%:t:r>')>_H
 #define <\=toupper('<@%:t:r>')>_H
 
+#ifdef __cplusplus
+#extern "C"{
+#endif
 
+
+#ifdef __cplusplus
+#}
+#endif
 
 #endif
