@@ -257,6 +257,8 @@ iabbrev cFileOpen #include <sys/types.h>
 iabbrev cThreads #include <pthread.h>
 	\<CR>#include <semaphore.h>
 
+iabbrev forloop for (int i = 0; i < ; i++) {<esc>7hi
+
 	" LEADER "
 	""""""""""
 
