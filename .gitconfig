@@ -6,3 +6,7 @@
 [pager]
 	status = true
 
+[push]
+	default = matching
+[color]
+	ui = auto
