@@ -20,11 +20,13 @@
 if has ('gui_running')
 
 " Boot up the current saved session
-	try
-		source ~/.vim/session
-	catch E484
-		" File does not exist error
-	endtry
+	if ! &diff
+		try
+			source ~/.vim/session
+		catch E484
+			" File does not exist error
+		endtry
+	endif
 
 	" Select a font based on system
 	" Courier New will be replaced when I _actually_ use that system
