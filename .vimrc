@@ -516,6 +516,8 @@ augroup END
 
 		endif
 
+		" Javascript "
+		command! PurgeDebuggers !sed -i '/^\s*debugger;\s*$/d' `grep -lr 'debugger;' .`;
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
