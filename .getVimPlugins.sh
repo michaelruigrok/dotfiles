@@ -29,6 +29,7 @@ get_plugin roryokane detectindent # command to guess the correct indentation set
 get_plugin tpope vim-dispatch
 
 # UI/Syntax
+get_plugin rafi awesome-vim-colorschemes # A Whole heap of colourschemes
 #get_plugin vim-airline vim-airline # Make the bottom line all pretty
 get_plugin itchyny lightline.vim # Make the bottom line all pretty
 get_plugin othree html5.vim # HTML5/SVG syntax and omnicompletion
