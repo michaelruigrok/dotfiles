@@ -7,6 +7,6 @@
 	status = true
 
 [push]
-	default = matching
+	default = simple
 [color]
 	ui = auto
