@@ -176,6 +176,10 @@ augroup END
 "                                                                            "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+command! -nargs=1  Grep grep -r --exclude=tags <f-args> .
+
+command! -nargs=1 Vimgrep vimgrep --exclude=tags <f-args> .
+vnoremap g/ y:Grep <c-r>"<CR>
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
