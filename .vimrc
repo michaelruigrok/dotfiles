@@ -546,11 +546,15 @@ augroup END
 	set ignorecase
 	set smartcase
 
-
 " In command mode, first tab fills in the longest common match
 "  Second tab displays list. Two more tabs will iterate over that list.
 	set wildmode=longest,list,list,list:full
 	set wildmenu
+
+" Ignore certain matches from autocomplete
+	set wildignore+=*.o,*.obj
+" These patterns will appear last in autocomplete
+	set suffixes+=*.pdf
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "   HISTORY & UNDO                                                           "
