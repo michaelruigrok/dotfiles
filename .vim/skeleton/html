@@ -20,15 +20,34 @@
 		<meta name="description" content=""/>
 		<title></title>
 
-
-		<!-- common libraries -->
-		<!-- Pure CSS -->
+		<!-- Common Libraries -->
+		<!-- Pure CSS Base - basic css helpers -->
 		<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/base-min.css"/>
+		<!-- jQuery -->
+		<script type="text/javascript"
+				src="https://code.jquery.com/jquery-3.4.1.min.js"
+				integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+				crossorigin="anonymous"></script>
+		<!-- animate.css -->
+		<link rel="stylesheet"
+				href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css"
+				integrity="sha256-PHcOkPmOshsMBC+vtJdVr5Mwb7r0LkSVJPlPrp/IMpU="
+				crossorigin="anonymous"
+			/>
+		<!-- WOW.js - simple animations on scroll -->
+		<script type="text/javascript"
+				src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"
+				integrity="sha256-z6FznuNG1jo9PP3/jBjL6P3tvLMtSwiVAowZPOgo56U="
+				crossorigin="anonymous"></script>
 
 		<!-- rel/scripts -->
 		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
+		<link rel='stylesheet' type='text/css' href='css/style.css'/>
 		<script type="text/javascript" src="js/main.js" defer="defer"></script>
+
 	</head>
+
 	<body>
 	</body>
+
 </html>

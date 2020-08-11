@@ -607,6 +607,7 @@ augroup templates
 	autocmd BufNewFile Makefile 0r ~/.vim/skeleton/Makefile
 
 	autocmd BufNewFile *_test.c 0r ~/.vim/skeleton/minUnit_test.c | normal 33GdG
+	autocmd BufNewFile *cgi.sh 0r ~/.vim/skeleton/cgi.sh | normal G
 
 	" expand filenames with <@%>, <@%:p>, <@%:t:r:p:h>, et cetera
 	autocmd BufNewFile * silent! %s/<@\(%.\{-}\)>/\=expand(submatch(1))/
