@@ -86,3 +86,5 @@ fi
 	[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx
 
 alias bye='shutdown now'
+
+alias mygrep='grep --exclude-dir=node_modules'
