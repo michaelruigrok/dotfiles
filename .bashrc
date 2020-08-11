@@ -14,7 +14,7 @@ fi
 [[ $- != *i* ]] && return
 
 # included as a folder executables are run from 
-	export PATH=$PATH:~/.bin
+	export PATH=~/.bin:$PATH
 	
 ####
 # SHELL BEHAVIOUR
