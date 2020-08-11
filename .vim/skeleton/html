@@ -9,16 +9,21 @@
 		<link rel="canonical" href=""/>
 
 		<!-- Open Graph Data (for Facebook, e.g.) -->
-		<meta property="og:image" content="">
+		<meta property="og:image" content=""/>
 		<meta property="og:description" content=""/>
 		<meta property="og:title" content=""/>
 		<meta property="og:url" content=""/> <!-- used as permanent ID -->
 		<!-- Twitter -->
-		<meta name="twitter:title" content="">
+		<meta name="twitter:title" content=""/>
 
 		<meta name="author" content="Michael Ruigrok"/>
 		<meta name="description" content=""/>
 		<title></title>
+
+
+		<!-- common libraries -->
+		<!-- Pure CSS -->
+		<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/base-min.css"/>
 
 		<!-- rel/scripts -->
 		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
