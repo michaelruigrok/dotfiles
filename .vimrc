@@ -241,6 +241,26 @@ iabbrev cssLink <link rel='stylesheet' type='text/css' href='css/style.css'/>
 
 iabbrev jsLink <script type="text/javascript" src="js/main.js" async="async"></script>
 
+iabbrev jsModule <!DOCTYPE html>
+	\<CR>
+	\<CR><html lang="en">
+	\<CR><head>
+	\<CR><meta charset="utf-8"/>
+	\<CR><title></title>
+	\<CR></head>
+	\<CR><body>
+	\<CR></body>
+	\<CR></html>
+
+iabbrev jsModule 
+	\var module = (function() {
+	\<CR>'use strict';
+	\<CR>
+	\<CR>return {
+	\<CR>};
+	\<CR>
+	\<CR>})();
+
 iabbrev jqueryLink <script type="text/javascript"
 	\<CR>src="https://code.jquery.com/jquery-3.2.1.min.js"
 	\<CR>integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
