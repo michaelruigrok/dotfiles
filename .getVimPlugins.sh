@@ -34,6 +34,8 @@ get_plugin rafi awesome-vim-colorschemes # A Whole heap of colourschemes
 get_plugin itchyny lightline.vim # Make the bottom line all pretty
 get_plugin othree html5.vim # HTML5/SVG syntax and omnicompletion
 get_plugin ap vim-css-color # preview the colours of CSS with highlights
+get_plugin sgur vim-editorconfig
+
 get_plugin vim-scripts screenplay # For writing scripts, of the film variety
 
 # Motions/Mappings
