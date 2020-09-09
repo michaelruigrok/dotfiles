@@ -78,6 +78,10 @@ fi
 	}
 	alias 'cd..'='cd_up'
 
+	alias bye='shutdown now'
+
+	alias mygrep='grep --exclude-dir=node_modules'
+
 ####
 # STARTUP
 ####
@@ -85,6 +89,3 @@ fi
 # And then start x (If on the first display)
 	[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx
 
-alias bye='shutdown now'
-
-alias mygrep='grep --exclude-dir=node_modules'
