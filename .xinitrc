@@ -56,5 +56,5 @@ runfile ~/.screenlayout/default.sh
 runfile ~/.fehbg
 
 command -v compton && compton &
-i3
+i3 -d all
 #exec startlxde
