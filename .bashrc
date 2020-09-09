@@ -23,6 +23,10 @@ fi
 # Allow use of globstart '**' to glob recursively through directories
 	shopt -s globstar
 
+# bash auto-completion
+	completion=/etc/profile.d/bash_completion.sh
+	[ -f $completion ] && source $completion
+
 ####
 # HISTORY
 ####
