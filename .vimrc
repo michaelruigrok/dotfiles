@@ -639,3 +639,49 @@ if exists(':AirlineRefresh')
 	let g:airline#extensions#whitespace#checks = [ 'indent', 'long' ]
 
 endif
+
+	" CoC Language Server "
+	"""""""""""""""""""""""
+" TODO: move into an autocmd maybe? It's not like I use these feature that
+" frequently
+
+" Some default recommended settings
+	set hidden
+	"set nobackup
+	"set nowritebackup
+	"set cmdheight=2
+	"set shortmess=2
+	set updatetime=1000
+
+" Enable markers on the side
+	if has("patch-8.1.1564")
+		" Recently vim can merge signcolumn and number column into one
+		set signcolumn=number
+	else
+		set signcolumn=yes
+	endif
+
+" Next/previous error/warning/diagnostic
+	nmap <silent> [c <Plug>(coc-diagnostic-prev)
+	nmap <silent> ]c <Plug>(coc-diagnostic-next)
+
+" Code Navigation
+	nmap <silent> <c-]> <Plug>(coc-definition)
+	nmap <silent> g] <Plug>(coc-references)
+	nmap <silent> gy <Plug>(coc-type-definition)
+	nmap <silent> <c-\> <Plug>(coc-implementation)
+
+	nnoremap <silent> gK :call <SID>coc_documentation()<CR>
+
+	function! s:coc_documentation()
+		if (index(['vim','help'], &filetype) >= 0)
+			execute 'h '.expand('<cword>')
+		else
+			call CocAction('doHover')
+		endif
+	endfunction
+
+"" Other stuff:
+" CocDiagnostics to get a list of what's wrong
+" https://github.com/neoclide/coc.nvim/wiki/Language-servers
+
