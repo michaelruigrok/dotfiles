@@ -86,6 +86,13 @@ fi
 
 	alias mygrep='grep --exclude-dir=node_modules'
 
+	alias docc='docker-compose'
+
+	alias docclogs='docc logs -f --tail=40 | ccze -m ansi'
+
+# I always type git checkout wrong
+	alias chekcout='checkout'
+
 ####
 # STARTUP
 ####

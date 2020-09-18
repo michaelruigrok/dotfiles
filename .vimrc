@@ -176,7 +176,15 @@ augroup END
 "                                                                            "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-command! -nargs=1  Grep grep -r --exclude=tags <f-args> .
+" TODO: use autocmd to parse .gitignore in dir
+
+
+command! -nargs=1  Grep grep -r
+ 	\ --exclude=tags 
+	\ --exclude-dir=node_modules
+	\ --exclude-dir=bin
+	\ --exclude-dir=obj
+	\ <f-args> .
 
 command! -nargs=1 Vimgrep vimgrep --exclude=tags <f-args> .
 vnoremap g/ y:Grep <c-r>"<CR>
@@ -421,7 +429,9 @@ augroup runners
 
 " For various scripting languages, <leader>m runs open file
 " In general, languages would probably work
-	nnoremap <leader>m :w<CR>:execute "!" . &filetype . " %"<CR>
+	autocmd FileType * nnoremap <buffer> <leader>m :w<CR>:execute "!" . &filetype . " %"<CR>
+	"autocmd FileType * compiler &filetype
+	autocmd FileType * let b:dispatch = &filetype . ' %'
 
 " In Other cases, the runner syntax differs
 	autocmd FileType awk nnoremap <buffer> <leader>m :w<CR>:!awk -f %<CR>
@@ -684,4 +694,28 @@ endif
 "" Other stuff:
 " CocDiagnostics to get a list of what's wrong
 " https://github.com/neoclide/coc.nvim/wiki/Language-servers
+
+
+
+	""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+	"	EXPERIMENTS																 "
+	"																			 "
+	""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Look through all subfolders for files
+" Since I usually hang out in ~, this is probably pretty slow
+	"set path+=**
+	set path+=* " nvm, just try within the next layer.
+
+
+" also 'b: <literally any substring of a file> is pretty useful!
+" ctrl-t, tag stack
+"
+" GET USED TO USING CTRL-N/P without CTRL-X, DUMMY!
+"
+" set complete?
+"
+" ctrl-e to exit completion
+"
+" set showcmd
+" 
 

@@ -23,6 +23,7 @@ rm -rf ~/.vim/bundle/vim-sleuth/
 rm -rf ~/.vim/bundle/vim-airline/
 
 #get other plugins
+get_plugin xolox vim-misc
 get_plugin tpope vim-repeat # support to repeat custom mappings
 get_plugin mattn emmet-vim # type in css selectors, out comes fully formed HTML
 get_plugin roryokane detectindent # command to guess the correct indentation settings
@@ -39,6 +40,7 @@ get_plugin editorconfig editorconfig-vim
 
 # Utilities
 get_plugin AndrewRadev linediff.vim # Diff only portions of a file
+get_plugin xolox vim-notes
 
 # Motions/Mappings
 get_plugin sickill vim-pasta # p/P paste with appropriate indentation
@@ -49,7 +51,9 @@ get_plugin vim-scripts paredit.vim # lisp list maps. See https://gist.github.com
 get_plugin tpope vim-unimpaired # collection of mappings using ] and [
 
 # Language support 
+get_plugin sheerun vim-polyglot
 get_plugin neoclide coc.nvim # Language server support
+get_plugin omnisharp omnisharp-vim
 get_plugin othree html5.vim
 get_plugin keith swift.vim
 get_plugin peitalin vim-jsx-typescript
