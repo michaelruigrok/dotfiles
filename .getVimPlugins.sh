@@ -51,7 +51,6 @@ get_plugin sickill vim-pasta # p/P paste with appropriate indentation
 get_plugin easymotion vim-easymotion # extend f/F and t/T with an interactive multi-jump select
 get_plugin tpope vim-surround # operate on surrounding brackets/tags
 get_plugin tpope vim-commentary # `gc` verb un/comments
-get_plugin vim-scripts paredit.vim # lisp list maps. See https://gist.github.com/nblumoe/5450099 for usage notes
 get_plugin tpope vim-unimpaired # collection of mappings using ] and [
 
 # Language support 
@@ -61,5 +60,8 @@ get_plugin omnisharp omnisharp-vim
 get_plugin othree html5.vim
 get_plugin keith swift.vim
 get_plugin peitalin vim-jsx-typescript
+get_plugin tpope vim-fireplace # clojure repl integration
+get_plugin guns vim-sexp # lisp S-expression handling
+get_plugin tpope vim-sexp-mappings-for-regular-people # lisp S-expression handling
 
 echo "----------------------------------------------------------------------"
