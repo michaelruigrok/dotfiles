@@ -24,7 +24,7 @@ wget -O ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
 
 (exit $?) || exit 1
 
-remove_plugins vim-sleuth vim-airline paredit.vim
+remove_plugins vim-sleuth vim-airline paredit.vim vim-editorconfig
 
 #get other plugins
 get_plugin xolox vim-misc
@@ -37,7 +37,6 @@ get_plugin tpope vim-dispatch
 get_plugin rafi awesome-vim-colorschemes # A Whole heap of colourschemes
 get_plugin itchyny lightline.vim # Make the bottom line all pretty
 get_plugin ap vim-css-color # preview the colours of CSS with highlights
-get_plugin sgur vim-editorconfig
 
 get_plugin vim-scripts screenplay # For writing scripts, of the film variety
 get_plugin editorconfig editorconfig-vim
