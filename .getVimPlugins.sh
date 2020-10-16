@@ -9,6 +9,13 @@ get_plugin() {
 	echo "----------------------------------------------------------------------"
 }
 
+remove_plugins() {
+	dir=~/.vim/bundle/
+	for file in "$@"; do
+		rm -rf "$dir/$file"
+	done
+}
+
 #get pathogen
 mkdir -p ~/.vim/autoload ~/.vim/bundle && {
 curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim || \
@@ -17,10 +24,7 @@ wget -O ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
 
 (exit $?) || exit 1
 
-# Remove vim-sleuth
-rm -rf ~/.vim/bundle/vim-sleuth/
-# Remove vim-airline
-rm -rf ~/.vim/bundle/vim-airline/
+remove_plugins vim-sleuth vim-airline paredit.vim
 
 #get other plugins
 get_plugin xolox vim-misc
