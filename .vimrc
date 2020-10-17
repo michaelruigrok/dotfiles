@@ -249,16 +249,7 @@ iabbrev cssLink <link rel='stylesheet' type='text/css' href='css/style.css'/>
 
 iabbrev jsLink <script type="text/javascript" src="js/main.js" async="async"></script>
 
-iabbrev jsModule <!DOCTYPE html>
-	\<CR>
-	\<CR><html lang="en">
-	\<CR><head>
-	\<CR><meta charset="utf-8"/>
-	\<CR><title></title>
-	\<CR></head>
-	\<CR><body>
-	\<CR></body>
-	\<CR></html>
+iabbrev jsLinkModule <script type="module" src="js/main.js" async="async"></script>
 
 iabbrev jsModule 
 	\var module = (function() {
