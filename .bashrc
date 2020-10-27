@@ -23,6 +23,9 @@ fi
 # Allow use of globstart '**' to glob recursively through directories
 	shopt -s globstar
 
+# ctrl-s searches forward in history, instead of pausing the terminal
+	stty -ixon
+
 # bash auto-completion
 	completion=/etc/profile.d/bash_completion.sh
 	[ -f $completion ] && source $completion
