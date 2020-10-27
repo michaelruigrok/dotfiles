@@ -27,6 +27,9 @@ fi
 	completion=/etc/profile.d/bash_completion.sh
 	[ -f $completion ] && source $completion
 
+# more autocomplete support
+	command -v kubectl >/dev/null && source <(kubectl completion bash)
+
 ####
 # HISTORY
 ####
