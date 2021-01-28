@@ -44,6 +44,7 @@ get_plugin editorconfig editorconfig-vim
 # Utilities
 get_plugin AndrewRadev linediff.vim # Diff only portions of a file
 get_plugin xolox vim-notes
+get_plugin mbbill undotree
 
 # Motions/Mappings
 get_plugin sickill vim-pasta # p/P paste with appropriate indentation
@@ -55,7 +56,6 @@ get_plugin tpope vim-unimpaired # collection of mappings using ] and [
 # Language support 
 get_plugin sheerun vim-polyglot
 get_plugin neoclide coc.nvim # Language server support
-get_plugin omnisharp omnisharp-vim
 get_plugin othree html5.vim
 get_plugin keith swift.vim
 get_plugin peitalin vim-jsx-typescript
