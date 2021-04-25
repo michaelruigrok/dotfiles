@@ -1,0 +1,7 @@
+set reverse_name=yes # reply to emails with the address they were sent to
+set reverse_realname=no
+set my_name="Michael Ruigrok"
+set from="Michael Ruigrok <michael@content.rodeo>"
+set edit_headers=yes
+
+alternates michael@content.rodeo
