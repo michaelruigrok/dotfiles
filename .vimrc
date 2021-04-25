@@ -176,7 +176,15 @@ augroup END
 "                                                                            "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-command! -nargs=1  Grep grep -r --exclude=tags <f-args> .
+" TODO: use autocmd to parse .gitignore in dir
+
+
+command! -nargs=1  Grep grep -r
+ 	\ --exclude=tags 
+	\ --exclude-dir=node_modules
+	\ --exclude-dir=bin
+	\ --exclude-dir=obj
+	\ <f-args> .
 
 command! -nargs=1 Vimgrep vimgrep --exclude=tags <f-args> .
 vnoremap g/ y:Grep <c-r>"<CR>
@@ -240,6 +248,17 @@ iabbrev htmlTemplate <!DOCTYPE html>
 iabbrev cssLink <link rel='stylesheet' type='text/css' href='css/style.css'/>
 
 iabbrev jsLink <script type="text/javascript" src="js/main.js" async="async"></script>
+
+iabbrev jsLinkModule <script type="module" src="js/main.js" async="async"></script>
+
+iabbrev jsModule 
+	\var module = (function() {
+	\<CR>'use strict';
+	\<CR>
+	\<CR>return {
+	\<CR>};
+	\<CR>
+	\<CR>})();
 
 iabbrev jqueryLink <script type="text/javascript"
 	\<CR>src="https://code.jquery.com/jquery-3.2.1.min.js"
@@ -401,7 +420,9 @@ augroup runners
 
 " For various scripting languages, <leader>m runs open file
 " In general, languages would probably work
-	nnoremap <leader>m :w<CR>:execute "!" . &filetype . " %"<CR>
+	autocmd FileType * nnoremap <buffer> <leader>m :w<CR>:execute "!" . &filetype . " %"<CR>
+	"autocmd FileType * compiler &filetype
+	autocmd FileType * let b:dispatch = &filetype . ' %'
 
 " In Other cases, the runner syntax differs
 	autocmd FileType awk nnoremap <buffer> <leader>m :w<CR>:!awk -f %<CR>
@@ -619,3 +640,73 @@ if exists(':AirlineRefresh')
 	let g:airline#extensions#whitespace#checks = [ 'indent', 'long' ]
 
 endif
+
+	" CoC Language Server "
+	"""""""""""""""""""""""
+" TODO: move into an autocmd maybe? It's not like I use these feature that
+" frequently
+
+" Some default recommended settings
+	set hidden
+	"set nobackup
+	"set nowritebackup
+	"set cmdheight=2
+	"set shortmess=2
+	set updatetime=1000
+
+" Enable markers on the side
+	if has("patch-8.1.1564")
+		" Recently vim can merge signcolumn and number column into one
+		set signcolumn=number
+	else
+		set signcolumn=yes
+	endif
+
+" Next/previous error/warning/diagnostic
+	nmap <silent> [c <Plug>(coc-diagnostic-prev)
+	nmap <silent> ]c <Plug>(coc-diagnostic-next)
+
+" Code Navigation
+	nmap <silent> <c-]> <Plug>(coc-definition)
+	nmap <silent> g] <Plug>(coc-references)
+	nmap <silent> gy <Plug>(coc-type-definition)
+	nmap <silent> <c-\> <Plug>(coc-implementation)
+
+	nnoremap <silent> gK :call <SID>coc_documentation()<CR>
+
+	function! s:coc_documentation()
+		if (index(['vim','help'], &filetype) >= 0)
+			execute 'h '.expand('<cword>')
+		else
+			call CocAction('doHover')
+		endif
+	endfunction
+
+"" Other stuff:
+" CocDiagnostics to get a list of what's wrong
+" https://github.com/neoclide/coc.nvim/wiki/Language-servers
+
+
+
+	""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+	"	EXPERIMENTS																 "
+	"																			 "
+	""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Look through all subfolders for files
+" Since I usually hang out in ~, this is probably pretty slow
+	"set path+=**
+	set path+=* " nvm, just try within the next layer.
+
+
+" also 'b: <literally any substring of a file> is pretty useful!
+" ctrl-t, tag stack
+"
+" GET USED TO USING CTRL-N/P without CTRL-X, DUMMY!
+"
+" set complete?
+"
+" ctrl-e to exit completion
+"
+" set showcmd
+" 
+
