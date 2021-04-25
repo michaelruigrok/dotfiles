@@ -63,8 +63,9 @@ fi
 # Easier way of doing "sudo !!"
 	alias oh='sudo $(history -p \!\!)'
 
-# Makes the "ls" command all pretty
+# Make some commands pretty
 	alias ls='ls --color=auto'
+	alias grep='grep --color=auto'
 
 # user personal vim config whenever running vim as superuser
 	alias suvim='sudo vim -u ~/.vimrc'
