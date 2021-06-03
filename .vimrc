@@ -226,18 +226,18 @@ iabbrev addBreak
 " TODO: set this up to use getopt or getopts. But keep it simple!
 "  preferably _just_ as a way to move args to the start of a command
 iabbrev bashArgs while true; do
-	\<CR> case "$1" in
-	\<CR>  -f, --force ) FORCE=true
-	\<CR>       shift
-	\<CR>       ;;
-	\<CR>  -n, --name ) NAME="$2"
-	\<CR>       shift
-	\<CR>       shift
-	\<CR>       ;;
-	\<CR>   * ) break
-	\<CR>      ;;
-	\<CR>  esac
-	\<CR>done
+	\<CR>case "$1" in
+		\<CR>-f \| --force ) FORCE=true
+			\<CR>shift
+			\<CR>;;
+		\<CR>-n \| --name ) NAME="$2"
+			\<CR>shift
+			\<CR>shift
+			\<CR>;;
+		\<CR>* ) break
+			\<CR>;;
+	\<CR>esac
+\<CR>done
 
 	" HTML SHORTCUTS "
 	""""""""""""""""""
