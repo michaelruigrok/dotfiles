@@ -234,6 +234,10 @@ iabbrev bashArgs while true; do
 			\<CR>shift
 			\<CR>shift
 			\<CR>;;
+		\<CR>-- )
+			\<CR>shift
+			\<CR>break
+			\<CR>;;
 		\<CR>* ) break
 			\<CR>;;
 	\<CR>esac
@@ -436,8 +440,10 @@ augroup runners
 	autocmd!
 
 " For various scripting languages, <leader>m runs open file
-" In general, languages would probably work
-	autocmd FileType * nnoremap <buffer> <leader>m :w<CR>:execute "!" . &filetype . " %"<CR>
+	" For most languages, we can just exec the file direct, or use
+	" the interpreter (using the filetype name)
+	autocmd FileType * nnoremap <buffer> <leader>m :w<CR>:execute "! [[ -x % ]] && %:p \|\| " . &filetype . " %"<CR>
+	" TODO: try and use vim's smart compiler/running architecture
 	"autocmd FileType * compiler &filetype
 	autocmd FileType * let b:dispatch = &filetype . ' %'
 
@@ -726,4 +732,9 @@ endif
 "
 " set showcmd
 " 
-
+" 1<C-V> repeats last visual block
+" <C-X><C-V> completes vim commands
+" '[ and '] for the boundaries around changed/pasted text
+" '< and '> last visual selection
+" command mode ctrl+f for command history
+" s/match//n count occurrences
