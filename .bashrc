@@ -13,9 +13,9 @@ fi
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-# included as a folder executables are run from 
+# included as a folder executables are run from
 	export PATH=~/.bin:$PATH
-	
+
 ####
 # SHELL BEHAVIOUR
 ####
