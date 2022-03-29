@@ -73,7 +73,7 @@ shopt -s checkwinsize
 ## Remaps Caps Lock to Escape.
 
 # This one's for CLI (must be root)
-	loadkeys ~/.keymap
+	loadkeys ~/.keymap 2>/dev/null
 
 	## Command-specific config ##
 
