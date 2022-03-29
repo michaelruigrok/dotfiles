@@ -15,6 +15,7 @@ fi
 
 # included as a folder executables are run from
 	export PATH=~/.bin:$PATH
+	export PATH=~/.local/bin:$PATH
 
 ####
 # SHELL BEHAVIOUR
