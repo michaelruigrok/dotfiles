@@ -116,6 +116,20 @@ shopt -s checkwinsize
 		fi
 	}
 
+alias k='kubectl'
+complete -F __start_kubectl k
+
+# To see k8s secret data in plaintext
+	function kubeSecret() {
+		[ -z "$1" ] && "arg 1: secret name"
+		[ -z "$2" ] && "arg 2: secret key"
+		kubectl get secret $1 -o jsonpath="{.data.$2}" | base64 --decode; echo
+	}
+
+alias use-context='kubectl config use-context'
+alias set-context='kubectl config set-context --current --namespace'
+alias get-contexts='kubectl config get-contexts'
+
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
 	alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
