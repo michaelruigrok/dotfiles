@@ -27,8 +27,12 @@ fi
 	stty -ixon
 
 # bash auto-completion
-	completion=/etc/profile.d/bash_completion.sh
-	[ -f $completion ] && source $completion
+source_if_exists() { [ -f "$1" ] && source $1;}
+if ! shopt -oq posix; then
+	source_if_exists /usr/share/bash-completion/bash_completion
+	source_if_exists /etc/bash_completion
+	source_if_exists /etc/profile.d/bash_completion.sh
+fi
 
 # more autocomplete support
 	command -v kubectl >/dev/null && source <(kubectl completion bash)
