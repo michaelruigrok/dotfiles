@@ -460,6 +460,11 @@ augroup runners
 " for this vimrc, <leader>m reloads its contents
 	autocmd FileType vim nnoremap <buffer> <leader>m :source %<CR>
 
+" Terraform validation
+	autocmd FileType terraform set efm=%EError:\ %m,%WWarning:\ %m,%ISuccess!\ %m,%C%.%#on\ %f\ line\ %l%.%#\ in\ %o:,%C\ %.%#,%C%m,%C,%-G,
+	autocmd FileType terraform set makeprg=terraform\ validate\ -no-color
+	autocmd FileType terraform nnoremap <buffer> <leader>m :w<CR>:make<CR>
+
 " for c/c++, <leader>m compiles a single file and then runs the binary
 	function! CompileC(...)
 		let newfile = split(expand('%:p'),"\\.")[0]
