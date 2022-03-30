@@ -21,6 +21,9 @@ fi
 # SHELL BEHAVIOUR
 ####
 
+# Just a general prompt. Gotta customise this sometimes...
+	PS1='[\u@\h \W]\$ '
+
 # Allow use of globstart '**' to glob recursively through directories
 	shopt -s globstar
 
@@ -41,6 +44,14 @@ shopt -s checkwinsize
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
+# Favourite editor:
+	export EDITOR="vim"
+
+## Remaps Caps Lock to Escape.
+# This one's for CLI (must be root)
+	loadkeys ~/.keymap
+
+
 ####
 # HISTORY
 ####
@@ -60,19 +71,6 @@ shopt -s checkwinsize
 
 # Record each line of history as it is issued
 	PROMPT_COMMAND='history -a'
-
-# Favourite editor:
-	export EDITOR="vim"
-
-# Just a general prompt. Gotta customise this sometimes...
-	PS1='[\u@\h \W]\$ '
-
-## Remaps Caps Lock to Escape.
-
-# This one's for CLI (must be root)
-	loadkeys ~/.keymap
-
-	## Command-specific config ##
 
 ####
 # ALIASES
