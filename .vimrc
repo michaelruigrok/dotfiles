@@ -181,8 +181,10 @@ augroup END
 
 command! -nargs=1  Grep grep -r
  	\ --exclude=tags 
+	\ --exclude=.git
 	\ --exclude-dir=node_modules
 	\ --exclude-dir=bin
+	\ --exclude-dir=.expo
 	\ --exclude-dir=obj
 	\ <f-args> .
 
