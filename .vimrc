@@ -181,8 +181,10 @@ augroup END
 
 command! -nargs=1  Grep grep -r
  	\ --exclude=tags 
+	\ --exclude=.git
 	\ --exclude-dir=node_modules
 	\ --exclude-dir=bin
+	\ --exclude-dir=.expo
 	\ --exclude-dir=obj
 	\ <f-args> .
 
@@ -225,7 +227,7 @@ iabbrev addBreak
 	""""""""""""""""""
 " TODO: set this up to use getopt or getopts. But keep it simple!
 "  preferably _just_ as a way to move args to the start of a command
-iabbrev bashArgs while true; do
+iabbrev bashArgs while [ $# -ne 0 ]; do
 	\<CR>case "$1" in
 		\<CR>-f \| --force ) FORCE=true
 			\<CR>shift
@@ -233,6 +235,10 @@ iabbrev bashArgs while true; do
 		\<CR>-n \| --name ) NAME="$2"
 			\<CR>shift
 			\<CR>shift
+			\<CR>;;
+		\<CR>-- )
+			\<CR>shift
+			\<CR>break
 			\<CR>;;
 		\<CR>* ) break
 			\<CR>;;
@@ -436,8 +442,10 @@ augroup runners
 	autocmd!
 
 " For various scripting languages, <leader>m runs open file
-" In general, languages would probably work
-	autocmd FileType * nnoremap <buffer> <leader>m :w<CR>:execute "!" . &filetype . " %"<CR>
+	" For most languages, we can just exec the file direct, or use
+	" the interpreter (using the filetype name)
+	autocmd FileType * nnoremap <buffer> <leader>m :w<CR>:execute "! [[ -x % ]] && %:p \|\| " . &filetype . " %"<CR>
+	" TODO: try and use vim's smart compiler/running architecture
 	"autocmd FileType * compiler &filetype
 	autocmd FileType * let b:dispatch = &filetype . ' %'
 
@@ -451,6 +459,11 @@ augroup runners
 
 " for this vimrc, <leader>m reloads its contents
 	autocmd FileType vim nnoremap <buffer> <leader>m :source %<CR>
+
+" Terraform validation
+	autocmd FileType terraform set efm=%EError:\ %m,%WWarning:\ %m,%ISuccess!\ %m,%C%.%#on\ %f\ line\ %l%.%#\ in\ %o:,%C\ %.%#,%C%m,%C,%-G,
+	autocmd FileType terraform set makeprg=terraform\ validate\ -no-color
+	autocmd FileType terraform nnoremap <buffer> <leader>m :w<CR>:make<CR>
 
 " for c/c++, <leader>m compiles a single file and then runs the binary
 	function! CompileC(...)
@@ -726,4 +739,9 @@ endif
 "
 " set showcmd
 " 
-
+" 1<C-V> repeats last visual block
+" <C-X><C-V> completes vim commands
+" '[ and '] for the boundaries around changed/pasted text
+" '< and '> last visual selection
+" command mode ctrl+f for command history
+" s/match//n count occurrences

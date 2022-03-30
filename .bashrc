@@ -15,10 +15,14 @@ fi
 
 # included as a folder executables are run from
 	export PATH=~/.bin:$PATH
+	export PATH=~/.local/bin:$PATH
 
 ####
 # SHELL BEHAVIOUR
 ####
+
+# Just a general prompt. Gotta customise this sometimes...
+	PS1='[\u@\h \W]\$ '
 
 # Allow use of globstart '**' to glob recursively through directories
 	shopt -s globstar
@@ -44,6 +48,14 @@ shopt -s checkwinsize
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
+# Favourite editor:
+	export EDITOR="vim"
+
+## Remaps Caps Lock to Escape.
+# This one's for CLI (must be root)
+	loadkeys ~/.keymap 2>/dev/null
+
+
 ####
 # HISTORY
 ####
@@ -63,19 +75,6 @@ shopt -s checkwinsize
 
 # Record each line of history as it is issued
 	PROMPT_COMMAND='history -a'
-
-# Favourite editor:
-	export EDITOR="vim"
-
-# Just a general prompt. Gotta customise this sometimes...
-	PS1='[\u@\h \W]\$ '
-
-## Remaps Caps Lock to Escape.
-
-# This one's for CLI (must be root)
-	loadkeys ~/.keymap 2>/dev/null
-
-	## Command-specific config ##
 
 ####
 # ALIASES
@@ -110,6 +109,28 @@ shopt -s checkwinsize
 
 # I always type git checkout wrong
 	alias chekcout='checkout'
+
+	function git() {
+		if [ "$1" = "recent-branches" ]; then
+			command git branch --all --sort=-committerdate | grep remote | head -n 5
+		else
+			command git "$@"
+		fi
+	}
+
+alias k='kubectl'
+complete -F __start_kubectl k
+
+# To see k8s secret data in plaintext
+	function kubeSecret() {
+		[ -z "$1" ] && "arg 1: secret name"
+		[ -z "$2" ] && "arg 2: secret key"
+		kubectl get secret $1 -o jsonpath="{.data.$2}" | base64 --decode; echo
+	}
+
+alias use-context='kubectl config use-context'
+alias set-context='kubectl config set-context --current --namespace'
+alias get-contexts='kubectl config get-contexts'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert

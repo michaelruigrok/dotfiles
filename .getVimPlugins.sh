@@ -62,5 +62,6 @@ get_plugin peitalin vim-jsx-typescript
 get_plugin tpope vim-fireplace # clojure repl integration
 get_plugin guns vim-sexp # lisp S-expression handling
 get_plugin tpope vim-sexp-mappings-for-regular-people # lisp S-expression handling
+get_plugin andrewstuart vim-kubernetes
 
 echo "----------------------------------------------------------------------"
