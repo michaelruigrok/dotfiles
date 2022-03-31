@@ -3,7 +3,7 @@
 # get_plugin git-maintainer git-repo
 get_plugin() {
 	dir=~/.vim/bundle
-	loc="git://github.com/$1/$2.git"
+	loc="https://github.com/$1/$2.git"
 	git clone "$loc" "$dir/$2" ||
 	( cd "$dir/$2" && git pull "$loc" )
 	echo "----------------------------------------------------------------------"

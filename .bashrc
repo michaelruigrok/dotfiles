@@ -31,8 +31,12 @@ fi
 	stty -ixon
 
 # bash auto-completion
-	completion=/etc/profile.d/bash_completion.sh
-	[ -f $completion ] && source $completion
+source_if_exists() { [ -f "$1" ] && source $1;}
+if ! shopt -oq posix; then
+	source_if_exists /usr/share/bash-completion/bash_completion
+	source_if_exists /etc/bash_completion
+	source_if_exists /etc/profile.d/bash_completion.sh
+fi
 
 # more autocomplete support
 	command -v kubectl >/dev/null && source <(kubectl completion bash)
@@ -49,7 +53,7 @@ shopt -s checkwinsize
 
 ## Remaps Caps Lock to Escape.
 # This one's for CLI (must be root)
-	loadkeys ~/.keymap
+	loadkeys ~/.keymap 2>/dev/null
 
 
 ####
@@ -133,6 +137,9 @@ alias get-contexts='kubectl config get-contexts'
 	alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
 	weather() { curl "wttr.in/${*:-Brisbane City}"; }
+
+# colored GCC warnings and errors
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 ####
 # STARTUP

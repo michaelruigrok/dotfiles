@@ -21,3 +21,8 @@
 	editor = 'vim'
 [init]
 	defaultBranch = main
+
+[url "git+ssh://michaelruigrok@git.launchpad.net/"]
+	insteadof = launchpad:
+[url "git+ssh://content.rodeo:/opt/git/"]
+	insteadof = content.rodeo:
