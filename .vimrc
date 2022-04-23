@@ -14,6 +14,10 @@
 		set runtimepath=$HOME/.vim,$VIMRUNTIME,$VIM/vimfiles/after,$VIM/.vim/after
 	endif
 
+	"Pathogen"
+	""""""""""
+	execute pathogen#infect()
+
 	"  GUI SETTINGS  "
 	""""""""""""""""""
 
@@ -90,8 +94,17 @@ endif
 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" colorscheme to desert
+try 
+	let my_colorschemes = [ 'one', 'PaperColor', 'afterglow', 'materialbox', 'meta5', 'solarized8_flat', 'rakr', 'ayu', 'challenger_deep', 'deep-space', 'flattened_dark', 'happyhacking', 'gruvbox', 'hybrid', 'gruvbox', 'scheakur', 'sonokai', 'space-vim-dark', 'deus' ]
+	execute 'colorscheme' my_colorschemes[localtime() % (len(my_colorschemes) - 1)]
+catch
 	colorscheme desert
+endtry
+
+if ! has ('gui_running')
+	" TODO: set some colourschemes
+	let my_colorschemes = [ 'gotham256', 'OceanicNext', 'rdark-terminal2', 'sierra', 'spacecamp', 'twilight256']
+endif
 
 " show relative numbering
 	set relativenumber
@@ -652,9 +665,6 @@ augroup templates
 
 augroup END
 
-	"Pathogen"
-	""""""""""
-	execute pathogen#infect()
 
 
 	"Line Managers"
