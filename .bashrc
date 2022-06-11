@@ -1,6 +1,4 @@
-#
 # ~/.bashrc
-#
 
 ###
 # Windows only Config
@@ -75,6 +73,12 @@ shopt -s checkwinsize
 
 # Record each line of history as it is issued
 	PROMPT_COMMAND='history -a'
+
+####
+# Application env
+####
+
+export LESS='-i'
 
 ####
 # ALIASES
