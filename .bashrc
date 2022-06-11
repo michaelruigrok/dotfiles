@@ -67,8 +67,8 @@ shopt -s checkwinsize
 	HISTCONTROL=ignoreboth
 
 # Let the history size be reasonably sized
-	HISTFILESIZE=10000000
-	HISTSIZE=10000000
+	HISTSIZE=-1
+	unset HISTFILESIZE
 
 # Append to HISTFILE, rather than overriding it
 	shopt -s histappend
