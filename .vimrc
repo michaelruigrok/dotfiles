@@ -469,9 +469,10 @@ augroup runners
 	autocmd FileType * let b:dispatch = &filetype . ' %'
 
 " In Other cases, the runner syntax differs
-	autocmd FileType awk setlocal makepgr=awk\ -f\ %:.
-	autocmd FileType sed setlocal makepgr=sed\ -f\ %:.
-	autocmd FileType cs  setlocal makepgr=mono-csc\ -f\ %:.
+	autocmd FileType awk  setlocal makeprg=awk\ -f\ %:.
+	autocmd FileType sed  setlocal makeprg=sed\ -f\ %:.
+	autocmd FileType cs   setlocal makeprg=mono-csc\ -f\ %:.
+	autocmd FileType rust let makeargs='build'
 
 " for LaTeX documents, compile as a pdf
 	autocmd FileType tex setlocal makepgr=pdflatex\ %:.
@@ -481,8 +482,32 @@ augroup runners
 	autocmd FileType vim nnoremap <buffer> <leader>m :source %<CR>
 
 " Terraform validation
-	autocmd FileType terraform setlocal efm=%EError:\ %m,%WWarning:\ %m,%ISuccess!\ %m,%C%.%#on\ %f\ line\ %l%.%#\ in\ %o:,%C\ %.%#,%C%m,%C,%-G,
+	autocmd FileType terraform execute 'setlocal ' . fnameescape(
+				\  'efm=%EError: %m,'
+				\. '%WWarning: %m,'
+				\. '%ISuccess! %m,'
+				\. '%C%.%#on %f line %l%.%# in %o:,'
+				\. '%C %.%#,'
+				\. '%C%m,'
+				\. '%C,'
+				\. '%-G,'
+				\)
 	autocmd FileType terraform setlocal makeprg=terraform\ validate\ -no-color
+
+" Raku
+	autocmd FileType raku execute 'setlocal '. fnameescape(
+				\  'efm=%E%.%#Error while compiling %f (Module),'
+				\. '%E%.%#Error while compiling %f,'
+				\. '%WWarning: %m,'
+				\. '%EAttempt to %m,'
+				\. '%C%.%#at %f:%l,'
+				\. '%C %#in block %o at %f line %l,'
+				\. '%C%p>%.%#,'
+				\. '%C %#%m,'
+				\. '%C,'
+				\. '%-G,'
+				\)
+	autocmd FileType raku  setlocal makeprg=rakudo\ %
 
 " for c/c++, <leader>m compiles a single file and then runs the binary
 	function! CompileC(...)
