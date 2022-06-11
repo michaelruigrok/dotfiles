@@ -35,17 +35,17 @@ if has ('gui_running')
 	" Select a font based on system
 	" Courier New will be replaced when I _actually_ use that system
 	if has("gui_gtk2") || has("gui_gtk3")
-		set guifont=Anonymous\ Pro\ For\ Powerline\ 11\\,Source\ Code\ Pro\ 10\\,Monospace
+		set guifont=Anonymous\ Pro\ For\ Powerline\ 11\\,Source\ Code\ Pro\ 10\\,Courier\ New\ 12,Monospace\ 12
 	elseif s:MSWindows
 		set guifont=Consolas
 	elseif has("gui_photon")
-		set guifont=Courier\ New:s11
+		set guifont=Courier\ New:s12
 	elseif has("gui_kde")
-		set guifont=Courier\ New/11/-1/5/50/0/0/0/1/0
+		set guifont=Courier\ New/12/-1/5/50/0/0/0/1/0
 	elseif has("x11")
 		set guifont=-*-courier-medium-r-normal-*-*-180-*-*-m-*-*
 	else
-		set guifont=Courier_New:h11:cDEFAULT
+		set guifont=Courier_New:h12:cDEFAULT
 	endif
 
 endif
