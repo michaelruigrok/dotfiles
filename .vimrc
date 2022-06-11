@@ -457,26 +457,30 @@ augroup runners
 " For various scripting languages, <leader>m runs open file
 	" For most languages, we can just exec the file direct, or use
 	" the interpreter (using the filetype name)
-	autocmd FileType * nnoremap <buffer> <leader>m :w<CR>:execute "! [[ -x % ]] && %:p \|\| " . &filetype . " %"<CR>
+	" TODO: detect Makefile and actually use make accordingly
+	autocmd FileType * execute "setlocal makeprg="
+				\. fnameescape('[[ -x % ]] && %:.:h/%:t $* \|\| '.&filetype.' % $*')
+	nnoremap <leader>m :w<CR>:exec 'make '.
+				\(exists('makeargs') ? makeargs : '')<CR>
 	" TODO: try and use vim's smart compiler/running architecture
 	"autocmd FileType * compiler &filetype
 	autocmd FileType * let b:dispatch = &filetype . ' %'
 
 " In Other cases, the runner syntax differs
-	autocmd FileType awk nnoremap <buffer> <leader>m :w<CR>:!awk -f %<CR>
-	autocmd FileType sed nnoremap <buffer> <leader>m :w<CR>:!sed -f %<CR>
-	autocmd FileType cs nnoremap <buffer> <leader>m :w<CR>:!mono-csc %<CR>
+	autocmd FileType awk setlocal makepgr=awk\ -f\ %:.
+	autocmd FileType sed setlocal makepgr=sed\ -f\ %:.
+	autocmd FileType cs  setlocal makepgr=mono-csc\ -f\ %:.
 
 " for LaTeX documents, compile as a pdf
-	autocmd FileType tex nnoremap <buffer> <leader>m :w<CR>:!pdflatex %<CR>
+	autocmd FileType tex setlocal makepgr=pdflatex\ %:.
 
 " for this vimrc, <leader>m reloads its contents
+	autocmd FileType vim setlocal makeprg=
 	autocmd FileType vim nnoremap <buffer> <leader>m :source %<CR>
 
 " Terraform validation
-	autocmd FileType terraform set efm=%EError:\ %m,%WWarning:\ %m,%ISuccess!\ %m,%C%.%#on\ %f\ line\ %l%.%#\ in\ %o:,%C\ %.%#,%C%m,%C,%-G,
-	autocmd FileType terraform set makeprg=terraform\ validate\ -no-color
-	autocmd FileType terraform nnoremap <buffer> <leader>m :w<CR>:make<CR>
+	autocmd FileType terraform setlocal efm=%EError:\ %m,%WWarning:\ %m,%ISuccess!\ %m,%C%.%#on\ %f\ line\ %l%.%#\ in\ %o:,%C\ %.%#,%C%m,%C,%-G,
+	autocmd FileType terraform setlocal makeprg=terraform\ validate\ -no-color
 
 " for c/c++, <leader>m compiles a single file and then runs the binary
 	function! CompileC(...)
