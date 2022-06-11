@@ -94,8 +94,8 @@ endif
 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+let my_colorschemes = [ 'one', 'PaperColor', 'afterglow', 'materialbox', 'meta5', 'solarized8_flat', 'rakr', 'ayu', 'challenger_deep', 'deep-space', 'happy_hacking', 'gruvbox', 'hybrid', 'gruvbox', 'scheakur', 'sonokai', 'space-vim-dark']
 try 
-	let my_colorschemes = [ 'one', 'PaperColor', 'afterglow', 'materialbox', 'meta5', 'solarized8_flat', 'rakr', 'ayu', 'challenger_deep', 'deep-space', 'flattened_dark', 'happyhacking', 'gruvbox', 'hybrid', 'gruvbox', 'scheakur', 'sonokai', 'space-vim-dark', 'deus' ]
 	execute 'colorscheme' my_colorschemes[localtime() % (len(my_colorschemes) - 1)]
 catch
 	colorscheme desert
@@ -104,6 +104,8 @@ endtry
 if ! has ('gui_running')
 	" TODO: set some colourschemes
 	let my_colorschemes = [ 'gotham256', 'OceanicNext', 'rdark-terminal2', 'sierra', 'spacecamp', 'twilight256']
+	let only_gui = [ 'flattened_dark' ] 
+	let daytime_colorschemes = ['solarized8']
 endif
 
 " show relative numbering
