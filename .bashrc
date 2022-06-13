@@ -20,7 +20,7 @@ fi
 ####
 
 # Just a general prompt. Gotta customise this sometimes...
-	PS1='[\u@\h \W]\$ '
+	PS1='\033[35;1m[\u@\h \W]\$ \033[0m'
 
 # Allow use of globstart '**' to glob recursively through directories
 	shopt -s globstar
