@@ -20,7 +20,16 @@ fi
 ####
 
 # Just a general prompt. Gotta customise this sometimes...
-	PS1='\033[35;1m[\u@\h \W]\$ \033[0m'
+	COLOR='\[\033[01'  # Start colour 2
+	ENDCOLOR='\[\033[00m\]'
+
+	PS1='\d \t\n'       # date/time
+	PS1+=''
+	PS1+="$COLOR;32m\]" # Start colour 1
+	PS1+='\u@\h'        # user@host
+	PS1+="$ENDCOLOR:$COLOR;35m\]"
+	PS1+='\W'           # Working directory tail
+	PS1+="$ENDCOLOR\$ "
 
 # Allow use of globstart '**' to glob recursively through directories
 	shopt -s globstar
