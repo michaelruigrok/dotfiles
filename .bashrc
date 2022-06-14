@@ -135,6 +135,9 @@ complete -F __start_kubectl k
 alias use-context='kubectl config use-context'
 alias set-context='kubectl config set-context --current --namespace'
 alias get-contexts='kubectl config get-contexts'
+alias kg='kubectl get pods'
+alias kgb='kubectl get pods -n beta'
+alias kgp='kubectl get pods -n prod'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
