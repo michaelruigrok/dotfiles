@@ -261,6 +261,9 @@ iabbrev bashArgs while [ $# -ne 0 ]; do
 	\<CR>esac
 \<CR>done
 
+iabbrev echo2 echo >&2
+
+
 	" HTML SHORTCUTS "
 	""""""""""""""""""
 
