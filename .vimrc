@@ -94,12 +94,13 @@ endif
 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-let my_colorschemes = [ 'one', 'PaperColor', 'afterglow', 'materialbox', 'meta5', 'solarized8_flat', 'rakr', 'ayu', 'challenger_deep', 'deep-space', 'happy_hacking', 'gruvbox', 'hybrid', 'gruvbox', 'scheakur', 'sonokai', 'space-vim-dark']
+let my_colorschemes = [ 'one', 'PaperColor', 'afterglow', 'materialbox', 'meta5', 'solarized8_flat', 'rakr', 'ayu', 'challenger_deep', 'deep-space', 'happy_hacking', 'hybrid', 'gruvbox', 'scheakur', 'sonokai', 'space-vim-dark']
 try 
 	execute 'colorscheme' my_colorschemes[localtime() % (len(my_colorschemes) - 1)]
 catch
 	colorscheme desert
 endtry
+set bg=dark
 
 if ! has ('gui_running')
 	" TODO: set some colourschemes
