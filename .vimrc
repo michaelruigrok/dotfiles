@@ -486,6 +486,9 @@ augroup runners
 	autocmd FileType vim nnoremap <buffer> <leader>m :source %<CR>
 
 " Terraform validation
+	autocmd FileType terraform set efm=%EError:\ %m,%WWarning:\ %m,%ISuccess!\ %m,%C%.%#on\ %f\ line\ %l%.%#\ in\ %o:,%C\ %.%#,%C%m,%C,%-G,
+	autocmd FileType terraform set makeprg=terraform\ validate\ -no-color
+	autocmd FileType terraform nnoremap <buffer> <leader>m :w<CR>:make<CR>
 	autocmd FileType terraform execute 'setlocal ' . fnameescape(
 				\  'efm=%EError: %m,'
 				\. '%WWarning: %m,'
