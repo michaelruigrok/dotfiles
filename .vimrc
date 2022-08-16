@@ -752,6 +752,9 @@ endif
 	nmap <silent> g] <Plug>(coc-references)
 	nmap <silent> gy <Plug>(coc-type-definition)
 	nmap <silent> <c-\> <Plug>(coc-implementation)
+	" fix/correct
+	nmap <silent> <leader>lc <Plug>(coc-fix-current)
+	nmap <silent> <leader>lf <Plug>(coc-fix-current)
 
 	nnoremap <silent> gK :call <SID>coc_documentation()<CR>
 
