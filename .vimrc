@@ -505,12 +505,15 @@ augroup runners
 	autocmd FileType raku execute 'setlocal '. fnameescape(
 				\  'efm=%E%.%#Error while compiling %f (Module),'
 				\. '%E%.%#Error while compiling %f,'
+				\. '%+E %#Usage%m,'
 				\. '%WWarning: %m,'
-				\. '%EAttempt to %m,'
 				\. '%C%.%#at %f:%l,'
 				\. '%C %#in block %o at %f line %l,'
+				\. '%C %#in method %o at %f line %l,'
 				\. '%C%p>%.%#,'
-				\. '%C %#%m,'
+				\. '%+EAttempt to %m,'
+				\. '%C  %#%m,'
+				\. '%+E%*[^ \t]%m,'
 				\. '%C,'
 				\. '%-G,'
 				\)
