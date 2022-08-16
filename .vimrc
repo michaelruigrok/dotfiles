@@ -27,7 +27,7 @@ if has ('gui_running')
 	if ! &diff
 		try
 			source ~/.vim/session
-		catch E484
+		catch /E484/
 			" File does not exist error
 		endtry
 	endif
