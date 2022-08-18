@@ -27,7 +27,7 @@ if has ('gui_running')
 	if ! &diff
 		try
 			source ~/.vim/session
-		catch E484
+		catch /E484/
 			" File does not exist error
 		endtry
 	endif
@@ -94,7 +94,7 @@ endif
 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-let my_colorschemes = [ 'one', 'PaperColor', 'afterglow', 'materialbox', 'meta5', 'solarized8_flat', 'rakr', 'ayu', 'challenger_deep', 'deep-space', 'happy_hacking', 'hybrid', 'gruvbox', 'scheakur', 'sonokai', 'space-vim-dark']
+let my_colorschemes = [ 'one', 'PaperColor', 'afterglow', 'materialbox', 'meta5', 'solarized8_flat', 'rakr', 'ayu', 'challenger_deep', 'happy_hacking', 'hybrid', 'gruvbox', 'scheakur', 'sonokai', 'space-vim-dark']
 try 
 	execute 'colorscheme' my_colorschemes[localtime() % (len(my_colorschemes) - 1)]
 catch
@@ -105,7 +105,7 @@ set bg=dark
 if ! has ('gui_running')
 	" TODO: set some colourschemes
 	let my_colorschemes = [ 'gotham256', 'OceanicNext', 'rdark-terminal2', 'sierra', 'spacecamp', 'twilight256']
-	let only_gui = [ 'flattened_dark' ] 
+	let only_gui = [ 'flattened_dark', 'deep-space'] 
 	let daytime_colorschemes = ['solarized8']
 endif
 
@@ -487,6 +487,9 @@ augroup runners
 	autocmd FileType vim nnoremap <buffer> <leader>m :source %<CR>
 
 " Terraform validation
+	autocmd FileType terraform set efm=%EError:\ %m,%WWarning:\ %m,%ISuccess!\ %m,%C%.%#on\ %f\ line\ %l%.%#\ in\ %o:,%C\ %.%#,%C%m,%C,%-G,
+	autocmd FileType terraform set makeprg=terraform\ validate\ -no-color
+	autocmd FileType terraform nnoremap <buffer> <leader>m :w<CR>:make<CR>
 	autocmd FileType terraform execute 'setlocal ' . fnameescape(
 				\  'efm=%EError: %m,'
 				\. '%WWarning: %m,'
@@ -503,12 +506,15 @@ augroup runners
 	autocmd FileType raku execute 'setlocal '. fnameescape(
 				\  'efm=%E%.%#Error while compiling %f (Module),'
 				\. '%E%.%#Error while compiling %f,'
+				\. '%+E %#Usage%m,'
 				\. '%WWarning: %m,'
-				\. '%EAttempt to %m,'
 				\. '%C%.%#at %f:%l,'
 				\. '%C %#in block %o at %f line %l,'
+				\. '%C %#in method %o at %f line %l,'
 				\. '%C%p>%.%#,'
-				\. '%C %#%m,'
+				\. '%+EAttempt to %m,'
+				\. '%C  %#%m,'
+				\. '%+E%*[^ \t]%m,'
 				\. '%C,'
 				\. '%-G,'
 				\)
@@ -747,6 +753,9 @@ endif
 	nmap <silent> g] <Plug>(coc-references)
 	nmap <silent> gy <Plug>(coc-type-definition)
 	nmap <silent> <c-\> <Plug>(coc-implementation)
+	" fix/correct
+	nmap <silent> <leader>lc <Plug>(coc-fix-current)
+	nmap <silent> <leader>lf <Plug>(coc-fix-current)
 
 	nnoremap <silent> gK :call <SID>coc_documentation()<CR>
 

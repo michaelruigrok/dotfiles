@@ -19,7 +19,6 @@ fi
 # SHELL BEHAVIOUR
 ####
 
-# Just a general prompt. Gotta customise this sometimes...
 	COLOR='\[\033[01'  # Start colour 2
 	ENDCOLOR='\[\033[00m\]'
 
@@ -142,11 +141,23 @@ complete -F __start_kubectl k
 	}
 
 alias use-context='kubectl config use-context'
-alias set-context='kubectl config set-context --current --namespace'
+alias set-namespace='kubectl config set-context --current --namespace'
 alias get-contexts='kubectl config get-contexts'
+
 alias kg='kubectl get pods'
 alias kgb='kubectl get pods -n beta'
 alias kgp='kubectl get pods -n prod'
+
+alias gds='git diff --staged'
+alias gd='git diff'
+
+HISTIGNORE+=":gds:kg:kg[bp]"
+
+# I always type stuff wrong
+	alias kubect='kubectl'
+	alias kubetl='kubectl'
+
+	unset SSH_ASKPASS
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert

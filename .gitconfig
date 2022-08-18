@@ -19,7 +19,7 @@
 
 [core]
 	editor = 'vim'
-	pager  = less -r
+	pager  = less -rX
 [init]
 	defaultBranch = main
 
