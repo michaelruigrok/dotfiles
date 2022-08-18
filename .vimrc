@@ -476,6 +476,7 @@ augroup runners
 	autocmd FileType awk  setlocal makeprg=awk\ -f\ %:.
 	autocmd FileType sed  setlocal makeprg=sed\ -f\ %:.
 	autocmd FileType cs   setlocal makeprg=mono-csc\ -f\ %:.
+	autocmd FileType dot  setlocal makeprg=dot\ -Tx11\ %:.
 	autocmd FileType rust let makeargs='build'
 
 " for LaTeX documents, compile as a pdf
