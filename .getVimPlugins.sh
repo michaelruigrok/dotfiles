@@ -31,6 +31,7 @@ get_plugin xolox vim-misc
 get_plugin tpope vim-repeat # support to repeat custom mappings
 get_plugin mattn emmet-vim # type in css selectors, out comes fully formed HTML
 get_plugin roryokane detectindent # command to guess the correct indentation settings
+get_plugin sickill vim-pasta # p/P paste with appropriate indentation
 get_plugin tpope vim-dispatch
 
 # UI/Syntax
@@ -47,8 +48,8 @@ get_plugin xolox vim-notes
 get_plugin mbbill undotree
 
 # Motions/Mappings
-get_plugin sickill vim-pasta # p/P paste with appropriate indentation
 get_plugin easymotion vim-easymotion # extend f/F and t/T with an interactive multi-jump select
+get_plugin tpope vim-rsi # readline mappings in insert mode
 get_plugin tpope vim-surround # operate on surrounding brackets/tags
 get_plugin tpope vim-commentary # `gc` verb un/comments
 get_plugin tpope vim-unimpaired # collection of mappings using ] and [
