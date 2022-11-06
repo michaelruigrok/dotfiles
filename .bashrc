@@ -92,6 +92,11 @@ export LESS='-i'
 # ALIASES
 ####
 
+# load shell source files
+for file in ~/.local/lib/shell/*; do
+	source "$file"
+done
+
 # Easier way of doing "sudo !!"
 	alias oh='sudo $(history -p \!\!)'
 
