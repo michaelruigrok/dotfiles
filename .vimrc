@@ -14,9 +14,55 @@
 		set runtimepath=$HOME/.vim,$VIMRUNTIME,$VIM/vimfiles/after,$VIM/.vim/after
 	endif
 
-	"Pathogen"
+	"Vim-Plug"
 	""""""""""
-	execute pathogen#infect()
+	" Automatically install Vim-Plug if it doesn't exist
+	let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+	if empty(glob(data_dir . '/autoload/plug.vim'))
+		silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+		autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+	endif
+
+	call plug#begin('~/.vim/bundle')
+	Plug 'xolox/vim-misc'
+	Plug 'tpope/vim-repeat' " support to repeat custom mappings
+	Plug 'mattn/emmet-vim' " type in css selectors, out comes fully formed HTML
+	Plug 'roryokane/detectindent' " command to guess the correct indentation settings
+	Plug 'sickill/vim-pasta' " p/P paste with appropriate indentation
+	Plug 'tpope/vim-dispatch'
+
+" UI/Syntax
+	Plug 'rafi/awesome-vim-colorschemes' " A Whole heap of colourschemes
+	Plug 'itchyny/lightline.vim' " Make the bottom line all pretty
+	Plug 'ap/vim-css-color' " preview the colours of CSS with highlights
+	Plug 'junegunn/goyo.vim' " Centre file in window for pretty editing (eg Markdown)
+
+	Plug 'vim-scripts/screenplay' " For writing scripts, of the film variety
+	Plug 'editorconfig/editorconfig-vim'
+
+" Utilities
+	Plug 'AndrewRadev/linediff.vim' " Diff only portions of a file
+	Plug 'xolox/vim-notes'
+	Plug 'mbbill/undotree'
+
+" Motions/Mappings
+	Plug 'easymotion/vim-easymotion' " extend f/F and t/T with an interactive multi-jump select
+	Plug 'tpope/vim-rsi' " readline mappings in insert mode
+	Plug 'tpope/vim-surround' " operate on surrounding brackets/tags
+	Plug 'tpope/vim-commentary' " `gc` verb un/comments
+	Plug 'tpope/vim-unimpaired' " collection of mappings using ] and [
+
+" Language support
+	Plug 'sheerun/vim-polyglot'
+	Plug 'neoclide/coc.nvim' " Language server support
+	Plug 'othree/html5.vim'
+	Plug 'keith/swift.vim'
+	Plug 'peitalin/vim-jsx-typescript'
+	Plug 'tpope/vim-fireplace' " clojure repl integration
+	Plug 'guns/vim-sexp' " lisp S-expression handling
+	Plug 'tpope/vim-sexp-mappings-for-regular-people' " lisp S-expression handling
+	Plug 'andrewstuart/vim-kubernetes'
+	call plug#end()
 
 	"  GUI SETTINGS  "
 	""""""""""""""""""
