@@ -3,7 +3,7 @@ REPL_DIR="/tmp/$USER/repl/"
 repl_start() {
 	mkdir -p "$REPL_DIR"
 	REPL_ID="${1:-$(ls "$REPL_DIR" | wc -l)}"
-	REPL_FILE="$REPL_DIR/$REPL_ID"
+	REPL_FILE="$REPL_DIR/$REPL_ID.sh"
 }
 
 alias repl_last="history -p '!!'"
