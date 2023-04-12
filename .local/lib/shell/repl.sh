@@ -17,6 +17,7 @@ repl_save_var() {
 	var="$(repl_last | sed 's/.*/'$1'="$(&)"/')"
 	echo "$var" | tee -a "$REPL_FILE"
 	eval "$var"
+	history -s "$var"
 }
 
 repl_run() {
