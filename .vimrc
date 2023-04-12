@@ -65,6 +65,10 @@
 	Plug 'andrewstuart/vim-kubernetes'
 	call plug#end()
 
+	if empty(glob(data_dir . '/bundle/coc.nvim/node_modules'))
+		silent execute '!echo "installing coc.nvim"; yarn install --cwd '.data_dir.'/bundle/coc.nvim'
+	endif
+
 	"  GUI SETTINGS  "
 	""""""""""""""""""
 
