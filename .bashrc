@@ -102,10 +102,11 @@ export LESS='-i'
 # ALIASES
 ####
 
-# load shell source files
-for file in ~/.local/lib/shell/*; do
-	source "$file"
-done
+# $1 -- alias name match (exact)
+# $2 -- resulting command prefix match (currently first line only)
+histignore_alias() {
+	var_a HISTIGNORE $(alias | sed -nE "/^alias ($1)='$2.*/s//\1/p")
+}
 
 # Easier way of doing "sudo !!"
 	alias oh='sudo $(history -p \!\!)'
@@ -157,16 +158,23 @@ complete -F __start_kubectl k
 
 alias use-context='kubectl config use-context'
 alias set-namespace='kubectl config set-context --current --namespace'
+alias kns='kubectl config set-context --current --namespace'
 alias get-contexts='kubectl config get-contexts'
 
 alias kg='kubectl get pods'
 alias kgb='kubectl get pods -n beta'
 alias kgp='kubectl get pods -n prod'
+histignore_alias k[g].* kubectl
 
-alias gds='git diff --staged'
+alias g='git'
+alias gs='git status'
+alias ga='git add'
+alias gai='git add -i'
 alias gd='git diff'
-
-HISTIGNORE+=":gds:kg:kg[bp]"
+alias gds='git diff --staged'
+alias gch-='git checkout --'
+histignore_alias g.* git
+HISTIGNORE+=":gch-*"
 
 # I always type stuff wrong
 	alias kubect='kubectl'
