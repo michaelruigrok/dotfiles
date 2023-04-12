@@ -1,5 +1,11 @@
 # ~/.bashrc
 
+function onExit {
+	history -p "EXIT $(date -I)"
+}
+
+trap onExit EXIT
+
 ###
 # Windows only Config
 ###
