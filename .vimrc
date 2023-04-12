@@ -14,8 +14,9 @@
 		set runtimepath=$HOME/.vim,$VIMRUNTIME,$VIM/vimfiles/after,$VIM/.vim/after
 	endif
 
-	"Vim-Plug"
-	""""""""""
+	" Vim-Plug Plugin Management "
+	""""""""""""""""""""""""""""""
+
 	" Automatically install Vim-Plug if it doesn't exist
 	let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
 	if empty(glob(data_dir . '/autoload/plug.vim'))
@@ -23,7 +24,7 @@
 		autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 	endif
 
-	call plug#begin('~/.vim/bundle')
+	call plug#begin(data_dir . '/bundle')
 	Plug 'xolox/vim-misc'
 	Plug 'tpope/vim-repeat' " support to repeat custom mappings
 	Plug 'mattn/emmet-vim' " type in css selectors, out comes fully formed HTML
