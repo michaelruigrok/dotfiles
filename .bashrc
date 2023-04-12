@@ -17,9 +17,13 @@ fi
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-# included as a folder executables are run from
-	export PATH=~/.bin:$PATH
-	export PATH=~/.local/bin:$PATH
+# load shell source files
+source_libs() {
+	for file in ~/.local/lib/shell/*; do
+		source "$file"
+	done
+}
+source_libs
 
 ####
 # SHELL BEHAVIOUR
@@ -178,6 +182,12 @@ HISTIGNORE+=":gds:kg:kg[bp]"
 
 # colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
+# included as a folder executables are run from
+	export PATH=~/.bin:$PATH
+	export PATH=~/.local/bin:$PATH
+	export PATH="~/.yarn/bin:$PATH"
+
 
 ####
 # STARTUP
