@@ -98,6 +98,8 @@ shopt -s checkwinsize
 
 export LESS='-i'
 
+export RLWRAP_HOME=$HOME/.config/readline
+
 ####
 # ALIASES
 ####
