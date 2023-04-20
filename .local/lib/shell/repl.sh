@@ -13,6 +13,7 @@ repl_save() {
 }
 
 repl_save_var() {
+	[ $# -ne 1 ] && { echo >&2 "Usage: repl_save_var VARIABLE_NAME"; return 1; }
 	local var
 	var="$(repl_last | sed 's/.*/'$1'="$(&)"/')"
 	echo "$var" | tee -a "$REPL_FILE"
