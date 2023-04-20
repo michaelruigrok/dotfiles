@@ -182,9 +182,10 @@ augroup tablength
 	autocmd!
 " reduce tabs to 2 spaces in xml or similar
 	autocmd BufRead,BufNewFile *.jelly,*.vue setlocal filetype=html
-	autocmd FileType xml,html,vue,tex setlocal shiftwidth=2
-	autocmd FileType xml,html,vue,tex setlocal tabstop=2
-	autocmd FileType tex setlocal expandtab
+	autocmd BufRead,BufNewFile *.pkg,*.visr setlocal filetype=yaml
+	autocmd FileType yaml,json,xml,html,vue,tex setlocal shiftwidth=2
+	autocmd FileType yaml,json,xml,html,vue,tex setlocal tabstop=2
+	autocmd FileType yaml,json,tex setlocal expandtab
 
 " Vim usually does special indentation for lisps. To help facilitate this,
 " a common standard of 2 spaces is used for indentation.
