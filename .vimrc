@@ -402,18 +402,29 @@ iabbrev forloop for (int i = 0; i < ; i++) {<esc>7hi
 	nnoremap <leader>P :set paste!<CR>
 
 " leader-n toggles between relative and absolute numbering
-	nnoremap <leader>n :call NumberToggle()<cr>
+	nnoremap <leader>n :call NumberTypeToggle()<cr>
 
-	" required function
-		function! NumberToggle()
-			if(&relativenumber == 1)
-				set relativenumber!
-				set number 
-			else
-				set relativenumber
-				set number!
-			endif
-		endfunc
+	function! NumberTypeToggle()
+		if(&relativenumber == 1)
+			set norelativenumber
+			set number 
+		else
+			set relativenumber
+			set nonumber
+		endif
+	endfunc
+
+" leader-n toggles numbering off
+	nnoremap <leader>N :call NumberToggle()<cr>
+
+	function! NumberToggle()
+		if(&number == 1 || &relativenumber == 1)
+			set norelativenumber
+		else
+			set relativenumber
+		endif
+		set nonumber
+	endfunc
 
 " leader-b is the black hole register (deleting or changing without saving for
 "  pasting)
