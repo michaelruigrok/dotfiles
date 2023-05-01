@@ -17,7 +17,7 @@
 	status = true
 [core]
 	editor = 'vim'
-	pager  = less -rX
+	pager  = less -RXi
 
 [filter "lfs"]
 	smudge = git-lfs smudge -- %f
