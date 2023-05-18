@@ -540,6 +540,7 @@ augroup runners
 	autocmd FileType sed  setlocal makeprg=sed\ -f\ %:.
 	autocmd FileType cs   setlocal makeprg=mono-csc\ -f\ %:.
 	autocmd FileType dot  setlocal makeprg=dot\ -Tx11\ %:.
+	autocmd FileType javascript  setlocal makeprg=node\ %:.
 	autocmd FileType rust let makeargs='build'
 
 " for LaTeX documents, compile as a pdf
