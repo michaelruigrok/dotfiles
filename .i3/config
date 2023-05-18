@@ -180,7 +180,8 @@ no_focus [class="plasmashell" window_type="notification"]
 # no_focus [class="plasmashell" window_type="on_screen_display"]
 
 # Don’t spawn an empty window for the Plasma Desktop
-for_window [title="Desktop — Plasma"] kill, floating enable, border none
+for_window [title="Desktop — Plasma"]  kill, floating enable, border none
+for_window [title="Desktop @ QRect.*"] kill; floating enable; border none
 
 # Don’t let notifications and non-interactive pop-up windows steal focus
 # no_focus [class="plasmashell" window_type="on_screen_display"]
@@ -194,7 +195,7 @@ for_window [class="krunner"] floating enable; border none
 for_window [class="Kmix"] floating enable; border none
 for_window [class="Klipper"] floating enable; border none
 for_window [class="Plasmoidviewer"] floating enable; border none
-for_window [class="(?i)*nextcloud*"] floating disable
+for_window [class="(?i)nextcloud"] floating disable
 
 ###
 #   Custom workspace locations
