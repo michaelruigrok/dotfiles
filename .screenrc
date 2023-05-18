@@ -1,2 +1,7 @@
+# remap ctrl-a to ctrl-j
+escape ^Jj
+
 # Allow use of scrolling within vim/similar programs
 termcapinfo linux|xterm|screen* ti@:te@:XT
+
+hardstatus alwayslastline "%{+r} %-w%{+bu I}%n-%t%{-}%+w %= %{+ b}%11` %{-}%D %d %LM %{+b I}%c "

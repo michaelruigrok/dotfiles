@@ -1,5 +1,11 @@
 # ~/.bashrc
 
+function onExit {
+	history -p "EXIT $(date -I)"
+}
+
+trap onExit EXIT
+
 ###
 # Windows only Config
 ###
@@ -11,9 +17,13 @@ fi
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-# included as a folder executables are run from
-	export PATH=~/.bin:$PATH
-	export PATH=~/.local/bin:$PATH
+# load shell source files
+source_libs() {
+	for file in ~/.local/lib/shell/*; do
+		source "$file"
+	done
+}
+source_libs
 
 ####
 # SHELL BEHAVIOUR
@@ -88,14 +98,17 @@ shopt -s checkwinsize
 
 export LESS='-i'
 
+export RLWRAP_HOME=$HOME/.config/readline
+
 ####
 # ALIASES
 ####
 
-# load shell source files
-for file in ~/.local/lib/shell/*; do
-	source "$file"
-done
+# $1 -- alias name match (exact)
+# $2 -- resulting command prefix match (currently first line only)
+histignore_alias() {
+	var_a HISTIGNORE $(alias | sed -nE "/^alias ($1)='$2.*/s//\1/p")
+}
 
 # Easier way of doing "sudo !!"
 	alias oh='sudo $(history -p \!\!)'
@@ -147,16 +160,23 @@ complete -F __start_kubectl k
 
 alias use-context='kubectl config use-context'
 alias set-namespace='kubectl config set-context --current --namespace'
+alias kns='kubectl config set-context --current --namespace'
 alias get-contexts='kubectl config get-contexts'
 
 alias kg='kubectl get pods'
 alias kgb='kubectl get pods -n beta'
 alias kgp='kubectl get pods -n prod'
+histignore_alias k[g].* kubectl
 
-alias gds='git diff --staged'
+alias g='git'
+alias gs='git status'
+alias ga='git add'
+alias gai='git add -i'
 alias gd='git diff'
-
-HISTIGNORE+=":gds:kg:kg[bp]"
+alias gds='git diff --staged'
+alias gch-='git checkout --'
+histignore_alias g.* git
+HISTIGNORE+=":gch-*"
 
 # I always type stuff wrong
 	alias kubect='kubectl'
@@ -172,6 +192,12 @@ HISTIGNORE+=":gds:kg:kg[bp]"
 
 # colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
+# included as a folder executables are run from
+	export PATH=~/.bin:$PATH
+	export PATH=~/.local/bin:$PATH
+	export PATH="~/.yarn/bin:$PATH"
+
 
 ####
 # STARTUP

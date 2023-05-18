@@ -14,9 +14,60 @@
 		set runtimepath=$HOME/.vim,$VIMRUNTIME,$VIM/vimfiles/after,$VIM/.vim/after
 	endif
 
-	"Pathogen"
-	""""""""""
-	execute pathogen#infect()
+	" Vim-Plug Plugin Management "
+	""""""""""""""""""""""""""""""
+
+	" Automatically install Vim-Plug if it doesn't exist
+	let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+	if empty(glob(data_dir . '/autoload/plug.vim'))
+		silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+		autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+	endif
+
+	call plug#begin(data_dir . '/bundle')
+	Plug 'xolox/vim-misc'
+	Plug 'tpope/vim-repeat' " support to repeat custom mappings
+	Plug 'mattn/emmet-vim' " type in css selectors, out comes fully formed HTML
+	Plug 'roryokane/detectindent' " command to guess the correct indentation settings
+	Plug 'sickill/vim-pasta' " p/P paste with appropriate indentation
+	Plug 'tpope/vim-dispatch'
+
+" UI/Syntax
+	Plug 'rafi/awesome-vim-colorschemes' " A Whole heap of colourschemes
+	Plug 'itchyny/lightline.vim' " Make the bottom line all pretty
+	Plug 'ap/vim-css-color' " preview the colours of CSS with highlights
+	Plug 'junegunn/goyo.vim' " Centre file in window for pretty editing (eg Markdown)
+
+	Plug 'vim-scripts/screenplay' " For writing scripts, of the film variety
+	Plug 'editorconfig/editorconfig-vim'
+
+" Utilities
+	Plug 'AndrewRadev/linediff.vim' " Diff only portions of a file
+	Plug 'xolox/vim-notes'
+	Plug 'mbbill/undotree'
+
+" Motions/Mappings
+	Plug 'easymotion/vim-easymotion' " extend f/F and t/T with an interactive multi-jump select
+	Plug 'tpope/vim-rsi' " readline mappings in insert mode
+	Plug 'tpope/vim-surround' " operate on surrounding brackets/tags
+	Plug 'tpope/vim-commentary' " `gc` verb un/comments
+	Plug 'tpope/vim-unimpaired' " collection of mappings using ] and [
+
+" Language support
+	Plug 'sheerun/vim-polyglot'
+	Plug 'neoclide/coc.nvim' " Language server support
+	Plug 'othree/html5.vim'
+	Plug 'keith/swift.vim'
+	Plug 'peitalin/vim-jsx-typescript'
+	Plug 'tpope/vim-fireplace' " clojure repl integration
+	Plug 'guns/vim-sexp' " lisp S-expression handling
+	Plug 'tpope/vim-sexp-mappings-for-regular-people' " lisp S-expression handling
+	Plug 'andrewstuart/vim-kubernetes'
+	call plug#end()
+
+	if empty(glob(data_dir . '/bundle/coc.nvim/node_modules'))
+		silent execute '!echo "installing coc.nvim"; yarn install --cwd '.data_dir.'/bundle/coc.nvim'
+	endif
 
 	"  GUI SETTINGS  "
 	""""""""""""""""""
@@ -94,7 +145,7 @@ endif
 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-let my_colorschemes = [ 'one', 'PaperColor', 'afterglow', 'materialbox', 'meta5', 'solarized8_flat', 'rakr', 'ayu', 'challenger_deep', 'happy_hacking', 'hybrid', 'gruvbox', 'scheakur', 'sonokai', 'space-vim-dark']
+let my_colorschemes = [ 'one', 'PaperColor', 'afterglow', 'materialbox', 'meta5', 'rakr', 'ayu', 'challenger_deep', 'happy_hacking', 'hybrid', 'gruvbox', 'scheakur', 'sonokai', 'space-vim-dark']
 try 
 	execute 'colorscheme' my_colorschemes[localtime() % (len(my_colorschemes) - 1)]
 catch
@@ -105,7 +156,7 @@ set bg=dark
 if ! has ('gui_running')
 	" TODO: set some colourschemes
 	let my_colorschemes = [ 'gotham256', 'OceanicNext', 'rdark-terminal2', 'sierra', 'spacecamp', 'twilight256']
-	let only_gui = [ 'flattened_dark', 'deep-space'] 
+	let only_gui = [ 'solarized8_flat', 'flattened_dark', 'deep-space' ] 
 	let daytime_colorschemes = ['solarized8']
 endif
 
@@ -131,9 +182,10 @@ augroup tablength
 	autocmd!
 " reduce tabs to 2 spaces in xml or similar
 	autocmd BufRead,BufNewFile *.jelly,*.vue setlocal filetype=html
-	autocmd FileType xml,html,vue,tex setlocal shiftwidth=2
-	autocmd FileType xml,html,vue,tex setlocal tabstop=2
-	autocmd FileType tex setlocal expandtab
+	autocmd BufRead,BufNewFile *.pkg,*.visr setlocal filetype=yaml
+	autocmd FileType yaml,json,xml,html,vue,tex setlocal shiftwidth=2
+	autocmd FileType yaml,json,xml,html,vue,tex setlocal tabstop=2
+	autocmd FileType yaml,json,tex setlocal expandtab
 
 " Vim usually does special indentation for lisps. To help facilitate this,
 " a common standard of 2 spaces is used for indentation.
@@ -350,18 +402,29 @@ iabbrev forloop for (int i = 0; i < ; i++) {<esc>7hi
 	nnoremap <leader>P :set paste!<CR>
 
 " leader-n toggles between relative and absolute numbering
-	nnoremap <leader>n :call NumberToggle()<cr>
+	nnoremap <leader>n :call NumberTypeToggle()<cr>
 
-	" required function
-		function! NumberToggle()
-			if(&relativenumber == 1)
-				set relativenumber!
-				set number 
-			else
-				set relativenumber
-				set number!
-			endif
-		endfunc
+	function! NumberTypeToggle()
+		if(&relativenumber == 1)
+			set norelativenumber
+			set number 
+		else
+			set relativenumber
+			set nonumber
+		endif
+	endfunc
+
+" leader-n toggles numbering off
+	nnoremap <leader>N :call NumberToggle()<cr>
+
+	function! NumberToggle()
+		if(&number == 1 || &relativenumber == 1)
+			set norelativenumber
+		else
+			set relativenumber
+		endif
+		set nonumber
+	endfunc
 
 " leader-b is the black hole register (deleting or changing without saving for
 "  pasting)
