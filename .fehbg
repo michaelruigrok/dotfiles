@@ -1,0 +1,7 @@
+#!/bin/bash
+shopt -s globstar
+# While we're processing nice wallpaper options
+feh --no-fehbg --bg-fill --recursive --randomize /usr/share/{backgrounds,wallpapers}/
+feh -q -L '%w %h %f' /usr/share/{backgrounds,wallpapers}/**/*[0-9][0-9][0-9][0-9]x* --recursive \
+	| awk '$1 > 1500 && $1 > $2 { print $3 }'  \
+	| feh -f - --no-fehbg --bg-fill --randomize 
