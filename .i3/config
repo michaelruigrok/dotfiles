@@ -209,8 +209,8 @@ assign [class="Chromium"] 2
 assign [class="Eclipse"] 1
 
 # and steam in workspace 3
-assign [class="Steam"] 3
-assign [class="Steam Login"] 3
+assign [class="steam"] 3
+assign [class="steam Login"] 3
 
 # hide title bar of selected window
 bindsym $mod+Shift+b border toggle 
