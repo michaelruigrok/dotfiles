@@ -598,7 +598,7 @@ augroup runners
 		let argv = ''
 		for arg in a:000
 			let argv = argv . ' ' . arg
-			argc += 1
+			let argc += 1
 		endfor
 		if filereadable(expand('%:p:h') . '/Makefile')
 			make -j 8
@@ -746,10 +746,10 @@ augroup END
 " put all swap files in ~/.vim
 	set directory^=~/.vim/swapfiles
 
-    """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    "   Skeletons and Templates                                                  "
-    "                                                                            "
-    """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"   Skeletons and Templates                                                  "
+"                                                                            "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 augroup templates
 	autocmd!
@@ -778,8 +778,6 @@ augroup templates
 
 augroup END
 
-
-
 	"Line Managers"
 	"""""""""""""""
 
@@ -792,6 +790,16 @@ if exists(':AirlineRefresh')
 	let g:airline_powerline_fonts = 1
 	let g:airline#extensions#whitespace#checks = [ 'indent', 'long' ]
 
+endif
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"    COMPLETION AND LANGUAGE SERVERS                                         "
+"                                                                            "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+if exists('g:asyncomplete_loaded')
+	inoremap <expr> <cr> pumvisible() ? asyncomplete#close_popup() . "\<cr>" : "\<cr>"
 endif
 
 	" CoC Language Server "
@@ -815,6 +823,7 @@ endif
 		set signcolumn=yes
 	endif
 
+if exists('g:coc_enabled')
 " Next/previous error/warning/diagnostic
 	nmap <silent> [c <Plug>(coc-diagnostic-prev)
 	nmap <silent> ]c <Plug>(coc-diagnostic-next)
@@ -837,6 +846,7 @@ endif
 			call CocAction('doHover')
 		endif
 	endfunction
+endif
 
 "" Other stuff:
 " CocDiagnostics to get a list of what's wrong
@@ -844,10 +854,11 @@ endif
 
 
 
-	""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-	"	EXPERIMENTS																 "
-	"																			 "
-	""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"	EXPERIMENTS																 "
+"																			 "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 " Look through all subfolders for files
 " Since I usually hang out in ~, this is probably pretty slow
 	"set path+=**
