@@ -55,7 +55,12 @@
 
 " Language support
 	Plug 'sheerun/vim-polyglot'
-	Plug 'neoclide/coc.nvim' " Language server support
+	"Plug 'neoclide/coc.nvim' " Language server support
+	Plug 'prabirshrestha/vim-lsp' " Language server support
+	Plug 'mattn/vim-lsp-settings' " Language server support
+	Plug 'prabirshrestha/asyncomplete.vim'
+	Plug 'prabirshrestha/asyncomplete-lsp.vim'
+
 	Plug 'othree/html5.vim'
 	Plug 'keith/swift.vim'
 	Plug 'peitalin/vim-jsx-typescript'
