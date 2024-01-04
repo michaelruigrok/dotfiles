@@ -60,6 +60,8 @@
 	Plug 'mattn/vim-lsp-settings' " Language server support
 	Plug 'prabirshrestha/asyncomplete.vim'
 	Plug 'prabirshrestha/asyncomplete-lsp.vim'
+	Plug 'dense-analysis/ale'
+	Plug 'rhysd/vim-lsp-ale'
 
 	Plug 'othree/html5.vim'
 	Plug 'keith/swift.vim'
