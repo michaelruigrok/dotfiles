@@ -1,6 +1,6 @@
 # ~/.bashrc
 
-function onExit {
+onExit() {
 	history -p "EXIT $(date -I)"
 }
 
