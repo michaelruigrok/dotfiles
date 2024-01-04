@@ -532,8 +532,10 @@ augroup runners
 	" For most languages, we can just exec the file direct, or use
 	" the interpreter (using the filetype name)
 	" TODO: detect Makefile and actually use make accordingly
-	autocmd FileType * execute "setlocal makeprg="
-				\. fnameescape('[[ -x % ]] && %:.:h/%:t $* \|\| '.&filetype.' % $*')
+	autocmd FileType * if &makeprg == "make" |
+				\ execute "setlocal makeprg="
+					\. fnameescape('[[ -x % ]] && %:.:h/%:t $* \|\| '.&filetype.' % $*')
+				\ | endif
 	nnoremap <leader>m :w<CR>:exec 'make '.
 				\(exists('makeargs') ? makeargs : '')<CR>
 	" TODO: try and use vim's smart compiler/running architecture
@@ -543,7 +545,7 @@ augroup runners
 " In Other cases, the runner syntax differs
 	autocmd FileType awk  setlocal makeprg=awk\ -f\ %:.
 	autocmd FileType sed  setlocal makeprg=sed\ -f\ %:.
-	autocmd FileType cs   setlocal makeprg=mono-csc\ -f\ %:.
+	autocmd FileType cs   if &makeprg == "make" | setlocal makeprg=mono-csc\ -f\ %:. | endif
 	autocmd FileType dot  setlocal makeprg=dot\ -Tx11\ %:.
 	autocmd FileType javascript  setlocal makeprg=node\ %:.
 	autocmd FileType rust let makeargs='build'
