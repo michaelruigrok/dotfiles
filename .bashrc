@@ -10,8 +10,15 @@ trap onExit EXIT
 # Windows only Config
 ###
 if [ `uname -o` = "Msys" ]; then
-	export STARTUP='/c/Users/Michael/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup'
+	export WINUSER="${WINUSER:-$USER}"
+	export WINHOME="/c/Users/$WINUSER"
+elif [ "$WSL_DISTRO_NAME" ]; then
+	export WINUSER="${WINUSER:-$USER}"
+	export WINHOME="/mnt/c/Users/$WINUSER"
+fi
 
+if [ "$WINHOME" ]; then
+	export STARTUP="$WINHOME/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup"
 fi
 
 # If not running interactively, don't do anything
