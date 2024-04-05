@@ -71,6 +71,8 @@
 	Plug 'guns/vim-sexp' " lisp S-expression handling
 	Plug 'tpope/vim-sexp-mappings-for-regular-people' " lisp S-expression handling
 	Plug 'andrewstuart/vim-kubernetes'
+	Plug 'towolf/vim-helm'
+
 	call plug#end()
 
 	if empty(glob(data_dir . '/bundle/coc.nvim/node_modules'))
@@ -191,9 +193,9 @@ augroup tablength
 " reduce tabs to 2 spaces in xml or similar
 	autocmd BufRead,BufNewFile *.jelly,*.vue setlocal filetype=html
 	autocmd BufRead,BufNewFile *.pkg,*.visr setlocal filetype=yaml
-	autocmd FileType yaml,json,xml,html,vue,tex setlocal shiftwidth=2
-	autocmd FileType yaml,json,xml,html,vue,tex setlocal tabstop=2
-	autocmd FileType yaml,json,tex setlocal expandtab
+	autocmd FileType yaml,json,xml,html,vue,tex,helm setlocal shiftwidth=2
+	autocmd FileType yaml,json,xml,html,vue,tex,helm setlocal tabstop=2
+	autocmd FileType yaml,json,tex,helm setlocal expandtab
 
 " Vim usually does special indentation for lisps. To help facilitate this,
 " a common standard of 2 spaces is used for indentation.
