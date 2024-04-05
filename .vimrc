@@ -31,6 +31,7 @@
 	Plug 'roryokane/detectindent' " command to guess the correct indentation settings
 	Plug 'sickill/vim-pasta' " p/P paste with appropriate indentation
 	Plug 'tpope/vim-dispatch'
+	Plug 'kopischke/vim-fetch' " Open file.ext:10 at line 10, for instance
 
 " UI/Syntax
 	Plug 'rafi/awesome-vim-colorschemes' " A Whole heap of colourschemes
