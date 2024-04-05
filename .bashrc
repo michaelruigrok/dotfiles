@@ -165,10 +165,16 @@ complete -F __start_kubectl k
 		kubectl get secret $1 -o jsonpath="{.data.$2}" | base64 --decode; echo
 	}
 
+alias k='kubectl'
+complete -F __start_kubectl k
+
 alias use-context='kubectl config use-context'
 alias set-namespace='kubectl config set-context --current --namespace'
 alias kns='kubectl config set-context --current --namespace'
 alias get-contexts='kubectl config get-contexts'
+alias kg='kubectl get pods'
+alias kgb='kubectl get pods -n beta'
+alias kgp='kubectl get pods -n prod'
 
 alias kg='kubectl get pods'
 alias kgb='kubectl get pods -n beta'
@@ -177,13 +183,17 @@ histignore_alias k[g].* kubectl
 
 alias g='git'
 alias gs='git status'
+alias gsh='git show'
 alias ga='git add'
-alias gai='git add -i'
+alias gap='git add -p'
 alias gd='git diff'
+alias gd-='git diff --'
+alias gd.='git diff -- .'
 alias gds='git diff --staged'
 alias gch-='git checkout --'
 histignore_alias g.* git
 HISTIGNORE+=":gch-*"
+
 
 # I always type stuff wrong
 	alias kubect='kubectl'
