@@ -56,7 +56,6 @@
 
 " Language support
 	Plug 'sheerun/vim-polyglot'
-	"Plug 'neoclide/coc.nvim' " Language server support
 	Plug 'prabirshrestha/vim-lsp' " Language server support
 	Plug 'mattn/vim-lsp-settings' " Language server support
 	Plug 'prabirshrestha/asyncomplete.vim'
@@ -74,10 +73,6 @@
 	Plug 'towolf/vim-helm'
 
 	call plug#end()
-
-	if empty(glob(data_dir . '/bundle/coc.nvim/node_modules'))
-		silent execute '!echo "installing coc.nvim"; yarn install --cwd '.data_dir.'/bundle/coc.nvim'
-	endif
 
 	"  GUI SETTINGS  "
 	""""""""""""""""""
