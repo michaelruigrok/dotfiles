@@ -537,12 +537,18 @@ augroup runners
 	" For most languages, we can just exec the file direct, or use
 	" the interpreter (using the filetype name)
 	" TODO: detect Makefile and actually use make accordingly
+if s:MSWindows
+	autocmd FileType * setlocal makeprg=%
+else
 	autocmd FileType * if &makeprg == "make" |
 				\ execute "setlocal makeprg="
 					\. fnameescape('[[ -x % ]] && %:.:h/%:t $* \|\| '.&filetype.' % $*')
 				\ | endif
+endif
+
 	nnoremap <leader>m :w<CR>:exec 'make '.
 				\(exists('makeargs') ? makeargs : '')<CR>
+
 	" TODO: try and use vim's smart compiler/running architecture
 	"autocmd FileType * compiler &filetype
 	autocmd FileType * let b:dispatch = &filetype . ' %'
@@ -554,6 +560,9 @@ augroup runners
 	autocmd FileType dot  setlocal makeprg=dot\ -Tx11\ %:.
 	autocmd FileType javascript  setlocal makeprg=node\ %:.
 	autocmd FileType rust let makeargs='build'
+
+" AutoHotkey runs forever, thus run in background
+	autocmd FileType autohotkey nnoremap <buffer> <leader>m :Make /restart<CR>
 
 " for LaTeX documents, compile as a pdf
 	autocmd FileType tex setlocal makepgr=pdflatex\ %:.
