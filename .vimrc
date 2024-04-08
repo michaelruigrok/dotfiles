@@ -98,7 +98,7 @@ if has ('gui_running')
 	if has("gui_gtk2") || has("gui_gtk3")
 		set guifont=Anonymous\ Pro\ For\ Powerline\ 11\\,Source\ Code\ Pro\ 10\\,Courier\ New\ 12,Monospace\ 12
 	elseif s:MSWindows
-		set guifont=Consolas
+		set guifont=Consolas:h11
 	elseif has("gui_photon")
 		set guifont=Courier\ New:s12
 	elseif has("gui_kde")
