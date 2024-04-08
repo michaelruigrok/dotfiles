@@ -1,3 +1,7 @@
 %*
-.vim/bundle/*
+.vim/bundle
+.vim/swapfiles
+.vim/undo-history
 .wakatime*
+NTUSER*
+ntuser*
