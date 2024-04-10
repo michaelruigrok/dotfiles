@@ -145,6 +145,12 @@ endif
 "  possibly only works while you have not edited your copy
 	set autoread
 
+" upon save, create directory if it doesn't exist
+augroup mkdir
+  autocmd!
+  autocmd BufWritePre * call mkdir(expand("<afile>:p:h"), "p")
+augroup END
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "    VIM APPEARANCE
 "
