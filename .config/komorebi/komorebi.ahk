@@ -32,8 +32,32 @@ if (Right < Bottom) {
 
 ; Focus windows
 #h::Focus("left")
-#j::Focus("down")
-#k::Focus("up")
+#j:: {
+    Critical
+    window := WinGetId("A")
+    Focus("down")
+    if (window == WinGetId("A")) {
+        Focus("right")
+        Focus("down")
+
+        if (Query("focused-container-index") == "0") {
+            Focus("left")
+        }
+    }
+    Critical "Off"
+}
+#k:: {
+    Critical
+    window := WinGetId("A")
+    Focus("up")
+    if (window == WinGetId("A")
+            && Query("focused-container-index") != "0"
+        ) {
+        Focus("left")
+        Focus("up")
+    }
+    Critical "Off"
+}
 #l::Focus("right")
 #+[::CycleFocus("previous")
 #+]::CycleFocus("next")
