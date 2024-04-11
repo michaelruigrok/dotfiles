@@ -6,6 +6,7 @@
 #Include komorebic.lib.ahk
 
 CapsLock::Escape
+#Enter::Run("wt")
 
 ; Allow win + L to be set
 RegWrite(1, "REG_DWORD", "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "DisableLockWorkstation")
@@ -61,7 +62,7 @@ if (Right < Bottom) {
 
 ; Manipulate windows
 +#Space::ToggleFloat()
-#+f::ToggleMonocle()
+#f::ToggleMonocle()
 
 ; Window manager options
 #+r::Retile()
@@ -71,12 +72,32 @@ if (Right < Bottom) {
 +#x::FlipLayout("horizontal")
 +#y::FlipLayout("vertical")
 
+; Monitors
+#^1::FocusMonitor(0)
+#^2::FocusMonitor(1)
+#^+1::MoveToMonitor(0)
+#^+2::MoveToMonitor(1)
+
 ; Workspaces
 #1::FocusWorkspace(0)
 #2::FocusWorkspace(1)
 #3::FocusWorkspace(2)
+#4::FocusWorkspace(3)
+#5::FocusWorkspace(4)
+#6::FocusWorkspace(5)
+#7::FocusWorkspace(6)
+#8::FocusWorkspace(7)
+#9::FocusWorkspace(8)
+#0::FocusWorkspace(9)
 
 ; Move windows across workspaces
 #+1::MoveToWorkspace(0)
 #+2::MoveToWorkspace(1)
 #+3::MoveToWorkspace(2)
+#+4::MoveToWorkspace(3)
+#+5::MoveToWorkspace(4)
+#+6::MoveToWorkspace(5)
+#+7::MoveToWorkspace(6)
+#+8::MoveToWorkspace(7)
+#+9::MoveToWorkspace(8)
+#+0::MoveToWorkspace(9)
