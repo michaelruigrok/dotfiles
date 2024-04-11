@@ -445,12 +445,6 @@ iabbrev forloop for (int i = 0; i < ; i++) {<esc>7hi
 	nnoremap <c-s> <Esc>:w<CR>
 	inoremap <c-s> <Esc>:w<CR>
 
-" ctrl-shift-c/v to copy/paste system keyboard
-	noremap <C-S-v> "+p
-	inoremap <C-S-v> <C-r>+
-	nnoremap <C-S-c> "+y
-	vnoremap <C-S-c> "+y
-
 " Make Y do the same thing as ^ (because ^ is too far to reach)
 	nnoremap Y ^
 
