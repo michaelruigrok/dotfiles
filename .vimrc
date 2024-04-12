@@ -394,10 +394,18 @@ iabbrev cThreads #include <pthread.h>
 
 iabbrev forloop for (int i = 0; i < ; i++) {<esc>7hi
 
-	" LEADER "
-	""""""""""
 
-" With a map leader it's possible to do extra key combinations
+	" Global Mappings "
+	"""""""""""""""""""
+
+" | in visual mode moves to the same column as the visual start (but on the
+" current line)
+vnoremap <expr> \| col("v") . "\|"
+" `|<register> jumps to the column (not row) of that register
+nnoremap <expr> `\| col("'" . nr2char(getchar())) . "\\|"
+vnoremap <expr> `\| col("'" . nr2char(getchar())) . "\\|"
+
+" With a map leader It's possible to do extra key combinations
 "  like <leader>w saves the current file
 	let mapleader = ","
 	let g:mapleader = ","
