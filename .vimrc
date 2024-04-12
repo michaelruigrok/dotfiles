@@ -578,7 +578,7 @@ endif
 
 " for this vimrc, <leader>m reloads its contents
 	autocmd FileType vim setlocal makeprg=
-	autocmd FileType vim nnoremap <buffer> <leader>m :source %<CR>
+	autocmd FileType vim nnoremap <buffer> <leader>m :w<CR>:source %<CR>
 
 " Terraform validation
 	autocmd FileType terraform set efm=%EError:\ %m,%WWarning:\ %m,%ISuccess!\ %m,%C%.%#on\ %f\ line\ %l%.%#\ in\ %o:,%C\ %.%#,%C%m,%C,%-G,
