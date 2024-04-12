@@ -50,7 +50,24 @@
         },
         {
           "name": "8",
-          "layout": "BSP"
+          "layout": "BSP",
+          "workspace_rules": [
+            {
+              "id": "mattermost",
+              "kind": "Exe",
+              "matching_strategy": "Equals"
+            },
+            {
+              "id": "spotify/i",
+              "kind": "Exe",
+              "matching_strategy": "Regex"
+            },
+            {
+              "id": "thunderbird",
+              "kind": "Exe",
+              "matching_strategy": "Equals"
+            }
+          ]
         },
         {
           "name": "9",
