@@ -571,7 +571,8 @@ endif
 	autocmd FileType rust let makeargs='build'
 
 " AutoHotkey runs forever, thus run in background
-	autocmd FileType autohotkey nnoremap <buffer> <leader>m :Make /restart<CR>
+	autocmd FileType autohotkey nnoremap <buffer> <leader>m :Make! /restart<CR>
+	autocmd FileType autohotkey setlocal makeprg=start\ %
 
 " for LaTeX documents, compile as a pdf
 	autocmd FileType tex setlocal makepgr=pdflatex\ %:.
