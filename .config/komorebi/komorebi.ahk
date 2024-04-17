@@ -8,15 +8,22 @@
 CapsLock::Escape
 #Enter::Run("wt")
 
-; Allow win + L to be set
-RegWrite(1, "REG_DWORD", "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "DisableLockWorkstation")
+Init() {
+    ; Allow win + L to be set
+    RegWrite(1, "REG_DWORD", "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "DisableLockWorkstation")
 
-MonitorGet(2, , , &Right, &Bottom)
-if (Right < Bottom) {
-    FocusMonitor(1)
-    ChangeLayout("rows")
-    FocusMonitor(0)
+    MonitorGet(2, , , &Right, &Bottom)
+    if (Right < Bottom) {
+        For w in ["7", "9", "10", "8"] { ; end on workspace 8
+            FocusNamedWorkspace(w)
+            ChangeLayout("rows")
+        }
+        FocusMonitor(0)
+    }
+
 }
+Init()
+
 
 +#Q::WinClose("A")
 
@@ -89,7 +96,10 @@ if (Right < Bottom) {
 #f::ToggleMonocle()
 
 ; Window manager options
-#+r::Retile()
+#+r::{
+    Init()
+    Retile()
+}
 #p::TogglePause()
 
 ; Layouts
