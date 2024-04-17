@@ -29,5 +29,5 @@
 
 [url "git+ssh://michaelruigrok@git.launchpad.net/"]
 	insteadof = launchpad:
-[url "git+ssh://content.rodeo:/opt/git/"]
+[url "git+ssh://git@content.rodeo:/git/"]
 	insteadof = content.rodeo:
