@@ -5,10 +5,9 @@
 ; Load library
 #Include komorebic.lib.ahk
 
-CapsLock::Escape
-#Enter::Run("wt")
-
 Init() {
+    SetCapsLockState false
+
     ; Allow win + L to be set
     RegWrite(1, "REG_DWORD", "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "DisableLockWorkstation")
 
@@ -24,6 +23,8 @@ Init() {
 }
 Init()
 
+CapsLock::Escape
+#Enter::Run("wt")
 
 +#Q::WinClose("A")
 
