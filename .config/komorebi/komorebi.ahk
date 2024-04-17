@@ -86,6 +86,37 @@ CapsLock::Escape
 #[::CycleStack("previous")
 #]::CycleStack("next")
 
+#w:: {
+    Loop {
+        window := WinGetId("A")
+        CycleFocus("next")
+        ; Wait for focus to update)
+        Query("focused-container-index")
+        if window == WinGetId("A") {
+            break
+        }
+
+        Stack("left")
+        Stack("right")
+        Stack("up")
+        Stack("down")
+    }
+}
+
+#z:: {
+    window := WinGetId("A")
+    Loop {
+        Unstack()
+        CycleFocus("previous")
+
+        ; Wait for focus to update)
+        Query("focused-container-index")
+        if window == WinGetId("A") {
+            break
+        }
+    }
+}
+
 ; Resize
 #=::ResizeAxis("horizontal", "increase")
 #-::ResizeAxis("horizontal", "decrease")
