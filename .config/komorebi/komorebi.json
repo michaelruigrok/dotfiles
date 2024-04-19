@@ -49,17 +49,17 @@
           "layout": "BSP",
           "workspace_rules": [
             {
-              "id": "mattermost",
+              "id": "Mattermost.exe",
               "kind": "Exe",
               "matching_strategy": "Equals"
             },
             {
-              "id": "spotify/i",
+              "id": "Spotify.exe",
               "kind": "Exe",
               "matching_strategy": "Regex"
             },
             {
-              "id": "thunderbird",
+              "id": "thunderbird.exe",
               "kind": "Exe",
               "matching_strategy": "Equals"
             }
@@ -67,7 +67,14 @@
         },
         {
           "name": "7",
-          "layout": "BSP"
+          "layout": "BSP",
+          "workspace_rules": [
+            {
+              "id": "ms-teams.exe",
+              "kind": "Exe",
+              "matching_strategy": "Equals"
+            }
+          ]
         },
         {
           "name": "9",
