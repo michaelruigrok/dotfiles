@@ -37,6 +37,10 @@ CapsLock::Escape
     return
 }
 
+#+m::{
+    For x in WinGetList()
+        WinRestore(x)
+}
 
 ; Focus windows
 #h::Focus("left")
