@@ -243,6 +243,9 @@ augroup nobeep
 	autocmd GUIEnter * set vb t_vb=
 augroup END
 
+" resize splits when window resized
+autocmd VimResized * wincmd =
+
 " Spell checker for Australian English, but not in helpfiles
 " augroup spelling
 " 	autocmd!
