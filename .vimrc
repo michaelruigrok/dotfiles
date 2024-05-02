@@ -220,10 +220,6 @@ augroup dotpoints
 	autocmd FileType text,markdown setlocal comments=n:>,b:*,b:+,b:-
 augroup END
 
-" makes it automatically indent in specific cases, such as
-"  when adding a curly bracket ({)
-	set smartindent
-
 " Minimal number of screen lines to keep above and below the cursor.
 	set scrolloff=7
 
