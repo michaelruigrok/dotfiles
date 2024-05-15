@@ -1,5 +1,7 @@
 ﻿#Requires AutoHotkey v2.0
 #Warn  ; Enable warnings to assist with detecting common errors.
+#Include "C:\Users\%A_UserName%\.local\lib\ahk\"
+#Include "clipboard-history.lib.ahk"
 
 DisabledApps := [
     ".*vim",
@@ -13,7 +15,7 @@ DisabledApps := [
     winClass := WinGetClass("A")
     exe := WinGetProcessName("A")
     MouseGetPos(&mouseX, &mouseY, &mouseW, &ctrl)
-  } catch TargetError {
+  } catch {
     return
   }
 
@@ -43,16 +45,21 @@ DisabledApps := [
 
   else
     SendInput("^c")
+
+
+  clipHist := ClipboardHistory
+  if clipHist.HistoryEnabled {
+      clips := clipHist.Count
+      loop {
+          text := clipHist.GetItemText(clips)
+          if (!text) {
+              clipHist.DeleteItem(clips)
+          }
+      } until (!--clips)
+      clipHist.PutItemIntoClipboard(1)
+  }
   return
 }
-
-/* ~/::{ */
-/*     if !ClipboardHistory.IsHistoryEnabled { */
-/*            MsgBox("A_Clipboard history disabled") */
-/*               ExitApp() */
-/*           } */
-/*           MsgBox("A_Clipboard history enabled") */
-/* } */
 
 ~mbutton::
 {
