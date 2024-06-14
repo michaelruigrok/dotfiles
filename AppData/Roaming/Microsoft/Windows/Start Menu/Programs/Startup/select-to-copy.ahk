@@ -68,19 +68,18 @@ DisabledApps := [
   else
     SendInput("^c")
 
-
   clipHist := ClipboardHistory
   if clipHist.HistoryEnabled {
       clips := clipHist.Count
-      if (!clips)
-          return
-      loop {
+      while (clips) {
           text := clipHist.GetItemText(clips)
           if (!text) {
               clipHist.DeleteItem(clips)
           }
-      } until (!--clips)
-      clipHist.PutItemIntoClipboard(1)
+          clips--
+      }
+      if clipHist.Count
+          clipHist.PutItemIntoClipboard(1)
   }
   return
 }
