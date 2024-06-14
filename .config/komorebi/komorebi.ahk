@@ -28,14 +28,21 @@ CapsLock::Escape
 
 +#Q::WinClose("A")
 
-; Win+Esc enables lock screen for long enough to lock it.
-#Escape:: {
+Lock() {
     RegWrite(0, "REG_DWORD", "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "DisableLockWorkstation")
     DllCall("LockWorkStation")
     sleep(1000)
     RegWrite(1, "REG_DWORD", "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "DisableLockWorkstation")
+}
+
+; Win+Esc enables lock screen for long enough to lock it.
+#Escape:: {
+    Lock()
     return
 }
+
+; Lock every 30 minutes, to force frequent breaks
+SetTimer Lock, 30 * 60 * 1000
 
 #+m::{
     For x in WinGetList()
