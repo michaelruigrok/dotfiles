@@ -135,26 +135,32 @@ CycleMoveToWorkspace(cycle_direction) {
 
 SendToMonitor(target) {
     RunWait("komorebic.exe send-to-monitor " target, , "Hide")
+    CycleFocus("next")
 }
 
 CycleSendToMonitor(cycle_direction) {
     RunWait("komorebic.exe cycle-send-to-monitor " cycle_direction, , "Hide")
+    CycleFocus("next")
 }
 
 SendToWorkspace(target) {
     RunWait("komorebic.exe send-to-workspace " target, , "Hide")
+    CycleFocus("next")
 }
 
 SendToNamedWorkspace(workspace) {
     RunWait("komorebic.exe send-to-named-workspace " workspace, , "Hide")
+    CycleFocus("next")
 }
 
 CycleSendToWorkspace(cycle_direction) {
     RunWait("komorebic.exe cycle-send-to-workspace " cycle_direction, , "Hide")
+    CycleFocus("next")
 }
 
 SendToMonitorWorkspace(target_monitor, target_workspace) {
     RunWait("komorebic.exe send-to-monitor-workspace " target_monitor " " target_workspace, , "Hide")
+    CycleFocus("next")
 }
 
 FocusMonitor(target) {

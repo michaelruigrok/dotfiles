@@ -145,8 +145,8 @@ CapsLock::Escape
 ; Monitors
 #^1::FocusMonitor(0)
 #^2::FocusMonitor(1)
-#^+1::MoveToMonitor(0)
-#^+2::MoveToMonitor(1)
+#^+1::SendToMonitor(0)
+#^+2::SendToMonitor(1)
 
 ; Workspaces
 #1::FocusNamedWorkspace("1")
@@ -161,13 +161,13 @@ CapsLock::Escape
 #0::FocusNamedWorkspace("10")
 
 ; Move windows across workspaces
-#+1::MoveToNamedWorkspace("1")
-#+2::MoveToNamedWorkspace("2")
-#+3::MoveToNamedWorkspace("3")
-#+4::MoveToNamedWorkspace("4")
-#+5::MoveToNamedWorkspace("5")
-#+6::MoveToNamedWorkspace("6")
-#+7::MoveToNamedWorkspace("7")
-#+8::MoveToNamedWorkspace("8")
-#+9::MoveToNamedWorkspace("9")
-#+0::MoveToNamedWorkspace("10")
+#+1::SendToNamedWorkspace("1")
+#+2::SendToNamedWorkspace("2")
+#+3::SendToNamedWorkspace("3")
+#+4::SendToNamedWorkspace("4")
+#+5::SendToNamedWorkspace("5")
+#+6::SendToNamedWorkspace("6")
+#+7::SendToNamedWorkspace("7")
+#+8::SendToNamedWorkspace("8")
+#+9::SendToNamedWorkspace("9")
+#+0::SendToNamedWorkspace("10")
