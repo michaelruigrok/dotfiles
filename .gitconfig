@@ -11,6 +11,7 @@
 [push]
 	default = simple
 	recurseSubmodules = check
+	autoSetupRemote = true
 
 [color]
 	ui = auto
