@@ -1,5 +1,31 @@
 #Include "Acc.ahk"
 
+class Debug {
+    static On := false
+    static Call(data) {
+        if (Debug.On) {
+            ToolTip2(DisplayObj(data))
+        }
+    }
+}
+
+DisplayObj(Obj, Depth:=5, IndentLevel2:="") {
+    if Type(Obj) = "Object"
+        Obj := Obj.OwnProps()
+    else
+        return Obj
+
+    for k, v in Obj {
+        arr .= IndentLevel2 "[" k "]"
+        if (IsObject(v) && Depth>1)
+            arr .="`n" DisplayObj(v, Depth-1, IndentLevel2 . "    ")
+        Else
+            arr .=" => " v
+        arr .="`n"
+    }
+    return RTrim(arr)
+}
+
 class Browser {
 
     static CurrentTab(handle) {
