@@ -9,13 +9,12 @@ trap onExit EXIT
 ###
 # Windows only Config
 ###
-if [ `uname -o` = "Msys" ]; then
-	export WINUSER="${WINUSER:-$USER}"
-	export WINHOME="/c/Users/$WINUSER"
-elif [ "$WSL_DISTRO_NAME" ]; then
-	export WINUSER="${WINUSER:-$USER}"
-	export WINHOME="/mnt/c/Users/$WINUSER"
-fi
+export WINUSER="${WINUSER:-$USER}"
+for prefix in /c/Users /mnt/c/Users; do
+	if [ -d "$prefix/$WINUSER" ]; then
+		export WINHOME="$prefix/$WINUSER"
+	fi
+done || unset WINUSER
 
 if [ "$WINHOME" ]; then
 	export STARTUP="$WINHOME/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup"
