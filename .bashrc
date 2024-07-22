@@ -10,6 +10,11 @@ trap onExit EXIT
 # Windows only Config
 ###
 export WINUSER="${WINUSER:-$USER}"
+
+if [[ -d "/mnt/c" ]] && ! [[ -d "mnt/c/Users" ]] && command -v sudo >/dev/null; then
+	sudo mount -t drvfs C: /mnt/c
+fi
+
 for prefix in /c/Users /mnt/c/Users; do
 	if [ -d "$prefix/$WINUSER" ]; then
 		export WINHOME="$prefix/$WINUSER"
