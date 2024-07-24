@@ -4,24 +4,26 @@ class Debug {
     static On := false
     static Call(data) {
         if (Debug.On) {
-            ToolTip2(DisplayObj(data))
+            ToolTip2(data)
         }
     }
 }
 
-DisplayObj(Obj, Depth:=5, IndentLevel2:="") {
+Pretty(Obj, Depth:=5, IndentLevel2:="") {
     if Type(Obj) = "Object"
         Obj := Obj.OwnProps()
-    else
-        return Obj
 
-    for k, v in Obj {
-        arr .= IndentLevel2 "[" k "]"
-        if (IsObject(v) && Depth>1)
-            arr .="`n" DisplayObj(v, Depth-1, IndentLevel2 . "    ")
-        Else
-            arr .=" => " v
-        arr .="`n"
+    try {
+        for k, v in Obj {
+            arr .= IndentLevel2 "[" k "]"
+            if (IsObject(v) && Depth>1)
+                arr .="`n" Pretty(v, Depth-1, IndentLevel2 . "    ")
+            Else
+                arr .=" => " v
+            arr .="`n"
+        }
+    } catch {
+        return Obj
     }
     return RTrim(arr)
 }
@@ -43,9 +45,11 @@ class Browser {
     }
 }
 
-ToolTip2(params*) {
-    ToolTip(params*)
-    SetTimer((*) =>  KeyWait("LButton", "D") && ToolTip(), -1)
+ToolTip2(content, params*) {
+    ToolTip(Pretty(content), params*)
+    local Clear := (*) => ToolTip()
+    ; TODO: try and run Clear() when thread is interrupted.
+    SetTimer((*) => KeyWait("LButton", "D") && Clear(), -1, -999999)
 }
 
 Has(haystack, needle) {
