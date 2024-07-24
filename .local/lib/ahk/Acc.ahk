@@ -746,6 +746,7 @@ class Acc {
         Exists {
             get {
                 try {
+                    local state
                     if ((state := this.State) == 32768) || (state == 1) || (((pos := this.Location).x==0) && (pos.y==0) && (pos.w==0) && (pos.h==0))
                         return 0
                 } catch
@@ -1179,6 +1180,7 @@ class Acc {
         Dump(scope:=1, delimiter:=" ", depth:=-1) {
             out := "", scope := IsInteger(scope) ? scope : Acc.TreeScope.%scope%
             if scope&1 {
+                local State
                 RoleText := "N/A", Role := "N/A", Value := "N/A", Name := "N/A", StateText := "N/A", State := "N/A", DefaultAction := "N/A", Description := "N/A", KeyboardShortcut := "N/A", Help := "N/A", Location := {x:"N/A",y:"N/A",w:"N/A",h:"N/A"}
                 for _, v in ["RoleText", "Role", "Value", "Name", "StateText", "State", "DefaultAction", "Description", "KeyboardShortcut", "Help", "Location"]
                     try %v% := this.%v%
@@ -1708,6 +1710,7 @@ class Acc {
             Acc.ClearHighlights() ; Clear
             oAcc.Highlight(0) ; Indefinite show
             this.LVProps.Delete()
+            local State
             Location := {x:"N/A",y:"N/A",w:"N/A",h:"N/A"}, RoleText := "N/A", Role := "N/A", Value := "N/A", Name := "N/A", StateText := "N/A", State := "N/A", DefaultAction := "N/A", Description := "N/A", KeyboardShortcut := "N/A", Help := "N/A", ChildId := ""
             for _, v in ["RoleText", "Role", "Value", "Name", "Location", "StateText", "State", "DefaultAction", "Description", "KeyboardShortcut", "Help", "ChildId"] {
                 try %v% := oAcc.%v%
