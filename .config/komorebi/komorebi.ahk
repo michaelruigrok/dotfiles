@@ -4,7 +4,11 @@
 
 #Include komorebic.lib.ahk
 
+#Include "C:\Users\%A_UserName%\.local\lib\ahk\"
+#Include "misc.lib.ahk"
+
 Init() {
+    Critical
     SetCapsLockState false
 
     ; Allow win + L to be set
@@ -21,7 +25,7 @@ Init() {
         }
         FocusMonitor(0)
     }
-
+    Critical "Off"
 }
 Init()
 
@@ -29,6 +33,22 @@ CapsLock::Escape
 #Enter::Run("wt")
 
 +#Q::WinClose("A")
+
+
+#s::{
+    QuickMenu := {
+        q: "mute",
+    }
+    ToolTip2(Pretty(QuickMenu))
+    ih := InputHook("L1 T3")
+    ih.Start()
+    ih.Wait()
+    Switch ih.Input {
+        Case "q":
+            Send "#!k"
+    }
+    ToolTip()
+}
 
 Lock() {
     RegWrite(0, "REG_DWORD", "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "DisableLockWorkstation")
@@ -56,7 +76,11 @@ SetTimer Lock, 30 * 60 * 1000
 #j:: {
     Critical
     window := WinGetId("A")
+
     Focus("down")
+    ; Wait for focus to update)
+    Query("focused-container-index")
+
     if (window == WinGetId("A")) {
         Focus("right")
         Focus("down")
@@ -70,7 +94,11 @@ SetTimer Lock, 30 * 60 * 1000
 #k:: {
     Critical
     window := WinGetId("A")
+
     Focus("up")
+    ; Wait for focus to update)
+    Query("focused-container-index")
+
     if (window == WinGetId("A")
             && Query("focused-container-index") != "0"
         ) {
@@ -100,7 +128,7 @@ SetTimer Lock, 30 * 60 * 1000
 #]::CycleStack("next")
 
 #w:: {
-    Loop {
+    Loop 32 {
         window := WinGetId("A")
         CycleFocus("next")
         ; Wait for focus to update)
@@ -118,7 +146,7 @@ SetTimer Lock, 30 * 60 * 1000
 
 #z:: {
     window := WinGetId("A")
-    Loop {
+    Loop 32 {
         Unstack()
         CycleFocus("previous")
 
