@@ -2,7 +2,6 @@
 #Warn  ; Enable warnings to assist with detecting common errors.
 #SingleInstance Force
 
-; Load library
 #Include komorebic.lib.ahk
 
 Init() {
@@ -10,6 +9,9 @@ Init() {
 
     ; Allow win + L to be set
     RegWrite(1, "REG_DWORD", "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "DisableLockWorkstation")
+
+    FocusMonitor(0)
+    ChangeLayout("bsp")
 
     MonitorGet(2, , , &Right, &Bottom)
     if (Right < Bottom) {
