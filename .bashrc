@@ -9,7 +9,14 @@ trap onExit EXIT
 ###
 # Windows only Config
 ###
-export WINUSER="${WINUSER:-$USER}"
+for user in "$WINUSER" "$USER" "$(basename "$HOME")"; do
+	if [[ -n "$user" ]]; then
+		export WINUSER="$user"
+		break
+	fi
+done
+
+
 
 if [[ -d "/mnt/c" ]] && ! [[ -d "mnt/c/Users" ]] && command -v sudo >/dev/null; then
 	sudo mount -t drvfs C: /mnt/c
