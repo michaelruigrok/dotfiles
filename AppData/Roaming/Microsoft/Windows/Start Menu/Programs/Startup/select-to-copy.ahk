@@ -86,7 +86,7 @@ DisabledApps := [
     MouseGetPos(&mouseWinX, &mouseWinY)
     CoordMode "Mouse", "Screen"
     MouseGetPos(&mouseX, &mouseY, &mouseW, &ctrl)
-    window := "A"
+    window := mouseW
     winClass := WinGetClass(window)
     exe := WinGetProcessName(window)
   } catch TargetError {
