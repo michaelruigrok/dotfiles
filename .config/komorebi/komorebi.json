@@ -7,8 +7,8 @@
   "default_container_padding": 8,
   "border_padding": 4,
   "border_offset": -1,
-  "active_window_border": true,
-  "active_window_border_colours": {
+  "border": true,
+  "border_colours": {
     "stack": "#42a5f5",
     "single": "#00a542",
     "monocle": "#ff3399"
