@@ -1,9 +1,16 @@
 #Include "Acc.ahk"
 
 class Debug {
-    static On := false
+    static Enabled := false
+
+    static On() {
+        this.Enabled := true
+    }
+    static Off() {
+        this.Enabled := false
+    }
     static Call(data) {
-        if (Debug.On) {
+        if (Debug.Enabled) {
             ToolTip2(data)
         }
     }
@@ -26,6 +33,10 @@ Pretty(Obj, Depth:=5, IndentLevel2:="") {
         return Obj
     }
     return RTrim(arr)
+}
+
+BoolStr(pred) {
+    return pred ? "true" : "false"
 }
 
 class Browser {
