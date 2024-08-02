@@ -21,13 +21,9 @@ DisabledApps := [
     window := "A"
     winClass := WinGetClass(window)
     exe := WinGetProcessName(window)
+    el := Acc.ElementFromPoint(mouseX, mouseY)
   } catch {
     return
-  }
-
-  try {
-      el := Acc.ElementFromPoint(mouseX, mouseY)
-      Debug(el.RoleText)
   }
 
   for i, x in DisabledApps
@@ -96,9 +92,20 @@ DisabledApps := [
   } catch TargetError {
     return
   }
-  ToolTip
+
+  debugInfo := Map(
+    "Active Window", BoolStr(WinActive(window)),
+    "Window Class", winClass,
+    "Exe", exe,
+  )
+
+  if (!WinActive(window)) {
+    WinActivate(window)
+    WinWaitActive(window)
+  }
 
   el := Acc.ElementFromPoint(mouseX, mouseY)
+  debugInfo["Acc Role Initial"] := el.RoleText
   parent := el
   i := 0
   while (parent.accessible.accParent) {
@@ -110,7 +117,11 @@ DisabledApps := [
     i++
   }
 
-  Debug(i el.RoleText)
+  debugInfo["Acc Parent distance"] := i
+  debugInfo["Acc Parent role"] := parent.RoleText
+  debugInfo["Acc role"] := el.RoleText
+
+  Debug(debugInfo)
   ;allowedAccRoles := ["editable text", "client"]
   ;if (! Has(allowedAccRoles, el.RoleText))
   ;  return
