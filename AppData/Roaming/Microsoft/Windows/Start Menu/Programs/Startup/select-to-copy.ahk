@@ -80,7 +80,8 @@ DisabledApps := [
   return
 }
 
-~MButton::
+;~MButton::
+$MButton::
 {
   try {
     MouseGetPos(&mouseWinX, &mouseWinY)
@@ -89,7 +90,9 @@ DisabledApps := [
     window := mouseW
     winClass := WinGetClass(window)
     exe := WinGetProcessName(window)
-  } catch TargetError {
+  } catch TargetError as e {
+    ToolTip2(e)
+    Send "{MButton}"
     return
   }
 
@@ -127,8 +130,10 @@ DisabledApps := [
   ;  return
 
   for i, x in DisabledApps
-    if (exe ~= x)
+    if (exe ~= x) {
+        Send "{MButton}"
         return
+    }
 
   if (winClass == "Emacs")
     SendInput("^y")
@@ -155,6 +160,8 @@ DisabledApps := [
     if (el.DefaultAction == "activate") {
       el.DoDefaultAction()
       SendInput("^v")
+    } else {
+      Send "{MButton}"
     }
   }
 
