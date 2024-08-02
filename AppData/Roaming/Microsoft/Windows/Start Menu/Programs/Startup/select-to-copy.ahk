@@ -12,46 +12,80 @@ DisabledApps := [
   "tabby",
 ]
 
-~LButton Up::
-{
-  try {
-    MouseGetPos(&mouseWinX, &mouseWinY)
-    CoordMode "Mouse", "Screen"
-    MouseGetPos(&mouseX, &mouseY, &mouseW, &ctrl)
-    window := "A"
-    winClass := WinGetClass(window)
-    exe := WinGetProcessName(window)
-    el := Acc.ElementFromPoint(mouseX, mouseY)
-  } catch {
-    return
+class Winfo {
+
+  id {
+    get => this._id
+    set {
+      this._id := value
+
+      this.class := WinGetClass(value)
+      this.exe := WinGetProcessName(value)
+
+      this.debug["active Window"] := BoolStr(WinActive(value))
+      this.debug["window Class"] := this.class
+      this.debug["exe"] := this.exe
+    }
   }
 
-  for i, x in DisabledApps
-    if (exe ~= "i)^" . x . "\.exe$")
-        return
+  __New(window := "A") {
+    this.debug := Map()
+    try {
+      MouseGetPos(&mouseX, &mouseY, &mouseWindow, &mouseCtrl)
+      this.mouseX := mouseX
+      this.mouseY := mouseY
+      this.mouseWindow := mouseWindow
 
-  if (winClass == "Emacs")
-    SendInput("!w")
+      CoordMode "Mouse", "Screen"
+      MouseGetPos(&mouseScreenX, &mouseScreenY)
+      this.mouseScreenX := mouseScreenX
+      this.mouseScreenY := mouseScreenY
 
-  else if (exe ~= "WindowsTerminal.exe")
+      if (window == "mouse") {
+          window := mouseWindow
+      }
+      this.id := window
+      this.el := Acc.ElementFromPoint(mouseScreenX, mouseScreenY)
+
+      this.debug["Acc Role Initial"] := this.el.RoleText
+
+    } catch TargetError as e {
+      return
+    }
+  }
+}
+
+~LButton Up::
+{
+  if not w := WInfo()
     return
 
-  else if (exe ~= "i)Tabby.exe$")
+  for i, x in DisabledApps
+    if (w.exe ~= "i)^" . x . "\.exe$")
+        return
+
+  if (w.class == "Emacs")
+    SendInput("!w")
+
+  else if (w.exe ~= "WindowsTerminal.exe")
+    return
+
+  else if (w.exe ~= "i)Tabby.exe$")
     SendInput("+^c")
 
-  else if (exe ~= "i)terminal.exe$")
+  else if (w.exe ~= "i)terminal.exe$")
     SendInput("+^c")
 
-  else if (exe == "explorer.exe") {
-    if (mouseWinX > 215 &&
-      mouseWinY > 48 &&
-      mouseWinY < 80
+  else if (w.exe == "explorer.exe") {
+    if (w.mouseX > 215 &&
+      w.mouseY > 48 &&
+      w.mouseY < 80
     )
       SendInput("^c")
   }
 
-  else if (exe == "firefox.exe") {
-    try site := Browser.CurrentTab(window)
+  else if (w.exe == "firefox.exe") {
+    try site := Browser.CurrentTab(w.id)
     catch
       return
 
@@ -83,82 +117,64 @@ DisabledApps := [
 ;~MButton::
 $MButton::
 {
-  try {
-    MouseGetPos(&mouseWinX, &mouseWinY)
-    CoordMode "Mouse", "Screen"
-    MouseGetPos(&mouseX, &mouseY, &mouseW, &ctrl)
-    window := mouseW
-    winClass := WinGetClass(window)
-    exe := WinGetProcessName(window)
-  } catch TargetError as e {
-    ToolTip2(e)
-    Send "{MButton}"
+  if not w := WInfo("mouse")
     return
+
+  if (!WinActive(w.id)) {
+    WinActivate(w.id)
+    WinWaitActive(w.id)
   }
 
-  debugInfo := Map(
-    "Active Window", BoolStr(WinActive(window)),
-    "Window Class", winClass,
-    "Exe", exe,
-  )
-
-  if (!WinActive(window)) {
-    WinActivate(window)
-    WinWaitActive(window)
-  }
-
-  el := Acc.ElementFromPoint(mouseX, mouseY)
-  debugInfo["Acc Role Initial"] := el.RoleText
-  parent := el
+  parent := w.el
   i := 0
   while (parent.accessible.accParent) {
     if (parent.RoleText == "editable text") {
-      el := parent
+      w.el := parent
       break
     }
     parent := parent.Parent
     i++
   }
 
-  debugInfo["Acc Parent distance"] := i
-  debugInfo["Acc Parent role"] := parent.RoleText
-  debugInfo["Acc role"] := el.RoleText
+  w.debug["Acc Parent distance"] := i
+  w.debug["Acc Parent role"] := parent.RoleText
+  w.debug["Acc role"] := w.el.RoleText
 
-  Debug(debugInfo)
+  Debug(w.debug)
   ;allowedAccRoles := ["editable text", "client"]
-  ;if (! Has(allowedAccRoles, el.RoleText))
+  ;if (! Has(allowedAccRoles, w.el.RoleText))
   ;  return
 
   for i, x in DisabledApps
-    if (exe ~= x) {
+    if (w.exe ~= x) {
         Send "{MButton}"
         return
     }
 
-  if (winClass == "Emacs")
+  if (w.class == "Emacs")
     SendInput("^y")
 
-  else if (exe == "Tabby.exe")
+  else if (w.exe == "Tabby.exe")
     SendInput("+^v")
 
-  else if (exe ~= "i)terminal.exe$")
+  else if (w.exe ~= "i)terminal.exe$")
     SendInput("+^v")
 
-  else if (exe == "explorer.exe") {
-    if (mouseWinX > 215 &&
-      mouseWinY > 48 &&
-      mouseWinY < 80
+  else if (w.exe == "explorer.exe") {
+    if (w.mouseX > 215 &&
+      w.mouseY > 48 &&
+      w.mouseY < 80
     ) {
       SendEvent("!d") ; Move to toolbar
       SendInput("^v")
     }
   }
 
-  else if (exe == "firefox.exe") {
+  else if (w.exe == "firefox.exe") {
     SendInput("{Escape}")
-    ; TODO: Default action doesn't actually focus the window when in use. We need AHK to do this for us
-    if (el.DefaultAction == "activate") {
-      el.DoDefaultAction()
+
+    if (w.el.DefaultAction == "activate") {
+      w.el.DoDefaultAction()
       SendInput("^v")
     } else {
       Send "{MButton}"
@@ -172,64 +188,34 @@ $MButton::
 
 $^+c::
 {
-    try {
-      MouseGetPos(&mouseWinX, &mouseWinY)
-      CoordMode "Mouse", "Screen"
-      MouseGetPos(&mouseX, &mouseY, &mouseW, &ctrl)
-      window := mouseW
-      winClass := WinGetClass(window)
-      exe := WinGetProcessName(window)
-    } catch TargetError as e {
-      ToolTip2(e)
-      return
-    }
+  if not w := WInfo()
+    return
 
-    debugInfo := Map(
-      "Active Window", BoolStr(WinActive(window)),
-      "Window Class", winClass,
-      "Exe", exe,
-    )
+  if (w.exe == "gvim.exe") {
+    SendInput('"{+}y')
 
-    if (exe == "gvim.exe") {
-        SendInput('"{+}y')
-
-    } else {
-        SendInput "^+c"
-        return
-    }
+  } else {
+    SendInput "^+c"
+    return
+  }
 
 }
 
 $^+v::
 {
-    try {
-      MouseGetPos(&mouseWinX, &mouseWinY)
-      CoordMode "Mouse", "Screen"
-      MouseGetPos(&mouseX, &mouseY, &mouseW, &ctrl)
-      window := mouseW
-      winClass := WinGetClass(window)
-      exe := WinGetProcessName(window)
-    } catch TargetError as e {
-      ToolTip2(e)
-      return
-    }
+  if not w := WInfo()
+    return
 
-    debugInfo := Map(
-      "Active Window", BoolStr(WinActive(window)),
-      "Window Class", winClass,
-      "Exe", exe,
-    )
+  if (w.exe == "gvim.exe") {
+    SendInput('"{+}p')
 
-    if (exe == "gvim.exe") {
-        SendInput('"{+}p')
-
-    } else {
-        Send "^+v"
-        return
-    }
+  } else {
+    Send "^+v"
+    return
+  }
 
 }
-  
+
 #HotIf !WinActive(, )
 
 
