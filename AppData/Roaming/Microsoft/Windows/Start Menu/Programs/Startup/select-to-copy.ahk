@@ -169,6 +169,66 @@ $MButton::
     SendInput("^v")
   return
 }
+
+$^+c::
+{
+    try {
+      MouseGetPos(&mouseWinX, &mouseWinY)
+      CoordMode "Mouse", "Screen"
+      MouseGetPos(&mouseX, &mouseY, &mouseW, &ctrl)
+      window := mouseW
+      winClass := WinGetClass(window)
+      exe := WinGetProcessName(window)
+    } catch TargetError as e {
+      ToolTip2(e)
+      return
+    }
+
+    debugInfo := Map(
+      "Active Window", BoolStr(WinActive(window)),
+      "Window Class", winClass,
+      "Exe", exe,
+    )
+
+    if (exe == "gvim.exe") {
+        SendInput('"{+}y')
+
+    } else {
+        SendInput "^+c"
+        return
+    }
+
+}
+
+$^+v::
+{
+    try {
+      MouseGetPos(&mouseWinX, &mouseWinY)
+      CoordMode "Mouse", "Screen"
+      MouseGetPos(&mouseX, &mouseY, &mouseW, &ctrl)
+      window := mouseW
+      winClass := WinGetClass(window)
+      exe := WinGetProcessName(window)
+    } catch TargetError as e {
+      ToolTip2(e)
+      return
+    }
+
+    debugInfo := Map(
+      "Active Window", BoolStr(WinActive(window)),
+      "Window Class", winClass,
+      "Exe", exe,
+    )
+
+    if (exe == "gvim.exe") {
+        SendInput('"{+}p')
+
+    } else {
+        Send "^+v"
+        return
+    }
+
+}
   
 #HotIf !WinActive(, )
 
