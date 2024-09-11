@@ -30,7 +30,8 @@ done
 
 
 
-if [[ -d "/mnt/c" ]] && ! [[ -d "mnt/c/Users" ]] && command -v sudo >/dev/null; then
+if item /mnt/c in /mnt/* && ! [[ -e "/mnt/c" ]]; then
+	echo >&2 Mounting C:\\
 	sudo mount -t drvfs C: /mnt/c
 fi
 
