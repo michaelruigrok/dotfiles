@@ -34,6 +34,7 @@ CapsLock::Escape
 
 +#Q::WinClose("A")
 
+#d::!Space
 
 #s::{
     QuickMenu := {
