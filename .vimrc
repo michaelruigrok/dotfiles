@@ -216,8 +216,11 @@ augroup END
 " get good working dotpoints
 augroup dotpoints
 	autocmd!
-	autocmd FileType text,markdown setlocal formatoptions=ctnqro
-	autocmd FileType text,markdown setlocal comments=n:>,b:*,b:+,b:-
+	autocmd FileType text,markdown
+				\   setlocal formatoptions=ctnqro
+				\ | setlocal comments=n:>,b:*,b:+,b:-
+				\ | inoremap <lt><lt> <c-d>
+				\ | inoremap >> <c-t>
 augroup END
 
 " Minimal number of screen lines to keep above and below the cursor.
