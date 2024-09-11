@@ -6,6 +6,8 @@
 #Include "misc.lib.ahk"
 #Include "Acc.ahk"
 
+;Debug.On()
+
 DisabledApps := [
   ".*vim",
   "mintty",
@@ -28,36 +30,54 @@ class Winfo {
     }
   }
 
+  static Call(Params*) {
+      obj := {base: this.prototype}
+      try {
+          obj.__New(Params*)
+          return obj
+      } catch TargetError as e {
+          return false
+      }
+  }
+
   __New(window := "A") {
     this.debug := Map()
-    try {
       MouseGetPos(&mouseX, &mouseY, &mouseWindow, &mouseCtrl)
       this.mouseX := mouseX
       this.mouseY := mouseY
       this.mouseWindow := mouseWindow
 
+      if (window == "mouse") {
+          window := mouseWindow
+      }
+
+      try {
+        this.id := window
+      } catch TargetError as e {
+        return false
+      }
+
       CoordMode "Mouse", "Screen"
       MouseGetPos(&mouseScreenX, &mouseScreenY)
       this.mouseScreenX := mouseScreenX
       this.mouseScreenY := mouseScreenY
+      CoordMode "Mouse", "Window"
 
-      if (window == "mouse") {
-          window := mouseWindow
+      Loop 5 {
+          this.el := Acc.ElementFromPoint(mouseScreenX, mouseScreenY)
+          try {
+              this.debug["Acc Role Initial"] := this.el.RoleText
+              break
+          }
+          Sleep 50
       }
-      this.id := window
-      this.el := Acc.ElementFromPoint(mouseScreenX, mouseScreenY)
 
-      this.debug["Acc Role Initial"] := this.el.RoleText
-
-    } catch TargetError as e {
-      return
-    }
   }
 }
 
 ~LButton Up::
 {
-  if not w := WInfo()
+  if not w := WInfo() || WInfo("mouse")
     return
 
   for i, x in DisabledApps
