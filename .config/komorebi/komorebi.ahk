@@ -64,8 +64,8 @@ Lock() {
     return
 }
 
-; Lock every 30 minutes, to force frequent breaks
-SetTimer Lock, 30 * 60 * 1000
+; Lock every X minutes (first num), to force frequent breaks
+SetTimer Lock, 66 * 60 * 1000
 
 #+m::{
     For x in WinGetList()
