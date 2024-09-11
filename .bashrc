@@ -161,11 +161,17 @@ histignore_alias() {
 	alias chekcout='checkout'
 
 	function git() {
-		if [ "$1" = "recent-branches" ]; then
-			command git branch --all --sort=-committerdate | grep remote | head -n 5
-		else
-			command git "$@"
-		fi
+		case "$1" in
+			recent-branches )
+				command git branch --all --sort=-committerdate | grep remote | head -n 5
+				;;
+			dog | adog | logadog )
+				command git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)' --all
+				;;
+			*)
+				command git "$@"
+				;;
+		esac
 	}
 
 alias k='kubectl'
