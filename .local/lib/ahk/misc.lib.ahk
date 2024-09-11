@@ -16,12 +16,16 @@ class Debug {
     }
 }
 
-Pretty(Obj, Depth:=5, IndentLevel2:="") {
-    if Type(Obj) = "Object"
-        Obj := Obj.OwnProps()
+Pretty(data, Depth:=5, IndentLevel2:="") {
 
-    try {
-        for k, v in Obj {
+    if type(data) == 'String'
+        return data
+
+    if not HasMethod(data, "__Enum")
+        data := data.OwnProps()
+
+    arr := ""
+        for k, v in data {
             arr .= IndentLevel2 "[" k "]"
             if (IsObject(v) && Depth>1)
                 arr .="`n" Pretty(v, Depth-1, IndentLevel2 . "    ")
@@ -29,10 +33,9 @@ Pretty(Obj, Depth:=5, IndentLevel2:="") {
                 arr .=" => " v
             arr .="`n"
         }
-    } catch {
-        return Obj
-    }
-    return RTrim(arr)
+    if arr
+        return RTrim(arr)
+    return String(data)
 }
 
 BoolStr(pred) {
