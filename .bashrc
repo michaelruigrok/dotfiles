@@ -6,6 +6,18 @@ onExit() {
 
 trap onExit EXIT
 
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
+# load shell source files
+source_libs() {
+	for file in ~/.local/lib/shell/*; do
+		# shellcheck source-path=.local/lib/shell/
+		source "$file"
+	done
+}
+source_libs
+
 ###
 # Windows only Config
 ###
@@ -31,17 +43,6 @@ done || unset WINUSER
 if [ "$WINHOME" ]; then
 	export STARTUP="$WINHOME/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup"
 fi
-
-# If not running interactively, don't do anything
-[[ $- != *i* ]] && return
-
-# load shell source files
-source_libs() {
-	for file in ~/.local/lib/shell/*; do
-		source "$file"
-	done
-}
-source_libs
 
 ####
 # SHELL BEHAVIOUR
