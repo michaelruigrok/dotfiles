@@ -134,6 +134,15 @@ class Winfo {
   return
 }
 
+$MButton Up::Send "{MButton Up}"
+
+MHold() {
+  Send "{MButton Down}"
+  Sleep 150
+  if not GetKeyState("MButton")
+    Send "{MButton Up}"
+}
+
 ;~MButton::
 $MButton::
 {
@@ -167,7 +176,7 @@ $MButton::
 
   for i, x in DisabledApps
     if (w.exe ~= x) {
-        Send "{MButton}"
+        MHold()
         return
     }
 
@@ -197,12 +206,17 @@ $MButton::
       w.el.DoDefaultAction()
       SendInput("^v")
     } else {
-      Send "{MButton}"
+      MHold()
+      return
     }
   }
 
   else
-    SendInput("^v")
+    Sleep 50
+    if GetKeyState("MButton", "P")
+      Send "{MButton Down}"
+    else
+      SendInput("^v")
   return
 }
 
