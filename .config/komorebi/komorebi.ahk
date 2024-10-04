@@ -4,7 +4,7 @@
 
 #Include komorebic.lib.ahk
 
-#Include "C:\Users\%A_UserName%\.local\lib\ahk\"
+#Include "C:\Users\%A_UserName%\.local\lib\ahk"
 #Include "misc.lib.ahk"
 
 Init() {
@@ -17,7 +17,13 @@ Init() {
     FocusMonitor(0)
     ChangeLayout("bsp")
 
-    MonitorGet(2, , , &Right, &Bottom)
+    try {
+        MonitorGet(2, , , &Right, &Bottom)
+        RunWait("C:\Users\" A_UserName "\go\bin\jsonnet --ext-code singleMonitor=false -o komorebi.json komorebi.jsonnet", , "Hide")
+    } catch {
+        RunWait("C:\Users\" A_UserName "\go\bin\jsonnet --ext-code singleMonitor=true  -o komorebi.json komorebi.jsonnet", , "Hide")
+        Right := Bottom := 0
+    }
     if (Right < Bottom) {
         For w in ["7", "9", "10", "8"] { ; end on workspace 8
             FocusNamedWorkspace(w)
