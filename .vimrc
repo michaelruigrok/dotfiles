@@ -133,6 +133,12 @@ endif
 " number of lines in history memory
 	set history=10000
 
+" viminfo controls data saved between vim runs
+	set viminfo='500, " remember marks for the last N files
+				\<10000, " truncate each register (and thus copy/pastes) to the first N lines
+				\s2000, " skip registers with N KB worth of text
+				\h " disable search highlighting when vim starts
+
 " :W sudo saves the file
 "  (useful for handling the permission-denied error)
 	command! W w !sudo tee % > /dev/null
