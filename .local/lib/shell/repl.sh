@@ -26,16 +26,19 @@ repl_save_var() {
 	repl_save "$1"
 }
 
+repl_open() {
+	$EDITOR "$REPL_FILE"
+}
+
 repl_run() {
 	. "$REPL_FILE"
 }
 
-repl_edit() {
-	$EDITOR "$REPL_FILE"
-	repl_run
+repl_export() {
+	cp "$REPL_FILE" "$1"
 }
 
 repl_clear() {
-	> "$REPL_FILE"
+	true > "$REPL_FILE"
 }
 
