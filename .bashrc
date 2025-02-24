@@ -9,6 +9,9 @@ trap onExit EXIT
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
+export SHELDRITCH="$HOME"/repos/sheldritch
+source "$SHELDRITCH/sheldritch.full.sh"
+
 # load shell source files
 source_libs() {
 	for file in ~/.local/lib/shell/*; do
@@ -190,6 +193,11 @@ complete -F __start_kubectl k
 alias use-context='kubectl config use-context'
 alias set-namespace='kubectl config set-context --current --namespace'
 alias kns='kubectl config set-context --current --namespace'
+_complete_kns() {
+	local opts="$(kubectl 2>/dev/null get namespace -o jsonpath='{.items[*].metadata.name}')"
+	COMPREPLY=($(compgen -W "$opts" "${COMP_WORDS[COMP_CWORD]}"))
+}
+complete -F _complete_kns kns
 alias get-contexts='kubectl config get-contexts'
 alias kg='kubectl get pods'
 alias kgb='kubectl get pods -n beta'
@@ -233,7 +241,6 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 	export PATH=~/.bin:$PATH
 	export PATH=~/.local/bin:$PATH
 	export PATH="~/.yarn/bin:$PATH"
-
 
 ####
 # STARTUP
