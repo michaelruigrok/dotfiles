@@ -219,6 +219,19 @@ augroup textwidth
 	autocmd FileType python setlocal textwidth=80
 augroup END
 
+augroup trailing-whitespace
+	autocmd!
+	highlight ExtraWhitespace ctermbg=red guibg=red
+	match ExtraWhitespace /\s\+$/
+	autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
+	autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+	autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+	autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+	autocmd BufWinLeave * call clearmatches()
+	" set list listchars=tab:\|_,trail:·
+augroup END
+
+
 " get good working dotpoints
 augroup dotpoints
 	autocmd!
