@@ -332,6 +332,22 @@ iabbrev bashArgs while [ $# -ne 0 ]; do
 	\<CR>esac
 \<CR>done
 
+iabbrev use_sheldritch 
+	\#!/bin/bash
+	\<CR>
+	\<CR>[[ -n ${SHELDRITCH_SOURCES:-} ]] \|\|
+	\<CR><TAB>source "$SHELDRITCH/sheldritch.sh" \|\| return 1;
+	\<CR><BS>check_is_sourced
+
+iabbrev use_base_sheldritch 
+	\#!/bin/bash
+	\<CR>
+	\<CR>[[ -n ${SHELDRITCH_SOURCES:-} ]] \|\|
+	\<CR><TAB>source "$SHELDRITCH/sheldritch.base.sh" \|\| return 1;
+	\<CR><BS>check_is_sourced
+	\<CR>
+	\<CR>summon sheldritch/core/args.sh
+
 iabbrev echo2 echo >&2
 
 
