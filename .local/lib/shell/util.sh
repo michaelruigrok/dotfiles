@@ -1,10 +1,12 @@
 # shellcheck disable=SC2317
 
-if [[ -z "$SHELDRITCH" ]]; then
-now() { date +%S.%N; }
+if [ -z "$SHELDRITCH" ]; then
 
-quiet() { "$@" >/dev/null 2>/dev/null; }
-stderr() { "$@" >&2; }
+now() { date '+%S.%N'; }
+
+alias quiet='>/dev/null 2>/dev/null'
+alias stderr='>&2'
+
 error() {
 	local prefix
 	if funcname -p 1 -q; then
@@ -14,13 +16,9 @@ error() {
 }
 
 item() {
-	function usage() {
-		echo "perform a check or operation of a single value against a given list"
-	}
-
 	local item="$1" operator="$2"
 	if ! shift 2; then
-		stderr usage
+		echo >&2 "perform a check or operation of a single value against a given list"
 		return 1
 	fi
 
