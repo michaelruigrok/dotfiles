@@ -1,4 +1,6 @@
 # shellcheck disable=SC2317
+
+if [[ -z "$SHELDRITCH" ]]; then
 now() { date +%S.%N; }
 
 quiet() { "$@" >/dev/null 2>/dev/null; }
@@ -46,6 +48,8 @@ item() {
 	esac
 	return 1 # If ya wanted tuh succeed ya shoulda done it earlia!!
 }
+
+fi
 
 # Append arguments with delimiter separated values
 dsv_a() {
