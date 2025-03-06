@@ -607,7 +607,7 @@ else
 endif
 
 	nnoremap <leader>m :w<CR>:exec 'make '.
-				\(exists('makeargs') ? makeargs : '')<CR>
+				\(exists('b:makeargs') ? b:makeargs : '')<CR>
 
 	" TODO: try and use vim's smart compiler/running architecture
 	"autocmd FileType * compiler &filetype
@@ -619,7 +619,7 @@ endif
 	autocmd FileType cs   if &makeprg == "make" | setlocal makeprg=mono-csc\ -f\ %:. | endif
 	autocmd FileType dot  setlocal makeprg=dot\ -Tx11\ %:.
 	autocmd FileType javascript  setlocal makeprg=node\ %:.
-	autocmd FileType rust let makeargs='build'
+	autocmd FileType rust let b:makeargs='build'
 
 " AutoHotkey runs forever, thus run in background
 	autocmd FileType autohotkey nnoremap <buffer> <leader>m :Make! /restart<CR>
@@ -633,9 +633,8 @@ endif
 	autocmd FileType vim nnoremap <buffer> <leader>m :w<CR>:source %<CR>
 
 " Terraform validation
-	autocmd FileType terraform set efm=%EError:\ %m,%WWarning:\ %m,%ISuccess!\ %m,%C%.%#on\ %f\ line\ %l%.%#\ in\ %o:,%C\ %.%#,%C%m,%C,%-G,
-	autocmd FileType terraform set makeprg=terraform\ validate\ -no-color
-	autocmd FileType terraform nnoremap <buffer> <leader>m :w<CR>:make<CR>
+	" autocmd FileType terraform setlocal efm=%EError:\ %m,%WWarning:\ %m,%ISuccess!\ %m,%C%.%#on\ %f\ line\ %l%.%#\ in\ %o:,%C\ %.%#,%C%m,%C,%-G,
+	" autocmd FileType terraform setlocal makeprg=terraform\ validate\ -no-color
 	autocmd FileType terraform execute 'setlocal ' . fnameescape(
 				\  'efm=%EError: %m,'
 				\. '%WWarning: %m,'
@@ -647,6 +646,22 @@ endif
 				\. '%-G,'
 				\)
 	autocmd FileType terraform setlocal makeprg=terraform\ validate\ -no-color
+
+" Helm validation
+	autocmd FileType helm setlocal makeprg=helm\ template
+	autocmd FileType helm let b:makeargs = FindFullFile("Chart.yaml", ".;", ":h:p")
+	autocmd FileType helm execute 'setlocal ' . fnameescape(
+				\  'efm='
+				\. '%EError: %.%#template: %[%^/]%#/%f:%l:%c: executing "%o" %m,'
+				\. '%EError: %.%#template: %[%^/]%#/%f:%l:%c: %m,'
+				\. '%EError: execution error at (%[%^/]%#/%f:%l:%c): - %m,'
+				\. '%EError: %m,'
+				\. '%WWarning: %m,'
+				\. '%ISuccess! %m,'
+				\. '%C%m,'
+				\. '%-Z,'
+				\. '%-G,'
+				\)
 
 " Raku
 	autocmd FileType raku execute 'setlocal '. fnameescape(
