@@ -74,6 +74,20 @@
 
 	call plug#end()
 
+	""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+	"   UTILITIES
+	"                                                                            "
+	""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+function! FullFile(name, modifiers = ':p')
+	return fnamemodify(resolve(expand(a:name)), a:modifiers)
+endfunc
+
+function! FindFullFile(name, path, modifiers = ':p', count = 1)
+	return FullFile( findfile(a:name, a:path, a:count), a:modifiers)
+endfunc
+
+
 	"  GUI SETTINGS  "
 	""""""""""""""""""
 
@@ -759,7 +773,7 @@ augroup END
 
 			" $L-d-r lists all breakpoints, including dependent files
 			nnoremap <leader>ldr :JavaDebugBreakpointRemove<cr>
-			
+
 			" $L-d-R lists all breakpoints, including dependent files
 			nnoremap <leader>ldR :JavaDebugBreakpointRemove<cr>
 
@@ -914,6 +928,24 @@ endif
 " https://github.com/neoclide/coc.nvim/wiki/Language-servers
 
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"	FINALISATION
+"																			 "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+" load .vimrc files in the current directory, for project config
+	function! LoadProjectVimrc()
+		let vimrcFile = FindFullFile(".vimrc", ".;")
+
+		if !empty(vimrcFile) && vimrcFile != expand('<script>:p')
+			execute ":so" l:vimrcFile
+			echom l:vimrcFile
+		endif
+
+	endfunction
+	autocmd DirChanged * call LoadProjectVimrc()
+call LoadProjectVimrc()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "	EXPERIMENTS																 "
@@ -936,7 +968,7 @@ endif
 " ctrl-e to exit completion
 "
 " set showcmd
-" 
+"
 " 1<C-V> repeats last visual block
 " <C-X><C-V> completes vim commands
 " '[ and '] for the boundaries around changed/pasted text
