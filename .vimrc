@@ -506,6 +506,7 @@ vnoremap <expr> `\| col("'" . nr2char(getchar())) . "\\|"
 
 " Make Y do the same thing as ^ (because ^ is too far to reach)
 	nnoremap Y ^
+	vnoremap Y ^
 
 " leader-s saves the session, leader-S saves session and buffers
 	noremap <leader>s :mks! ~/.vim/session<CR>
