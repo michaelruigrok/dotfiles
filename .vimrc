@@ -57,10 +57,12 @@
 " Language support
 	Plug 'sheerun/vim-polyglot'
 	Plug 'prabirshrestha/vim-lsp' " Language server support
-	Plug 'mattn/vim-lsp-settings' " Language server support
+	Plug 'mattn/vim-lsp-settings' " Language server installer & config
 	Plug 'prabirshrestha/asyncomplete.vim'
 	Plug 'prabirshrestha/asyncomplete-lsp.vim'
 	Plug 'dense-analysis/ale'
+	" vim-lsp-ale disable's ALE's LSP functionality
+	" instead, it returns LSP's results into the ALE interface
 	Plug 'rhysd/vim-lsp-ale'
 
 	Plug 'othree/html5.vim'
@@ -187,7 +189,7 @@ set bg=dark
 if ! has ('gui_running')
 	" TODO: set some colourschemes
 	let my_colorschemes = [ 'gotham256', 'OceanicNext', 'rdark-terminal2', 'sierra', 'spacecamp', 'twilight256']
-	let only_gui = [ 'solarized8_flat', 'flattened_dark', 'deep-space' ] 
+	let only_gui = [ 'solarized8_flat', 'flattened_dark', 'deep-space' ]
 	let daytime_colorschemes = ['solarized8']
 endif
 
@@ -197,6 +199,13 @@ endif
 
 " show relative numbering in netrw
 	let g:netrw_bufsettings = 'noma nomod nu rnu nobl nowrap ro'
+
+augroup layout
+" resize splits when window resized
+	autocmd VimResized * wincmd =
+" increase command line height if screen is big enough
+	autocmd VimResized * let &cmdheight = &lines / 48 + 1
+augroup END
 
 " Use UTF-8
 	set encoding=utf-8
@@ -208,6 +217,14 @@ endif
 " note that tabs are still tabs, not spaces
 	set shiftwidth=4
 	set tabstop=4
+
+" Enable markers in the line number column
+	if has("patch-8.1.1564")
+		" Recently vim can merge signcolumn and number column into one
+		set signcolumn=number
+	else
+		set signcolumn=yes
+	endif
 
 augroup tablength
 	autocmd!
@@ -274,9 +291,6 @@ augroup nobeep
 	set noeb vb t_vb=
 	autocmd GUIEnter * set vb t_vb=
 augroup END
-
-" resize splits when window resized
-autocmd VimResized * wincmd =
 
 " Spell checker for Australian English, but not in helpfiles
 " augroup spelling
@@ -753,7 +767,7 @@ augroup END
 	" Eclim "
 		if exists('g:vimplugin_running')
 
-			" TODO: Set these up also for javascript, php search, all that 
+			" TODO: Set these up also for javascript, php search, all that
 			" g[ is remapped to work with eclim's JavaSearch
 			nnoremap g[ :JavaSearchContext<cr>
 
@@ -838,6 +852,8 @@ augroup END
 
 " put all swap files in ~/.vim
 	set directory^=~/.vim/swapfiles
+" save swap every second
+	set updatetime=1000
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "   Skeletons and Templates                                                  "
@@ -897,24 +913,6 @@ endif
 
 	" CoC Language Server "
 	"""""""""""""""""""""""
-" TODO: move into an autocmd maybe? It's not like I use these feature that
-" frequently
-
-" Some default recommended settings
-	set hidden
-	"set nobackup
-	"set nowritebackup
-	"set cmdheight=2
-	"set shortmess=2
-	set updatetime=1000
-
-" Enable markers on the side
-	if has("patch-8.1.1564")
-		" Recently vim can merge signcolumn and number column into one
-		set signcolumn=number
-	else
-		set signcolumn=yes
-	endif
 
 if exists('g:coc_enabled')
 " Next/previous error/warning/diagnostic
@@ -941,16 +939,11 @@ if exists('g:coc_enabled')
 	endfunction
 endif
 
-"" Other stuff:
-" CocDiagnostics to get a list of what's wrong
-" https://github.com/neoclide/coc.nvim/wiki/Language-servers
-
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "	FINALISATION
 "																			 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 
 " load .vimrc files in the current directory, for project config
 	function! LoadProjectVimrc()
@@ -970,16 +963,10 @@ call LoadProjectVimrc()
 "																			 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" Look through all subfolders for files
-" Since I usually hang out in ~, this is probably pretty slow
-	"set path+=**
+" path searches all directories beneath the current directory
 	set path+=* " nvm, just try within the next layer.
 
-
-" also 'b: <literally any substring of a file> is pretty useful!
 " ctrl-t, tag stack
-"
-" GET USED TO USING CTRL-N/P without CTRL-X, DUMMY!
 "
 " set complete?
 "
@@ -991,5 +978,4 @@ call LoadProjectVimrc()
 " <C-X><C-V> completes vim commands
 " '[ and '] for the boundaries around changed/pasted text
 " '< and '> last visual selection
-" command mode ctrl+f for command history
 " s/match//n count occurrences
