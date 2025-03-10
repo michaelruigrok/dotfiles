@@ -655,7 +655,9 @@ endif
 				\  'efm='
 				\. '%EError: %.%#template: %[%^/]%#/%f:%l:%c: executing "%o" %m,'
 				\. '%EError: %.%#template: %[%^/]%#/%f:%l:%c: %m,'
-				\. '%EError: execution error at (%[%^/]%#/%f:%l:%c): - %m,'
+				\. '%EError: %[%^(]%# (%[%^/]%#/%f:%l:%c): %m,'
+				\. '%EError: %[%^(]%# (%[%^/]%#/%f:%e): %m in action started at %[%^:]%#:%l,'
+				\. '%EError: %[%^(]%# (%[%^/]%#/%f:%l): %m,'
 				\. '%EError: %m,'
 				\. '%WWarning: %m,'
 				\. '%ISuccess! %m,'
@@ -956,7 +958,7 @@ endif
 
 		if !empty(vimrcFile) && vimrcFile != expand('<script>:p')
 			execute ":so" l:vimrcFile
-			echom l:vimrcFile
+			" echom l:vimrcFile
 		endif
 
 	endfunction
