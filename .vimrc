@@ -266,9 +266,14 @@ augroup END
 " get good working dotpoints
 augroup dotpoints
 	autocmd!
+	" TODO: using comments for dot points is a lost cause, don't treat - as a special comment
+	" Should set inoremap <C-R> and nnoremap O/o
+	" For <C-R>, Check if current paragraph is a list and:
+		" If current line is a populated item, create a new dotpoint at the same indentation
+		" if current line is a dotpoint but with no content, de-indent, maybe exit list?
 	autocmd FileType text,markdown
-				\   setlocal formatoptions=ctnqro
-				\ | setlocal comments=n:>,b:*,b:+,b:-
+				\   setlocal formatoptions=tnqro
+				\ | setlocal comments=n:>
 				\ | inoremap <lt><lt> <c-d>
 				\ | inoremap >> <c-t>
 augroup END
