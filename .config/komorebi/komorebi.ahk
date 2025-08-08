@@ -24,6 +24,7 @@ Init() {
         RunWait("C:\Users\" A_UserName "\go\bin\jsonnet --ext-code singleMonitor=true  -o komorebi.json komorebi.jsonnet", , "Hide")
         Right := Bottom := 0
     }
+    Sleep 3000 ; Wait for komorebi to apply changes
     if (Right < Bottom) {
         For w in ["7", "9", "10", "8"] { ; end on workspace 8
             FocusNamedWorkspace(w)
