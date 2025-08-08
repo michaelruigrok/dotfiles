@@ -57,10 +57,12 @@
 " Language support
 	Plug 'sheerun/vim-polyglot'
 	Plug 'prabirshrestha/vim-lsp' " Language server support
-	Plug 'mattn/vim-lsp-settings' " Language server support
+	Plug 'mattn/vim-lsp-settings' " Language server installer & config
 	Plug 'prabirshrestha/asyncomplete.vim'
 	Plug 'prabirshrestha/asyncomplete-lsp.vim'
 	Plug 'dense-analysis/ale'
+	" vim-lsp-ale disable's ALE's LSP functionality
+	" instead, it returns LSP's results into the ALE interface
 	Plug 'rhysd/vim-lsp-ale'
 
 	Plug 'othree/html5.vim'
@@ -73,6 +75,20 @@
 	Plug 'towolf/vim-helm'
 
 	call plug#end()
+
+	""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+	"   UTILITIES
+	"                                                                            "
+	""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+function! FullFile(name, modifiers = ':p')
+	return fnamemodify(resolve(expand(a:name)), a:modifiers)
+endfunc
+
+function! FindFullFile(name, path, modifiers = ':p', count = 1)
+	return FullFile( findfile(a:name, a:path, a:count), a:modifiers)
+endfunc
+
 
 	"  GUI SETTINGS  "
 	""""""""""""""""""
@@ -133,6 +149,12 @@ endif
 " number of lines in history memory
 	set history=10000
 
+" viminfo controls data saved between vim runs
+	set viminfo='500, " remember marks for the last N files
+				\<10000, " truncate each register (and thus copy/pastes) to the first N lines
+				\s2000, " skip registers with N KB worth of text
+				\h " disable search highlighting when vim starts
+
 " :W sudo saves the file
 "  (useful for handling the permission-denied error)
 	command! W w !sudo tee % > /dev/null
@@ -167,7 +189,7 @@ set bg=dark
 if ! has ('gui_running')
 	" TODO: set some colourschemes
 	let my_colorschemes = [ 'gotham256', 'OceanicNext', 'rdark-terminal2', 'sierra', 'spacecamp', 'twilight256']
-	let only_gui = [ 'solarized8_flat', 'flattened_dark', 'deep-space' ] 
+	let only_gui = [ 'solarized8_flat', 'flattened_dark', 'deep-space' ]
 	let daytime_colorschemes = ['solarized8']
 endif
 
@@ -177,6 +199,13 @@ endif
 
 " show relative numbering in netrw
 	let g:netrw_bufsettings = 'noma nomod nu rnu nobl nowrap ro'
+
+augroup layout
+" resize splits when window resized
+	autocmd VimResized * wincmd =
+" increase command line height if screen is big enough
+	autocmd VimResized * let &cmdheight = &lines / 48 + 1
+augroup END
 
 " Use UTF-8
 	set encoding=utf-8
@@ -188,6 +217,14 @@ endif
 " note that tabs are still tabs, not spaces
 	set shiftwidth=4
 	set tabstop=4
+
+" Enable markers in the line number column
+	if has("patch-8.1.1564")
+		" Recently vim can merge signcolumn and number column into one
+		set signcolumn=number
+	else
+		set signcolumn=yes
+	endif
 
 augroup tablength
 	autocmd!
@@ -213,12 +250,30 @@ augroup textwidth
 	autocmd FileType python setlocal textwidth=80
 augroup END
 
+augroup trailing-whitespace
+	autocmd!
+	highlight ExtraWhitespace ctermbg=red guibg=red
+	match ExtraWhitespace /\s\+$/
+	autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
+	autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+	autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+	autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+	autocmd BufWinLeave * call clearmatches()
+	" set list listchars=tab:\|_,trail:·
+augroup END
+
+
 " get good working dotpoints
 augroup dotpoints
 	autocmd!
+	" TODO: using comments for dot points is a lost cause, don't treat - as a special comment
+	" Should set inoremap <C-R> and nnoremap O/o
+	" For <C-R>, Check if current paragraph is a list and:
+		" If current line is a populated item, create a new dotpoint at the same indentation
+		" if current line is a dotpoint but with no content, de-indent, maybe exit list?
 	autocmd FileType text,markdown
-				\   setlocal formatoptions=ctnqro
-				\ | setlocal comments=n:>,b:*,b:+,b:-
+				\   setlocal formatoptions=tnqro
+				\ | setlocal comments=n:>
 				\ | inoremap <lt><lt> <c-d>
 				\ | inoremap >> <c-t>
 augroup END
@@ -241,9 +296,6 @@ augroup nobeep
 	set noeb vb t_vb=
 	autocmd GUIEnter * set vb t_vb=
 augroup END
-
-" resize splits when window resized
-autocmd VimResized * wincmd =
 
 " Spell checker for Australian English, but not in helpfiles
 " augroup spelling
@@ -325,6 +377,22 @@ iabbrev bashArgs while [ $# -ne 0 ]; do
 			\<CR>;;
 	\<CR>esac
 \<CR>done
+
+iabbrev use_sheldritch 
+	\#!/bin/bash
+	\<CR>
+	\<CR>[[ -n ${SHELDRITCH_SOURCES:-} ]] \|\|
+	\<CR><TAB>source "$SHELDRITCH/sheldritch.sh" \|\| return 1;
+	\<CR><BS>check_is_sourced
+
+iabbrev use_base_sheldritch 
+	\#!/bin/bash
+	\<CR>
+	\<CR>[[ -n ${SHELDRITCH_SOURCES:-} ]] \|\|
+	\<CR><TAB>source "$SHELDRITCH/sheldritch.base.sh" \|\| return 1;
+	\<CR><BS>check_is_sourced
+	\<CR>
+	\<CR>summon sheldritch/core/args.sh
 
 iabbrev echo2 echo >&2
 
@@ -457,6 +525,7 @@ vnoremap <expr> `\| col("'" . nr2char(getchar())) . "\\|"
 
 " Make Y do the same thing as ^ (because ^ is too far to reach)
 	nnoremap Y ^
+	vnoremap Y ^
 
 " leader-s saves the session, leader-S saves session and buffers
 	noremap <leader>s :mks! ~/.vim/session<CR>
@@ -558,7 +627,7 @@ else
 endif
 
 	nnoremap <leader>m :w<CR>:exec 'make '.
-				\(exists('makeargs') ? makeargs : '')<CR>
+				\(exists('b:makeargs') ? b:makeargs : '')<CR>
 
 	" TODO: try and use vim's smart compiler/running architecture
 	"autocmd FileType * compiler &filetype
@@ -570,7 +639,7 @@ endif
 	autocmd FileType cs   if &makeprg == "make" | setlocal makeprg=mono-csc\ -f\ %:. | endif
 	autocmd FileType dot  setlocal makeprg=dot\ -Tx11\ %:.
 	autocmd FileType javascript  setlocal makeprg=node\ %:.
-	autocmd FileType rust let makeargs='build'
+	autocmd FileType rust let b:makeargs='build'
 
 " AutoHotkey runs forever, thus run in background
 	autocmd FileType autohotkey nnoremap <buffer> <leader>m :Make! /restart<CR>
@@ -584,9 +653,8 @@ endif
 	autocmd FileType vim nnoremap <buffer> <leader>m :w<CR>:source %<CR>
 
 " Terraform validation
-	autocmd FileType terraform set efm=%EError:\ %m,%WWarning:\ %m,%ISuccess!\ %m,%C%.%#on\ %f\ line\ %l%.%#\ in\ %o:,%C\ %.%#,%C%m,%C,%-G,
-	autocmd FileType terraform set makeprg=terraform\ validate\ -no-color
-	autocmd FileType terraform nnoremap <buffer> <leader>m :w<CR>:make<CR>
+	" autocmd FileType terraform setlocal efm=%EError:\ %m,%WWarning:\ %m,%ISuccess!\ %m,%C%.%#on\ %f\ line\ %l%.%#\ in\ %o:,%C\ %.%#,%C%m,%C,%-G,
+	" autocmd FileType terraform setlocal makeprg=terraform\ validate\ -no-color
 	autocmd FileType terraform execute 'setlocal ' . fnameescape(
 				\  'efm=%EError: %m,'
 				\. '%WWarning: %m,'
@@ -598,6 +666,24 @@ endif
 				\. '%-G,'
 				\)
 	autocmd FileType terraform setlocal makeprg=terraform\ validate\ -no-color
+
+" Helm validation
+	autocmd FileType helm setlocal makeprg=helm\ template
+	autocmd FileType helm let b:makeargs = FindFullFile("Chart.yaml", ".;", ":h:p")
+	autocmd FileType helm execute 'setlocal ' . fnameescape(
+				\  'efm='
+				\. '%EError: %.%#template: %[%^/]%#/%f:%l:%c: executing "%o" %m,'
+				\. '%EError: %.%#template: %[%^/]%#/%f:%l:%c: %m,'
+				\. '%EError: %[%^(]%# (%[%^/]%#/%f:%l:%c): %m,'
+				\. '%EError: %[%^(]%# (%[%^/]%#/%f:%e): %m in action started at %[%^:]%#:%l,'
+				\. '%EError: %[%^(]%# (%[%^/]%#/%f:%l): %m,'
+				\. '%EError: %m,'
+				\. '%WWarning: %m,'
+				\. '%ISuccess! %m,'
+				\. '%C%m,'
+				\. '%-Z,'
+				\. '%-G,'
+				\)
 
 " Raku
 	autocmd FileType raku execute 'setlocal '. fnameescape(
@@ -686,7 +772,7 @@ augroup END
 	" Eclim "
 		if exists('g:vimplugin_running')
 
-			" TODO: Set these up also for javascript, php search, all that 
+			" TODO: Set these up also for javascript, php search, all that
 			" g[ is remapped to work with eclim's JavaSearch
 			nnoremap g[ :JavaSearchContext<cr>
 
@@ -724,7 +810,7 @@ augroup END
 
 			" $L-d-r lists all breakpoints, including dependent files
 			nnoremap <leader>ldr :JavaDebugBreakpointRemove<cr>
-			
+
 			" $L-d-R lists all breakpoints, including dependent files
 			nnoremap <leader>ldR :JavaDebugBreakpointRemove<cr>
 
@@ -771,6 +857,8 @@ augroup END
 
 " put all swap files in ~/.vim
 	set directory^=~/.vim/swapfiles
+" save swap every second
+	set updatetime=1000
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "   Skeletons and Templates                                                  "
@@ -830,24 +918,6 @@ endif
 
 	" CoC Language Server "
 	"""""""""""""""""""""""
-" TODO: move into an autocmd maybe? It's not like I use these feature that
-" frequently
-
-" Some default recommended settings
-	set hidden
-	"set nobackup
-	"set nowritebackup
-	"set cmdheight=2
-	"set shortmess=2
-	set updatetime=1000
-
-" Enable markers on the side
-	if has("patch-8.1.1564")
-		" Recently vim can merge signcolumn and number column into one
-		set signcolumn=number
-	else
-		set signcolumn=yes
-	endif
 
 if exists('g:coc_enabled')
 " Next/previous error/warning/diagnostic
@@ -874,37 +944,43 @@ if exists('g:coc_enabled')
 	endfunction
 endif
 
-"" Other stuff:
-" CocDiagnostics to get a list of what's wrong
-" https://github.com/neoclide/coc.nvim/wiki/Language-servers
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"	FINALISATION
+"																			 "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+" load .vimrc files in the current directory, for project config
+	function! LoadProjectVimrc()
+		let vimrcFile = FindFullFile(".vimrc", ".;")
+
+		if !empty(vimrcFile) && vimrcFile != expand('<script>:p')
+			execute ":so" l:vimrcFile
+			" echom l:vimrcFile
+		endif
+
+	endfunction
+	autocmd DirChanged * call LoadProjectVimrc()
+call LoadProjectVimrc()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "	EXPERIMENTS																 "
 "																			 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" Look through all subfolders for files
-" Since I usually hang out in ~, this is probably pretty slow
-	"set path+=**
+" path searches all directories beneath the current directory
 	set path+=* " nvm, just try within the next layer.
 
-
-" also 'b: <literally any substring of a file> is pretty useful!
 " ctrl-t, tag stack
-"
-" GET USED TO USING CTRL-N/P without CTRL-X, DUMMY!
 "
 " set complete?
 "
 " ctrl-e to exit completion
 "
 " set showcmd
-" 
+"
 " 1<C-V> repeats last visual block
 " <C-X><C-V> completes vim commands
 " '[ and '] for the boundaries around changed/pasted text
 " '< and '> last visual selection
-" command mode ctrl+f for command history
 " s/match//n count occurrences
