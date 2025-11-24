@@ -12,7 +12,7 @@ Init() {
     SetCapsLockState false
 
     ; Allow win + L to be set
-    RegWrite(1, "REG_DWORD", "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "DisableLockWorkstation")
+    ;RegWrite(1, "REG_DWORD", "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "DisableLockWorkstation")
 
     FocusMonitor(0)
     ChangeLayout("bsp")
@@ -68,12 +68,12 @@ Lock() {
 
 ; Win+Esc enables lock screen for long enough to lock it.
 #Escape:: {
-    Lock()
+    ;Lock()
     return
 }
 
 ; Lock every X minutes (first num), to force frequent breaks
-SetTimer Lock, 66 * 60 * 1000
+;SetTimer Lock, 66 * 60 * 1000
 
 #+m::{
     For x in WinGetList()
