@@ -26,6 +26,7 @@ Init() {
     }
     Sleep 3000 ; Wait for komorebi to apply changes
     if (Right < Bottom) {
+        FocusMonitor(1)
         For w in ["7", "9", "10", "8"] { ; end on workspace 8
             FocusNamedWorkspace(w)
             ChangeLayout("rows")
