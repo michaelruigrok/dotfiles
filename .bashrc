@@ -242,7 +242,7 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 	PATH="$HOME/.bin:$PATH"
 declare _Path
 for _Path in .yarn .cargo .local .raku; do
-	_Path="$HOME/$Path/bin"
+	_Path="$HOME/$_Path/bin"
 	[[ -d "$_Path" ]] && PATH="$_Path:$PATH"
 done
 export PATH
