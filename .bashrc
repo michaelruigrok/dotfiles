@@ -238,9 +238,14 @@ HISTIGNORE+=":gch-*"
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # included as a folder executables are run from
-	export PATH=~/.bin:$PATH
-	export PATH=~/.local/bin:$PATH
-	export PATH="~/.yarn/bin:$PATH"
+	PATH="$PATH:/sbin"
+	PATH="$HOME/.bin:$PATH"
+declare _Path
+for _Path in .yarn .cargo .local .raku; do
+	_Path="$HOME/$Path/bin"
+	[[ -d "$_Path" ]] && PATH="$_Path:$PATH"
+done
+export PATH
 
 ####
 # STARTUP
