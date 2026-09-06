@@ -46,6 +46,7 @@
 	Plug 'AndrewRadev/linediff.vim' " Diff only portions of a file
 	Plug 'xolox/vim-notes'
 	Plug 'mbbill/undotree'
+	Plug 'dbakker/vim-projectroot'
 
 " Motions/Mappings
 	Plug 'easymotion/vim-easymotion' " extend f/F and t/T with an interactive multi-jump select
@@ -172,6 +173,13 @@ augroup mkdir
   autocmd!
   autocmd BufWritePre * call mkdir(expand("<afile>:p:h"), "p")
 augroup END
+
+" if includeexpr (e.g. fg) can't find a match, process the text as follows
+function! IncludeFileExpr(fname)
+	" try and interpret absolute paths as relative to &path
+	return substitute(a:fname,'/','','')
+endfunc
+set includeexpr=IncludeFileExpr(v:fname)
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "    VIM APPEARANCE
@@ -970,6 +978,9 @@ call LoadProjectVimrc()
 
 " path searches all directories beneath the current directory
 	set path+=* " nvm, just try within the next layer.
+
+
+autocmd BufRead,BufNewFile * let &l:path = &l:path ? &l:path : &path .. "," .. projectroot#guess()
 
 " ctrl-t, tag stack
 "
