@@ -250,13 +250,8 @@ augroup tablength
 	autocmd FileType lisp,clojure setlocal expandtab
 augroup END
 
-" text files may not extend further than 78 characters horizonally
-augroup textwidth
-	autocmd!
-	autocmd FileType text,markdown setlocal textwidth=78
-	autocmd FileType tex setlocal textwidth=90 " Except LaTeX, because of weird indents
-	autocmd FileType python setlocal textwidth=80
-augroup END
+" wrap in-between words
+set linebreak
 
 augroup trailing-whitespace
 	autocmd!
