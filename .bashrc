@@ -1,4 +1,4 @@
-# ~/.bashrc
+#!/usr/bin/env bash
 
 onExit() {
 	history -p "EXIT $(date -I)"
@@ -78,14 +78,14 @@ if ! shopt -oq posix; then
 fi
 
 # more autocomplete support
-	command -v kubectl >/dev/null && source <(kubectl completion bash)
+command -v kubectl >/dev/null && source <(kubectl completion bash)
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
 # make less more friendly for non-text input files, see lesspipe(1)
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+[ -x /usr/bin/lesspipe ] && eval "$(lesspipe)"
 
 # Favourite editor:
 	export EDITOR="vim"
@@ -119,7 +119,7 @@ shopt -s checkwinsize
 # Application env
 ####
 
-export LESS='-i'
+export LESS='-i -R --use-color'
 
 export RLWRAP_HOME=$HOME/.config/readline
 
@@ -154,7 +154,7 @@ histignore_alias() {
 
 	alias bye='shutdown now'
 
-	alias mygrep='grep --exclude-dir=node_modules'
+	alias mygrep='grep --exclude-dir=node_modules --exclude-dir=.git'
 
 	alias docc='docker-compose'
 
