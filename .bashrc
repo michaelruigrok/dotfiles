@@ -9,7 +9,7 @@ trap onExit EXIT
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-export SHELDRITCH="$HOME"/repos/sheldritch
+export SHELDRITCH="$HOME"/projects/sheldritch
 source "$SHELDRITCH/sheldritch.full.sh"
 
 # load shell source files
