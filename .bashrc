@@ -140,8 +140,16 @@ histignore_alias() {
 	alias ls='ls --color=auto'
 	alias grep='grep --color=auto'
 
-# user personal vim config whenever running vim as superuser
-	alias suvim='sudo vim -u ~/.vimrc'
+# integrate sudoedit with vim a little better (eg undofiles)
+suvim() {
+	if [[ "$*" = *"\f"* ]]; then
+		echo >&2 "Error: file names contain form feed character (\\f)."
+		return 1
+	fi
+	EDITOR='vim -O' SUDOEDIT=1 \
+		FILES="$(printf "%s\f" "$@")" \
+		sudoedit "$@"
+}
 
 # Common typo shortening I may as well use
 	alias chmox='sudo chmod +x'

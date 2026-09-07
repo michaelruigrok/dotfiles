@@ -17,6 +17,20 @@
 	" Vim-Plug Plugin Management "
 	""""""""""""""""""""""""""""""
 
+if $SUDOEDIT == "1"
+	let files = split($FILES, "\f")
+	" it's ok to do these without autocmd because we're acting on the
+	" files listed in the arguments
+	bufdo let b:original_file = files[bufnr('%') - 1]
+	bufdo setlocal noundofile
+	bfirst
+
+elseif $SUDO_USER
+	echomsg "Warning: running under sudo. Use sudoedit instead"
+
+endif
+
+
 	" Automatically install Vim-Plug if it doesn't exist
 	let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
 	if empty(glob(data_dir . '/autoload/plug.vim'))
@@ -720,7 +734,7 @@ endif
 		else
 			if (&filetype == 'c')
 				execute '!clear; gcc -std=gnu99 -pedantic -Wall ' . expand('%:p') . ' -o ' . newfile . ' && ' newfile . ' ' . argv
-			else 
+			else
 				execute '!clear; g++ -pedantic -Wall ' . expand('%:p') . ' -o ' . newfile . ' && ' newfile . ' ' . argv
 			endif
 		endif
@@ -858,6 +872,34 @@ augroup END
 " set a directory to store the undo history
 	set undodir=~/.vim/undo-history/
 
+" manually handle undo files in certain cases
+augroup persistent-undo
+	autocmd!
+
+	autocmd BufWritePre  * call s:SetUndo()
+	autocmd BufReadPost  * call s:ReadUndo()
+	autocmd BufWritePost * call s:WriteUndo()
+
+	func! s:SetUndo()
+		if get(b:, 'original_file')
+			setlocal undofile!
+		endif
+	endfunc
+
+	func! s:ReadUndo()
+		let undofile = get(b:, 'original_file')->undofile()
+		if filereadable(undofile)
+			setlocal undofile!
+			execute 'rundo ' .. undofile->fnameescape()
+		endif
+	endfunc
+
+	func! s:WriteUndo()
+		execute "wundo" get(b:, 'original_file')->undofile()->fnameescape()
+	endfunc
+
+augroup END
+
 " put all swap files in ~/.vim
 	set directory^=~/.vim/swapfiles
 " save swap every second
@@ -976,6 +1018,9 @@ call LoadProjectVimrc()
 
 
 autocmd BufRead,BufNewFile * let &l:path = &l:path ? &l:path : &path .. "," .. projectroot#guess()
+
+" turn off diff when window closed
+set diffopt+=hiddenoff
 
 " ctrl-t, tag stack
 "
