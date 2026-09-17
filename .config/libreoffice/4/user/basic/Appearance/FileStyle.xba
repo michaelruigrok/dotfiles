@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="FileStyle" script:language="StarBasic" script:moduleType="normal">REM  *****  BASIC  *****
+
+sub Main
+
+Dim oConfig As Object
+oConfig = ConfigInit()
+
+Dim colorScheme As String
+colorScheme = ConfigGet(oConfig, &quot;/org.openoffice.Office.UI/ColorScheme&quot;, &quot;CurrentColorScheme&quot;)
+
+Dim sId     As String
+Dim sPath   As String
+
+If ThisComponent.hasLocation() Then
+    sId = ThisComponent.URL
+Else
+    sId = ThisComoponent.RuntimeUUID
+end if
+
+sPath = &quot;/org.openoffice.Office.UI/ColorScheme/ColorSchemes/org.openoffice.Office.UI:ColorScheme[&apos;&quot; &amp; colorScheme &amp; &quot;&apos;]/AppBackground&quot;
+
+ConfigUpdate(oConfig, sPath, &quot;Dark&quot;, HashStringToRGB(sId, 1))
+ConfigUpdate(oConfig, sPath, &quot;Light&quot;, HashStringToRGB(sId, 0))
+
+
+end sub
+
+rem Move the following functions to a util location
+
+Function ConfigInit()
+ConfigInit = createUnoService(&quot;com.sun.star.configuration.ConfigurationProvider&quot;)
+end function
+
+
+Sub ConfigUpdate(oConfig As Object, sNodePath As String, sPropertyName As String, vPropertyValue As Variant)
+
+Dim oUpdateAccess As Object
+Dim args1(0) As New com.sun.star.beans.PropertyValue
+
+args1(0).Name = &quot;nodepath&quot;
+args1(0).Value = sNodePath
+
+Rem get write access to the specific configuration path
+oUpdateAccess = oConfig.createInstanceWithArguments( _
+    &quot;com.sun.star.configuration.ConfigurationUpdateAccess&quot;, args1())
+
+Rem update the value and commit changes
+oUpdateAccess.setPropertyValue(sPropertyName, vPropertyValue)
+oUpdateAccess.commitChanges()
+End Sub
+
+
+Function ConfigGet(oConfig As Object, sNodePath As String, sPropertyName As String) As Variant
+
+Dim oAccess As Object
+Dim args1(0) As New com.sun.star.beans.PropertyValue
+
+
+args1(0).Name = &quot;nodepath&quot;
+args1(0).Value = sNodePath
+
+Rem ----------------------------------------------------------------------
+Rem get read-only access to the specified configuration path
+oAccess = oConfig.createInstanceWithArguments( _
+    &quot;com.sun.star.configuration.ConfigurationAccess&quot;, args1())
+    
+ConfigGet = oAccess.getPropertyValue(sPropertyName)
+
+End Function
+
+
+Rem -----------------------------------------------------------------
+
+Rem Trash AI written function, may be bad
+Function HashStringToRGB(sInput As String, optional bDarkMode As Boolean) As Long
+
+Rem ----------------------------------------------------------------------
+Rem define variables
+Dim nHash As Double
+Dim nLength As Integer
+Dim i As Integer
+Dim nCharCode As Integer
+Dim nRed As Integer
+Dim nGreen As Integer
+Dim nBlue As Integer
+Dim nTotalColorSpace As Double
+
+Rem ----------------------------------------------------------------------
+Rem initialize djb2 constant seed and limits
+nHash = 5381
+nLength = Len(sInput)
+nTotalColorSpace = 16777216 Rem 2^24 maximum color values
+
+Rem ----------------------------------------------------------------------
+Rem calculate the rolling hash value across the string
+If nLength &gt; 0 Then
+    For i = 1 To nLength
+        nCharCode = Asc(Mid(sInput, i, 1))
+        
+        Rem Emulate the bitwise shift (hash * 33) + charcode
+        nHash = ((nHash * 33) + nCharCode)
+        
+        Rem Keep the number within a reasonable boundary to prevent basic overflow
+        nHash = nHash Mod nTotalColorSpace
+    Next i
+End If
+
+Rem ----------------------------------------------------------------------
+Rem extract red, green, and blue color channels (8-bits each)
+nRed   = Int(nHash Mod 256)
+nGreen = Int((nHash / 256) Mod 256)
+nBlue  = Int((nHash / 65536) Mod 256)
+
+If Not IsMissing (bDarkMode) Then
+    nRed   = nRed / 2
+	nGreen = nGreen / 2
+	nBlue  = nBlue / 2
+	If Not bDarkMode Then
+	    nRed   = nRed + 128
+		nGreen = nGreen + 128
+		nBlue  = nBlue + 128
+	end if
+end if
+
+
+Rem ----------------------------------------------------------------------
+Rem return the composite LibreOffice long integer color format
+HashStringToRGB = RGB(nRed, nGreen, nBlue)
+
+End Function
+
+
+
+</script:module>
