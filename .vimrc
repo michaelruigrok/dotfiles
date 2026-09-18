@@ -200,9 +200,12 @@ set includeexpr=IncludeFileExpr(v:fname)
 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-let my_colorschemes = [ 'one', 'PaperColor', 'afterglow', 'materialbox', 'meta5', 'rakr', 'ayu', 'challenger_deep', 'happy_hacking', 'hybrid', 'gruvbox', 'scheakur', 'sonokai', 'space-vim-dark']
-try 
+func ColorschemeRandom()
+	let my_colorschemes = [ 'one', 'PaperColor', 'afterglow', 'materialbox', 'meta5', 'rakr', 'ayu', 'challenger_deep', 'happy_hacking', 'hybrid', 'gruvbox', 'scheakur', 'sonokai', 'space-vim-dark']
 	execute 'colorscheme' my_colorschemes[localtime() % (len(my_colorschemes) - 1)]
+endfunc
+try
+	call ColorschemeRandom()
 catch
 	colorscheme desert
 endtry
