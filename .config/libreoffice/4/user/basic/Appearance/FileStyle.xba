@@ -13,10 +13,12 @@ colorScheme = ConfigGet(oConfig, &quot;/org.openoffice.Office.UI/ColorScheme&quo
 Dim sId     As String
 Dim sPath   As String
 
-If ThisComponent.hasLocation() Then
+If IsNull(ThisComponent) Then
+	sId = &quot;&quot;
+ElseIf ThisComponent.hasLocation() Then
     sId = ThisComponent.URL
 Else
-    sId = ThisComoponent.RuntimeUUID
+    sId = ThisComponent.RuntimeUID
 end if
 
 sPath = &quot;/org.openoffice.Office.UI/ColorScheme/ColorSchemes/org.openoffice.Office.UI:ColorScheme[&apos;&quot; &amp; colorScheme &amp; &quot;&apos;]/AppBackground&quot;
