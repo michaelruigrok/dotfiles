@@ -1021,7 +1021,9 @@ call LoadProjectVimrc()
 	set path+=* " nvm, just try within the next layer.
 
 
+if exists('*projectroot#guess')
 autocmd BufRead,BufNewFile * let &l:path = &l:path ? &l:path : &path .. "," .. projectroot#guess()
+endif
 
 " turn off diff when window closed
 set diffopt+=hiddenoff
