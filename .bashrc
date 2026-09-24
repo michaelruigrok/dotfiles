@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
 onExit() {
-	history -p "EXIT $(date -I)"
+	if [[ -t 2 ]]; then
+		history -p "EXIT $(date -I)" > /dev/tty
+	fi
 }
 
 trap onExit EXIT
