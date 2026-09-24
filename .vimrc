@@ -89,6 +89,7 @@ endif
 	Plug 'tpope/vim-sexp-mappings-for-regular-people' " lisp S-expression handling
 	Plug 'andrewstuart/vim-kubernetes'
 	Plug 'towolf/vim-helm'
+	Plug 'bullets-vim/bullets.vim'
 
 	call plug#end()
 
@@ -293,23 +294,22 @@ augroup END
 " get good working dotpoints
 augroup dotpoints
 	autocmd!
-	""" Dotpoint Tips
-	" - hit CTRL-U to remove an auto-generated dotpoint (or comment leader)
+	if ! exists('g:loaded_bullets_vim')
+		" For formatoptions config, see :help fo-table
+		" For comments config, see :help format-comments
+		" tip: hit CTRL-U to remove an auto-generated dotpoint (or comment leader)
+		autocmd FileType text,markdown
+					\   setlocal formatoptions=tnqro1j
+					\ | setlocal comments+=nb:-\ \[\ \],nb:-
+		" Alternative config:
+		" If you want wrapped dotpoints to have correct indents, at the expense of
+		" getting new dotpoints when you hit <Enter>, you can use the f: prefix:
+		" \ | setlocal comments+=n:>,bf:*,bf:+,bf:-
+	endif
 
-	" For formatoptions config, see :help fo-table
-	" For comments config, see :help format-comments
 	autocmd FileType text,markdown
-				\   setlocal formatoptions=tnqro1j
-				\ | setlocal comments=s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,nb:-\ \[\ \],nb:-
-				\ | inoremap <lt><lt> <c-d>
-				\ | inoremap >> <c-t>
-" Alternative config
-" the r formatoption does not work with the f: comments prefix
-" You can't have f: auto-wrap lines omitting the comment leader, but have
-" <Enter> leave them in.
-" so the following config will indent properly, but not add comment leaders
-" \ | setlocal comments=n:>,bf:*,bf:+,bf:-
-"
+				\ | inoremap <buffer> <lt><lt> <c-d>
+				\ | inoremap <buffer> >> <c-t>
 augroup END
 
 " Minimal number of screen lines to keep above and below the cursor.
