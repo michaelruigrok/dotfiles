@@ -1035,6 +1035,7 @@ endif
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " load .vimrc files in the current directory, for project config
+try
 	function! LoadProjectVimrc()
 		let vimrcFile = FindFullFile(".vimrc", ".;")
 
@@ -1045,7 +1046,10 @@ endif
 
 	endfunction
 	autocmd DirChanged * call LoadProjectVimrc()
-call LoadProjectVimrc()
+	call LoadProjectVimrc()
+catch /E127/
+	" Cannot redefine function LoadProjectVimrc: It is in use
+endtry
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "	EXPERIMENTS																 "
