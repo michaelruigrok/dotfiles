@@ -737,6 +737,23 @@ endif
 				\)
 	autocmd FileType raku  setlocal makeprg=rakudo\ %
 
+" YAML
+" yaml is used for many purposes, many without a dedicated filetype
+" this function lets us configure builds without changing the filetype
+	autocmd FileType yaml call YamlDetectMakeprg()
+	function! YamlDetectMakeprg()
+		let filepath = expand("%:p")
+
+		let helmDir = FindFullFile("Chart.yaml", ".;", ":p:h")
+
+		" Helm unittest: github.com/helm-unittest/helm-unittest
+		if filepath =~ '\v/tests/.*\.(ya?ml|tpl)$'
+					\ && helmDir != ""
+			setlocal makeprg=helm\ unittest\ -f
+			let b:makeargs='% ' . helmDir
+		endif
+	endfunction
+
 " for c/c++, <leader>m compiles a single file and then runs the binary
 	function! CompileC(...)
 		let newfile = split(expand('%:p'),"\\.")[0]
