@@ -172,6 +172,12 @@ suvim() {
 
 # I always type git checkout wrong
 	alias chekcout='checkout'
+	alias checkotu='checkout'
+
+# Sheldritch aliases
+	alias tm=transmute
+	alias svim=transmute
+	complete -F _complete_sheldritch_lib tm svim
 
 	function git() {
 		case "$1" in
@@ -202,7 +208,13 @@ complete -F __start_kubectl k
 
 alias use-context='kubectl config use-context'
 alias set-namespace='kubectl config set-context --current --namespace'
-alias kns='kubectl config set-context --current --namespace'
+function kns {
+	local Namespace="$1"
+
+	[[ "$Namespace" = - ]] && Namespace="$K8S_OLD_NS"
+	export K8S_OLD_NS="$(kubectl config view --minify -o jsonpath='{..namespace}')"
+	kubectl config set-context --current --namespace "$Namespace"
+}
 _complete_kns() {
 	local opts="$(kubectl 2>/dev/null get namespace -o jsonpath='{.items[*].metadata.name}')"
 	COMPREPLY=($(compgen -W "$opts" "${COMP_WORDS[COMP_CWORD]}"))
