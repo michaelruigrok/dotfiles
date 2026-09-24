@@ -944,13 +944,17 @@ augroup END
 "                                                                            "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+" TODO: parse BufNewFile into a function with a language case statement
+" That way, we can have a base case 'if $file == $fileExt { skeleton }'
 augroup templates
 	autocmd!
 
+	" TODO: normal here, but also at the bottom of the augroup?
 	autocmd BufNewFile *.c 0r ~/.vim/skeleton/c | normal 4j
 	autocmd BufNewFile *.h 0r ~/.vim/skeleton/h
 	autocmd BufNewFile *.l 0r ~/.vim/skeleton/l
 	autocmd BufNewFile *.tex 0r ~/.vim/skeleton/tex
+	autocmd BufNewFile *.pl  0r ~/.vim/skeleton/pl
 
 	autocmd BufNewFile *.java 0r ~/.vim/skeleton/java
 	autocmd BufNewFile *.html 0r ~/.vim/skeleton/html
@@ -959,6 +963,7 @@ augroup templates
 	autocmd BufNewFile *_test.c 0r ~/.vim/skeleton/minUnit_test.c | normal 33GdG
 	autocmd BufNewFile *cgi.sh 0r ~/.vim/skeleton/cgi.sh | normal G
 
+	" TODO: this should go somewhere else
 	" expand filenames with <@%>, <@%:p>, <@%:t:r:p:h>, et cetera
 	autocmd BufNewFile * silent! %s/<@\(%.\{-}\)>/\=expand(submatch(1))/
 	" use vim expressions in templates with <\=expression>

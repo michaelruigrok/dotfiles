@@ -1,0 +1,12 @@
+repositories:
+  - name:
+    url:
+
+releases:
+  - name:
+    namespace:
+    chart:
+    values:
+      - values.helm.yaml
+      - key: value
+        key2: value2
