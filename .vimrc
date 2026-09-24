@@ -101,8 +101,14 @@ function! FullFile(name, modifiers = ':p')
 	return fnamemodify(resolve(expand(a:name)), a:modifiers)
 endfunc
 
+" combine findfile and FullFile
+" seach from the current file's dir upwards until the given file is found
+" returns the full canonical path
 function! FindFullFile(name, path, modifiers = ':p', count = 1)
-	return FullFile( findfile(a:name, a:path, a:count), a:modifiers)
+	let file = findfile(a:name, a:path, a:count)
+	if file != ''
+		return FullFile(file, a:modifiers)
+	endif
 endfunc
 
 
