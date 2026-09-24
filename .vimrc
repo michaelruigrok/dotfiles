@@ -340,13 +340,16 @@ augroup END
 " TODO: use autocmd to parse .gitignore in dir
 
 
+" TODO: extend based on values found in ~/.gitignore
 command! -nargs=1  Grep grep -r
- 	\ --exclude=tags 
+	\ --exclude=tags
 	\ --exclude=.git
-	\ --exclude-dir=node_modules
-	\ --exclude-dir=bin
 	\ --exclude-dir=.expo
+	\ --exclude-dir=.git
+	\ --exclude-dir=bin
+	\ --exclude-dir=node_modules
 	\ --exclude-dir=obj
+	\ --exclude-dir=tmp
 	\ <f-args> .
 
 command! -nargs=1 Vimgrep vimgrep --exclude=tags <f-args> .
