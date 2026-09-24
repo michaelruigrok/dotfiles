@@ -61,6 +61,7 @@ endif
 	Plug 'xolox/vim-notes'
 	Plug 'mbbill/undotree'
 	Plug 'dbakker/vim-projectroot'
+	Plug 'tpope/vim-fugitive'
 
 " Motions/Mappings
 	Plug 'easymotion/vim-easymotion' " extend f/F and t/T with an interactive multi-jump select
