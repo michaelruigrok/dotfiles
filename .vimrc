@@ -669,8 +669,9 @@ endif
 	autocmd FileType sed  setlocal makeprg=sed\ -f\ %:.
 	autocmd FileType cs   if &makeprg == "make" | setlocal makeprg=mono-csc\ -f\ %:. | endif
 	autocmd FileType dot  setlocal makeprg=dot\ -Tx11\ %:.
-	autocmd FileType javascript  setlocal makeprg=node\ %:.
 	autocmd FileType rust let b:makeargs='build'
+	autocmd FileType javascript setlocal makeprg=node\ %:.
+	autocmd FileType dockerfile setlocal makeprg=docker\ build\ -f\ %:.\ .
 
 " AutoHotkey runs forever, thus run in background
 	autocmd FileType autohotkey nnoremap <buffer> <leader>m :Make! /restart<CR>
@@ -708,6 +709,8 @@ endif
 				\. '%EError: %[%^(]%# (%[%^/]%#/%f:%l:%c): %m,'
 				\. '%EError: %[%^(]%# (%[%^/]%#/%f:%e): %m in action started at %[%^:]%#:%l,'
 				\. '%EError: %[%^(]%# (%[%^/]%#/%f:%l): %m,'
+				\. '%EFAIL %m %f,'
+				\. '%EFAIL%m,'
 				\. '%EError: %m,'
 				\. '%WWarning: %m,'
 				\. '%ISuccess! %m,'
