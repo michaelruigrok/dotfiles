@@ -14,9 +14,6 @@ Init() {
     ; Allow win + L to be set
     ;RegWrite(1, "REG_DWORD", "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "DisableLockWorkstation")
 
-    FocusMonitor(0)
-    ChangeLayout("bsp")
-
     try {
         MonitorGet(2, , , &Right, &Bottom)
         RunWait("C:\Users\" A_UserName "\go\bin\jsonnet --ext-code singleMonitor=false -o komorebi.json komorebi.jsonnet", , "Hide")
@@ -24,16 +21,9 @@ Init() {
         RunWait("C:\Users\" A_UserName "\go\bin\jsonnet --ext-code singleMonitor=true  -o komorebi.json komorebi.jsonnet", , "Hide")
         Right := Bottom := 0
     }
-    Sleep 3000 ; Wait for komorebi to apply changes
-    if (Right < Bottom) {
-        FocusMonitor(1)
-        For w in ["7", "9", "10", "8"] { ; end on workspace 8
-            FocusNamedWorkspace(w)
-            ChangeLayout("rows")
-        }
-        FocusMonitor(0)
-    }
-    Critical "Off"
+    ; we don't need a vertical second monitor at the moment
+    ;Sleep 3000 ; Wait for komorebi to apply changes
+    ;SecondMonitorOrientation(Right, Bottom)
 }
 Init()
 
@@ -217,3 +207,21 @@ Lock() {
 #+8::SendToNamedWorkspace("8")
 #+9::SendToNamedWorkspace("9")
 #+0::SendToNamedWorkspace("10")
+
+
+SecondMonitorOrientation(Right, Bottom) {
+    Suspend True
+    FocusMonitor(0)
+    ChangeLayout("bsp")
+
+    if (Right < Bottom) {
+        FocusMonitor(1)
+        For w in ["7", "9", "10", "8"] { ; end on workspace 8
+            FocusNamedWorkspace(w)
+            ChangeLayout("rows")
+        }
+        FocusMonitor(0)
+    }
+    Suspend False
+    Critical "Off"
+}

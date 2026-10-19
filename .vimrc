@@ -17,6 +17,20 @@
 	" Vim-Plug Plugin Management "
 	""""""""""""""""""""""""""""""
 
+if $SUDOEDIT == "1"
+	let files = split($FILES, "\f")
+	" it's ok to do these without autocmd because we're acting on the
+	" files listed in the arguments
+	bufdo let b:original_file = files[bufnr('%') - 1]
+	bufdo setlocal noundofile
+	bfirst
+
+elseif $SUDO_USER
+	echomsg "Warning: running under sudo. Use sudoedit instead"
+
+endif
+
+
 	" Automatically install Vim-Plug if it doesn't exist
 	let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
 	if empty(glob(data_dir . '/autoload/plug.vim'))
@@ -46,6 +60,8 @@
 	Plug 'AndrewRadev/linediff.vim' " Diff only portions of a file
 	Plug 'xolox/vim-notes'
 	Plug 'mbbill/undotree'
+	Plug 'dbakker/vim-projectroot'
+	Plug 'tpope/vim-fugitive'
 
 " Motions/Mappings
 	Plug 'easymotion/vim-easymotion' " extend f/F and t/T with an interactive multi-jump select
@@ -73,6 +89,7 @@
 	Plug 'tpope/vim-sexp-mappings-for-regular-people' " lisp S-expression handling
 	Plug 'andrewstuart/vim-kubernetes'
 	Plug 'towolf/vim-helm'
+	Plug 'bullets-vim/bullets.vim'
 
 	call plug#end()
 
@@ -85,8 +102,14 @@ function! FullFile(name, modifiers = ':p')
 	return fnamemodify(resolve(expand(a:name)), a:modifiers)
 endfunc
 
+" combine findfile and FullFile
+" seach from the current file's dir upwards until the given file is found
+" returns the full canonical path
 function! FindFullFile(name, path, modifiers = ':p', count = 1)
-	return FullFile( findfile(a:name, a:path, a:count), a:modifiers)
+	let file = findfile(a:name, a:path, a:count)
+	if file != ''
+		return FullFile(file, a:modifiers)
+	endif
 endfunc
 
 
@@ -173,14 +196,24 @@ augroup mkdir
   autocmd BufWritePre * call mkdir(expand("<afile>:p:h"), "p")
 augroup END
 
+" if includeexpr (e.g. fg) can't find a match, process the text as follows
+function! IncludeFileExpr(fname)
+	" try and interpret absolute paths as relative to &path
+	return substitute(a:fname,'/','','')
+endfunc
+set includeexpr=IncludeFileExpr(v:fname)
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "    VIM APPEARANCE
 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-let my_colorschemes = [ 'one', 'PaperColor', 'afterglow', 'materialbox', 'meta5', 'rakr', 'ayu', 'challenger_deep', 'happy_hacking', 'hybrid', 'gruvbox', 'scheakur', 'sonokai', 'space-vim-dark']
-try 
+func ColorschemeRandom()
+	let my_colorschemes = [ 'one', 'PaperColor', 'afterglow', 'materialbox', 'meta5', 'rakr', 'ayu', 'challenger_deep', 'happy_hacking', 'hybrid', 'gruvbox', 'scheakur', 'sonokai', 'space-vim-dark']
 	execute 'colorscheme' my_colorschemes[localtime() % (len(my_colorschemes) - 1)]
+endfunc
+try
+	call ColorschemeRandom()
 catch
 	colorscheme desert
 endtry
@@ -242,13 +275,8 @@ augroup tablength
 	autocmd FileType lisp,clojure setlocal expandtab
 augroup END
 
-" text files may not extend further than 78 characters horizonally
-augroup textwidth
-	autocmd!
-	autocmd FileType text,markdown setlocal textwidth=78
-	autocmd FileType tex setlocal textwidth=90 " Except LaTeX, because of weird indents
-	autocmd FileType python setlocal textwidth=80
-augroup END
+" wrap in-between words
+set linebreak
 
 augroup trailing-whitespace
 	autocmd!
@@ -266,16 +294,22 @@ augroup END
 " get good working dotpoints
 augroup dotpoints
 	autocmd!
-	" TODO: using comments for dot points is a lost cause, don't treat - as a special comment
-	" Should set inoremap <C-R> and nnoremap O/o
-	" For <C-R>, Check if current paragraph is a list and:
-		" If current line is a populated item, create a new dotpoint at the same indentation
-		" if current line is a dotpoint but with no content, de-indent, maybe exit list?
+	if ! exists('g:loaded_bullets_vim')
+		" For formatoptions config, see :help fo-table
+		" For comments config, see :help format-comments
+		" tip: hit CTRL-U to remove an auto-generated dotpoint (or comment leader)
+		autocmd FileType text,markdown
+					\   setlocal formatoptions=tnqro1j
+					\ | setlocal comments+=nb:-\ \[\ \],nb:-
+		" Alternative config:
+		" If you want wrapped dotpoints to have correct indents, at the expense of
+		" getting new dotpoints when you hit <Enter>, you can use the f: prefix:
+		" \ | setlocal comments+=n:>,bf:*,bf:+,bf:-
+	endif
+
 	autocmd FileType text,markdown
-				\   setlocal formatoptions=tnqro
-				\ | setlocal comments=n:>
-				\ | inoremap <lt><lt> <c-d>
-				\ | inoremap >> <c-t>
+				\ | inoremap <buffer> <lt><lt> <c-d>
+				\ | inoremap <buffer> >> <c-t>
 augroup END
 
 " Minimal number of screen lines to keep above and below the cursor.
@@ -312,13 +346,16 @@ augroup END
 " TODO: use autocmd to parse .gitignore in dir
 
 
+" TODO: extend based on values found in ~/.gitignore
 command! -nargs=1  Grep grep -r
- 	\ --exclude=tags 
+	\ --exclude=tags
 	\ --exclude=.git
-	\ --exclude-dir=node_modules
-	\ --exclude-dir=bin
 	\ --exclude-dir=.expo
+	\ --exclude-dir=.git
+	\ --exclude-dir=bin
+	\ --exclude-dir=node_modules
 	\ --exclude-dir=obj
+	\ --exclude-dir=tmp
 	\ <f-args> .
 
 command! -nargs=1 Vimgrep vimgrep --exclude=tags <f-args> .
@@ -638,8 +675,9 @@ endif
 	autocmd FileType sed  setlocal makeprg=sed\ -f\ %:.
 	autocmd FileType cs   if &makeprg == "make" | setlocal makeprg=mono-csc\ -f\ %:. | endif
 	autocmd FileType dot  setlocal makeprg=dot\ -Tx11\ %:.
-	autocmd FileType javascript  setlocal makeprg=node\ %:.
 	autocmd FileType rust let b:makeargs='build'
+	autocmd FileType javascript setlocal makeprg=node\ %:.
+	autocmd FileType dockerfile setlocal makeprg=docker\ build\ -f\ %:.\ .
 
 " AutoHotkey runs forever, thus run in background
 	autocmd FileType autohotkey nnoremap <buffer> <leader>m :Make! /restart<CR>
@@ -677,6 +715,8 @@ endif
 				\. '%EError: %[%^(]%# (%[%^/]%#/%f:%l:%c): %m,'
 				\. '%EError: %[%^(]%# (%[%^/]%#/%f:%e): %m in action started at %[%^:]%#:%l,'
 				\. '%EError: %[%^(]%# (%[%^/]%#/%f:%l): %m,'
+				\. '%EFAIL %m %f,'
+				\. '%EFAIL%m,'
 				\. '%EError: %m,'
 				\. '%WWarning: %m,'
 				\. '%ISuccess! %m,'
@@ -703,6 +743,23 @@ endif
 				\)
 	autocmd FileType raku  setlocal makeprg=rakudo\ %
 
+" YAML
+" yaml is used for many purposes, many without a dedicated filetype
+" this function lets us configure builds without changing the filetype
+	autocmd FileType yaml call YamlDetectMakeprg()
+	function! YamlDetectMakeprg()
+		let filepath = expand("%:p")
+
+		let helmDir = FindFullFile("Chart.yaml", ".;", ":p:h")
+
+		" Helm unittest: github.com/helm-unittest/helm-unittest
+		if filepath =~ '\v/tests/.*\.(ya?ml|tpl)$'
+					\ && helmDir != ""
+			setlocal makeprg=helm\ unittest\ -f
+			let b:makeargs='% ' . helmDir
+		endif
+	endfunction
+
 " for c/c++, <leader>m compiles a single file and then runs the binary
 	function! CompileC(...)
 		let newfile = split(expand('%:p'),"\\.")[0]
@@ -717,7 +774,7 @@ endif
 		else
 			if (&filetype == 'c')
 				execute '!clear; gcc -std=gnu99 -pedantic -Wall ' . expand('%:p') . ' -o ' . newfile . ' && ' newfile . ' ' . argv
-			else 
+			else
 				execute '!clear; g++ -pedantic -Wall ' . expand('%:p') . ' -o ' . newfile . ' && ' newfile . ' ' . argv
 			endif
 		endif
@@ -855,6 +912,34 @@ augroup END
 " set a directory to store the undo history
 	set undodir=~/.vim/undo-history/
 
+" manually handle undo files in certain cases
+augroup persistent-undo
+	autocmd!
+
+	autocmd BufWritePre  * call s:SetUndo()
+	autocmd BufReadPost  * call s:ReadUndo()
+	autocmd BufWritePost * call s:WriteUndo()
+
+	func! s:SetUndo()
+		if get(b:, 'original_file')
+			setlocal undofile!
+		endif
+	endfunc
+
+	func! s:ReadUndo()
+		let undofile = get(b:, 'original_file')->undofile()
+		if filereadable(undofile)
+			setlocal undofile!
+			execute 'rundo ' .. undofile->fnameescape()
+		endif
+	endfunc
+
+	func! s:WriteUndo()
+		execute "wundo" get(b:, 'original_file')->undofile()->fnameescape()
+	endfunc
+
+augroup END
+
 " put all swap files in ~/.vim
 	set directory^=~/.vim/swapfiles
 " save swap every second
@@ -865,13 +950,17 @@ augroup END
 "                                                                            "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+" TODO: parse BufNewFile into a function with a language case statement
+" That way, we can have a base case 'if $file == $fileExt { skeleton }'
 augroup templates
 	autocmd!
 
+	" TODO: normal here, but also at the bottom of the augroup?
 	autocmd BufNewFile *.c 0r ~/.vim/skeleton/c | normal 4j
 	autocmd BufNewFile *.h 0r ~/.vim/skeleton/h
 	autocmd BufNewFile *.l 0r ~/.vim/skeleton/l
 	autocmd BufNewFile *.tex 0r ~/.vim/skeleton/tex
+	autocmd BufNewFile *.pl  0r ~/.vim/skeleton/pl
 
 	autocmd BufNewFile *.java 0r ~/.vim/skeleton/java
 	autocmd BufNewFile *.html 0r ~/.vim/skeleton/html
@@ -880,6 +969,7 @@ augroup templates
 	autocmd BufNewFile *_test.c 0r ~/.vim/skeleton/minUnit_test.c | normal 33GdG
 	autocmd BufNewFile *cgi.sh 0r ~/.vim/skeleton/cgi.sh | normal G
 
+	" TODO: this should go somewhere else
 	" expand filenames with <@%>, <@%:p>, <@%:t:r:p:h>, et cetera
 	autocmd BufNewFile * silent! %s/<@\(%.\{-}\)>/\=expand(submatch(1))/
 	" use vim expressions in templates with <\=expression>
@@ -951,6 +1041,7 @@ endif
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " load .vimrc files in the current directory, for project config
+try
 	function! LoadProjectVimrc()
 		let vimrcFile = FindFullFile(".vimrc", ".;")
 
@@ -961,7 +1052,10 @@ endif
 
 	endfunction
 	autocmd DirChanged * call LoadProjectVimrc()
-call LoadProjectVimrc()
+	call LoadProjectVimrc()
+catch /E127/
+	" Cannot redefine function LoadProjectVimrc: It is in use
+endtry
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "	EXPERIMENTS																 "
@@ -970,6 +1064,14 @@ call LoadProjectVimrc()
 
 " path searches all directories beneath the current directory
 	set path+=* " nvm, just try within the next layer.
+
+
+if exists('*projectroot#guess')
+autocmd BufRead,BufNewFile * let &l:path = &l:path ? &l:path : &path .. "," .. projectroot#guess()
+endif
+
+" turn off diff when window closed
+set diffopt+=hiddenoff
 
 " ctrl-t, tag stack
 "

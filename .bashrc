@@ -1,7 +1,9 @@
-# ~/.bashrc
+#!/usr/bin/env bash
 
 onExit() {
-	history -p "EXIT $(date -I)"
+	if [[ -t 2 ]]; then
+		history -p "EXIT $(date -I)" > /dev/tty
+	fi
 }
 
 trap onExit EXIT
@@ -9,7 +11,7 @@ trap onExit EXIT
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-export SHELDRITCH="$HOME"/repos/sheldritch
+export SHELDRITCH="$HOME"/projects/sheldritch
 source "$SHELDRITCH/sheldritch.full.sh"
 
 # load shell source files
@@ -78,14 +80,14 @@ if ! shopt -oq posix; then
 fi
 
 # more autocomplete support
-	command -v kubectl >/dev/null && source <(kubectl completion bash)
+command -v kubectl >/dev/null && source <(kubectl completion bash)
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
 # make less more friendly for non-text input files, see lesspipe(1)
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+[ -x /usr/bin/lesspipe ] && eval "$(lesspipe)"
 
 # Favourite editor:
 	export EDITOR="vim"
@@ -119,7 +121,7 @@ shopt -s checkwinsize
 # Application env
 ####
 
-export LESS='-i'
+export LESS='-i -R --use-color'
 
 export RLWRAP_HOME=$HOME/.config/readline
 
@@ -140,8 +142,16 @@ histignore_alias() {
 	alias ls='ls --color=auto'
 	alias grep='grep --color=auto'
 
-# user personal vim config whenever running vim as superuser
-	alias suvim='sudo vim -u ~/.vimrc'
+# integrate sudoedit with vim a little better (eg undofiles)
+suvim() {
+	if [[ "$*" = *"\f"* ]]; then
+		echo >&2 "Error: file names contain form feed character (\\f)."
+		return 1
+	fi
+	EDITOR='vim -O' SUDOEDIT=1 \
+		FILES="$(printf "%s\f" "$@")" \
+		sudoedit "$@"
+}
 
 # Common typo shortening I may as well use
 	alias chmox='sudo chmod +x'
@@ -154,7 +164,7 @@ histignore_alias() {
 
 	alias bye='shutdown now'
 
-	alias mygrep='grep --exclude-dir=node_modules'
+	alias mygrep='grep --exclude-dir=node_modules --exclude-dir=.git'
 
 	alias docc='docker-compose'
 
@@ -162,6 +172,12 @@ histignore_alias() {
 
 # I always type git checkout wrong
 	alias chekcout='checkout'
+	alias checkotu='checkout'
+
+# Sheldritch aliases
+	alias tm=transmute
+	alias svim=transmute
+	complete -F _complete_sheldritch_lib tm svim
 
 	function git() {
 		case "$1" in
@@ -192,7 +208,13 @@ complete -F __start_kubectl k
 
 alias use-context='kubectl config use-context'
 alias set-namespace='kubectl config set-context --current --namespace'
-alias kns='kubectl config set-context --current --namespace'
+function kns {
+	local Namespace="$1"
+
+	[[ "$Namespace" = - ]] && Namespace="$K8S_OLD_NS"
+	export K8S_OLD_NS="$(kubectl config view --minify -o jsonpath='{..namespace}')"
+	kubectl config set-context --current --namespace "$Namespace"
+}
 _complete_kns() {
 	local opts="$(kubectl 2>/dev/null get namespace -o jsonpath='{.items[*].metadata.name}')"
 	COMPREPLY=($(compgen -W "$opts" "${COMP_WORDS[COMP_CWORD]}"))
@@ -238,10 +260,10 @@ HISTIGNORE+=":gch-*"
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # included as a folder executables are run from
-	PATH="$PATH:/sbin"
-	PATH="$HOME/.bin:$PATH"
+PATH="$PATH:/sbin"
+PATH="$HOME/.bin:$PATH"
 declare _Path
-for _Path in .yarn .cargo .local .raku; do
+for _Path in .yarn .cargo .local .raku go .go; do
 	_Path="$HOME/$_Path/bin"
 	[[ -d "$_Path" ]] && PATH="$_Path:$PATH"
 done

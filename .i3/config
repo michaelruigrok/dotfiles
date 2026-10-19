@@ -220,26 +220,26 @@ assign [class="steam"] 3
 assign [class="steam Login"] 3
 
 # hide title bar of selected window
-bindsym $mod+Shift+b border toggle 
+bindsym $mod+Shift+b border toggle
 
 # Volume buttons, try a few approaches
-set $refresh_i3status killall -SIGUSR1 i3status
+set $refresh_status killall -SIGUSR1 i3status waybar swaybar # TODO: apply to status_command proper
 bindsym XF86AudioRaiseVolume exec --no-startup-id \
 	   qdbus org.kde.kglobalaccel /component/kmix invokeShortcut "increase_volume" \
 	|| pactl set-sink-volume @DEFAULT_SINK@ +5% \
-	&&  $refresh_i3status
+	&&  $refresh_status
 bindsym XF86AudioLowerVolume exec --no-startup-id \
        qdbus org.kde.kglobalaccel /component/kmix invokeShortcut "decrease_volume" \
 	|| pactl set-sink-volume @DEFAULT_SINK@ -5% \
-	&& $refresh_i3status
+	&& $refresh_status
 bindsym XF86AudioMute exec --no-startup-id \
 	   qdbus org.kde.kglobalaccel /component/kmix invokeShortcut "mute" \
 	|| pactl set-sink-mute @DEFAULT_SINK@ toggle \
-	&& $refresh_i3status0
+	&& $refresh_status0
 bindsym XF86AudioMicMute exec --no-startup-id \
 	   qdbus org.kde.kglobalaccel /component/kmix invokeShortcut "mic_mute" \
     || pactl set-source-mute @DEFAULT_SOURCE@ toggle \
-	&& $refresh_i3status
+	&& $refresh_status
 
 #Prinscreen automatically saves a screenshot
 bindsym Print exec scrot 'Images/%d-%m-%y-at-%H:%M:%S.png'

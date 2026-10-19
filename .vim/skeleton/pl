@@ -1,0 +1,17 @@
+#!/usr/bin/env perl
+
+use feature qw(say);
+use strict;
+use warnings;
+
+my $arg1 = shift(@ARGV);
+my $matchFound;
+
+#Iterate over all the lines, of all the files given as arguments
+while (my $line = <ARGV>) {
+	if ($line =~ /$arg1/) {
+		$matchFound = 1;
+		print "$line";
+	} elsif () {
+	}
+}

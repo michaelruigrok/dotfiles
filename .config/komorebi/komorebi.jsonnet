@@ -2,29 +2,10 @@
 local workspaces = [
   [
     {
-      "name": "1",
-      "layout": "BSP"
-    },
-    {
-      "name": "2",
-      "layout": "BSP"
-    },
-    {
-      "name": "3",
-      "layout": "BSP"
-    },
-    {
-      "name": "4",
-      "layout": "BSP"
-    },
-    {
-      "name": "5",
-      "layout": "BSP"
-    },
-    {
-      "name": "6",
-      "layout": "BSP"
+      "name": "" + x,
+      "layout": "RightMainVerticalStack"
     }
+	for x in std.range(1, 6)
   ],
   [
     {
