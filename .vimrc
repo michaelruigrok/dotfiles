@@ -433,7 +433,6 @@ iabbrev use_base_sheldritch
 
 iabbrev echo2 echo >&2
 
-
 	" HTML SHORTCUTS "
 	""""""""""""""""""
 
@@ -927,6 +926,9 @@ augroup persistent-undo
 	endfunc
 
 	func! s:ReadUndo()
+		if ! get(b:, 'original_file')
+			return
+		endif
 		let undofile = get(b:, 'original_file')->undofile()
 		if filereadable(undofile)
 			setlocal undofile!
@@ -935,7 +937,9 @@ augroup persistent-undo
 	endfunc
 
 	func! s:WriteUndo()
-		execute "wundo" get(b:, 'original_file')->undofile()->fnameescape()
+		if get(b:, 'original_file')
+			execute "wundo" get(b:, 'original_file')->undofile()->fnameescape()
+		endif
 	endfunc
 
 augroup END

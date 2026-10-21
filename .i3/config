@@ -76,6 +76,7 @@ bindsym $mod+Shift+Right move right
 # changed to accomodate vim navigation keys
 bindsym $mod+z split h
 
+
 # split in vertical orientation
 bindsym $mod+v split v
 
@@ -251,7 +252,5 @@ bar {
         status_command i3status
 }
 
-for_window [class="zoom"] floating enable
-for_window [title="Zoom Meeting"] floating disable
 
 exec ~/.i3/extra.sh

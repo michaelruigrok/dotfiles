@@ -40,3 +40,7 @@ bindkey -M viins '\e.' insert-last-word
 
 #WORDCHARS='*?_-.[]~=/&;!#$%^(){}<>'
 WORDCHARS='*?~&!#$%^(){}<>'
+
+HISTORY_IGNORE="(ls|[bf]g|exit|pwd|clear|less|umount|oh)"
+setopt HIST_IGNORE_SPACE
+setopt HIST_IGNORE_DUPS
